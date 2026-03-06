@@ -1,0 +1,17 @@
+# TmpMail
+
+TmpMail is a free temporary email service. Create disposable email addresses instantly, no registration required. Emails self-destruct after 10 minutes.
+
+## Use cases
+- Avoid spam when signing up for services
+- Protect your real email address
+- Receive confirmation emails without commitment
+- Test email flows during development
+
+## Features
+- Instant email generation
+- Real-time inbox via WebSocket
+- Multiple domains available
+- File attachment support (up to 5 MB)
+- Available in Spanish and English
+- No IP logging, no registration required

@@ -1,0 +1,76 @@
+{
+  "hero": {
+    "title": "Your temporary email is ready",
+    "subtitle": "Use this address to sign up on any site. It self-destructs in {minutes} minutes.",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "newEmail": "New email",
+    "generateQR": "QR Code",
+    "deleteMailbox": "Delete mailbox",
+    "selectDomain": "Select domain"
+  },
+  "timer": {
+    "expiresIn": "Expires in",
+    "expired": "Expired",
+    "extend": "+5 min"
+  },
+  "inbox": {
+    "title": "Inbox",
+    "empty": "Waiting for emails...",
+    "emptyHint": "Emails sent to your address will appear here instantly.",
+    "from": "From:",
+    "open": "Open",
+    "notifications": "Notifications",
+    "new": "New"
+  },
+  "viewer": {
+    "close": "Close",
+    "from": "From",
+    "subject": "Subject",
+    "received": "Received",
+    "viewHTML": "HTML",
+    "viewText": "Plain text",
+    "downloadAttachment": "Download",
+    "attachments": "Attachments"
+  },
+  "faq": {
+    "title": "Frequently asked questions",
+    "items": [
+      {
+        "q": "What is a temporary email?",
+        "a": "A temporary or disposable email is an address that self-destructs after a set time. It's perfect for signing up on websites without revealing your real email or receiving spam."
+      },
+      {
+        "q": "Is it safe to use a disposable email?",
+        "a": "Yes, it's safe for its intended purpose: avoiding spam and protecting your privacy. Don't use it for sensitive information, as anyone with the link can view the emails."
+      },
+      {
+        "q": "How long does the temporary email last?",
+        "a": "By default it lasts 10 minutes. Each email you receive adds 5 extra minutes automatically. You can also generate a new one at any time."
+      },
+      {
+        "q": "Can I receive attachments?",
+        "a": "Yes, you can receive attachments up to 5 MB. Files remain available while the mailbox is active."
+      },
+      {
+        "q": "What is a temporary email useful for?",
+        "a": "It's useful for forum registrations, software downloads, service trials, avoiding email marketing lists, and protecting your online identity."
+      },
+      {
+        "q": "Are my emails private?",
+        "a": "We don't store IP addresses. Emails are automatically deleted when the mailbox expires. However, don't use this service for confidential information."
+      }
+    ]
+  },
+  "footer": {
+    "tagline": "Temporary email, real privacy.",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "contact": "Contact",
+    "language": "Language"
+  },
+  "meta": {
+    "title": "TmpMail — Free Temporary Email",
+    "description": "Create a disposable email in seconds. No sign-up, no spam. Your temporary email self-destructs in 10 minutes."
+  }
+}

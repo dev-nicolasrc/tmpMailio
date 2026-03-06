@@ -1,0 +1,76 @@
+{
+  "hero": {
+    "title": "Tu correo temporal está listo",
+    "subtitle": "Usa esta dirección para registrarte en cualquier sitio. Se autodestruye en {minutes} minutos.",
+    "copy": "Copiar",
+    "copied": "Copiado!",
+    "newEmail": "Nuevo correo",
+    "generateQR": "Código QR",
+    "deleteMailbox": "Borrar buzón",
+    "selectDomain": "Seleccionar dominio"
+  },
+  "timer": {
+    "expiresIn": "Expira en",
+    "expired": "Expirado",
+    "extend": "+5 min"
+  },
+  "inbox": {
+    "title": "Bandeja de entrada",
+    "empty": "Esperando correos...",
+    "emptyHint": "Los correos enviados a tu dirección aparecerán aquí al instante.",
+    "from": "De:",
+    "open": "Abrir",
+    "notifications": "Notificaciones",
+    "new": "Nuevo"
+  },
+  "viewer": {
+    "close": "Cerrar",
+    "from": "De",
+    "subject": "Asunto",
+    "received": "Recibido",
+    "viewHTML": "HTML",
+    "viewText": "Texto plano",
+    "downloadAttachment": "Descargar",
+    "attachments": "Adjuntos"
+  },
+  "faq": {
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "q": "¿Qué es un correo temporal?",
+        "a": "Un correo temporal o desechable es una dirección de email que se autodestruye después de un tiempo. Es ideal para registrarte en sitios web sin revelar tu email real ni recibir spam."
+      },
+      {
+        "q": "¿Es seguro usar un correo desechable?",
+        "a": "Sí, es seguro para el uso previsto: evitar spam y proteger tu privacidad. No lo uses para información sensible, ya que cualquier persona con el enlace puede ver los correos."
+      },
+      {
+        "q": "¿Cuánto tiempo dura el correo temporal?",
+        "a": "Por defecto dura 10 minutos. Cada correo que recibes añade 5 minutos extra automáticamente. También puedes generar uno nuevo en cualquier momento."
+      },
+      {
+        "q": "¿Puedo recibir archivos adjuntos?",
+        "a": "Sí, puedes recibir archivos adjuntos de hasta 5 MB. Los archivos quedan disponibles mientras el buzón esté activo."
+      },
+      {
+        "q": "¿Para qué sirve un correo temporal?",
+        "a": "Es útil para registros en foros, descargas de software, trials de servicios, evitar listas de email marketing y proteger tu identidad online."
+      },
+      {
+        "q": "¿Mis correos son privados?",
+        "a": "No almacenamos direcciones IP. Los correos se eliminan automáticamente al expirar el buzón. Sin embargo, no uses este servicio para información confidencial."
+      }
+    ]
+  },
+  "footer": {
+    "tagline": "Correo temporal, privacidad real.",
+    "privacy": "Privacidad",
+    "terms": "Términos",
+    "contact": "Contacto",
+    "language": "Idioma"
+  },
+  "meta": {
+    "title": "TmpMail — Correo Temporal Gratis",
+    "description": "Crea un correo desechable en segundos. Sin registro, sin spam. Tu email temporal se autodestruye en 10 minutos."
+  }
+}
