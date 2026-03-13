@@ -4,30 +4,34 @@
 
 /* ── Dark mode (default) ── */
 :root {
-  --bg-primary:        #0A0A0F;
-  --bg-secondary:      #12121A;
-  --bg-tertiary:       #1A1A28;
-  --accent-primary:    #6C63FF;
-  --accent-secondary:  #00D4FF;
-  --text-primary:      #F0F0FF;
-  --text-secondary:    #8888AA;
-  --success:           #00FF88;
-  --danger:            #FF4466;
-  --border:            rgba(108,99,255,0.2);
+  --bg-primary:     #080808;
+  --bg-secondary:   #101010;
+  --bg-tertiary:    #1A1A1A;
+  --accent-primary: #B8FF35;
+  --accent-secondary: #B8FF35;
+  --accent-dim:     rgba(184, 255, 53, 0.08);
+  --text-primary:   #E8E4DC;
+  --text-secondary: #5A5A5A;
+  --success:        #B8FF35;
+  --danger:         #FF3333;
+  --border:         #1C1C1C;
+  --border-mid:     #2A2A2A;
 }
 
 /* ── Light mode ── */
 .light {
-  --bg-primary:        #F5F5FF;
-  --bg-secondary:      #FFFFFF;
-  --bg-tertiary:       #EEEEFF;
-  --accent-primary:    #5A52E0;
-  --accent-secondary:  #0099CC;
-  --text-primary:      #0A0A1A;
-  --text-secondary:    #555577;
-  --success:           #00BB66;
-  --danger:            #DD2244;
-  --border:            rgba(90,82,224,0.2);
+  --bg-primary:     #F0ECE4;
+  --bg-secondary:   #FAFAF7;
+  --bg-tertiary:    #E4E0D8;
+  --accent-primary: #5C8000;
+  --accent-secondary: #5C8000;
+  --accent-dim:     rgba(92, 128, 0, 0.08);
+  --text-primary:   #111111;
+  --text-secondary: #888880;
+  --success:        #5C8000;
+  --danger:         #CC2222;
+  --border:         #D8D3CA;
+  --border-mid:     #C0BAB0;
 }
 
 * {
@@ -43,44 +47,232 @@ html {
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  font-family: var(--font-space), sans-serif;
+  font-family: var(--font-mono), "Fira Code", monospace;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
+  font-size: 13px;
+  line-height: 1.6;
 }
 
 /* ── Scrollbar ── */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--bg-secondary); }
-::-webkit-scrollbar-thumb {
-  background: var(--bg-tertiary);
-  border-radius: 3px;
-}
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--border-mid); border-radius: 0; }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent-primary); }
 
 /* ── Selection ── */
 ::selection {
   background: var(--accent-primary);
-  color: #fff;
+  color: #080808;
 }
 
-/* ── Glow button utility ── */
+/* ── Keyframes ── */
+@keyframes blink-cursor {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@keyframes scanline {
+  0%   { top: -3px; }
+  100% { top: 110%; }
+}
+
+@keyframes signal-ring {
+  0%   { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(2.8); opacity: 0; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideRight {
+  from { opacity: 0; transform: translateX(-8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Utilities ── */
 @layer utilities {
-  .btn-glow:hover {
-    box-shadow: 0 0 20px rgba(108,99,255,0.5);
+
+  /* Address display box with animated scanline */
+  .address-box {
+    position: relative;
+    border-left: 3px solid var(--accent-primary);
+    border-top: 1px solid var(--border-mid);
+    border-right: 1px solid var(--border-mid);
+    border-bottom: 1px solid var(--border-mid);
+    background: var(--bg-secondary);
+    overflow: hidden;
   }
-  .btn-glow-cyan:hover {
-    box-shadow: 0 0 20px rgba(0,212,255,0.4);
+
+  .address-box .scanline {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-primary), rgba(184,255,53,0.2), transparent);
+    animation: scanline 3.5s linear infinite;
+    pointer-events: none;
   }
-  .btn-glow-danger:hover {
-    box-shadow: 0 0 20px rgba(255,68,102,0.4);
+
+  /* Blinking cursor */
+  .cursor-blink::after {
+    content: '_';
+    color: var(--accent-primary);
+    animation: blink-cursor 1s step-end infinite;
+    margin-left: 1px;
   }
+
+  /* Card (sharp) */
   .card {
     background-color: var(--bg-secondary);
     border: 1px solid var(--border);
-    border-radius: 0.75rem;
+    border-radius: 0;
   }
+
   .card-hover:hover {
     background-color: var(--bg-tertiary);
+    border-color: var(--border-mid);
+  }
+
+  /* Grid texture overlay */
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(184,255,53,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(184,255,53,0.035) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+
+  .light .grid-bg {
+    background-image:
+      linear-gradient(rgba(92,128,0,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(92,128,0,0.04) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+
+  /* Animations */
+  .animate-fade-up   { animation: fadeUp 0.45s ease-out forwards; }
+  .animate-slide-right { animation: slideRight 0.3s ease-out forwards; }
+
+  /* Staggered children */
+  .stagger > *:nth-child(1) { animation-delay: 0ms; }
+  .stagger > *:nth-child(2) { animation-delay: 60ms; }
+  .stagger > *:nth-child(3) { animation-delay: 120ms; }
+  .stagger > *:nth-child(4) { animation-delay: 180ms; }
+
+  /* Flat action buttons */
+  .btn-flat {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border: 1px solid var(--border-mid);
+    border-radius: 0;
+    color: var(--text-secondary);
+    font-family: var(--font-mono), monospace;
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    background: transparent;
+    white-space: nowrap;
+  }
+
+  .btn-flat:hover {
+    color: var(--text-primary);
+    border-color: var(--border-mid);
+    background: var(--bg-tertiary);
+  }
+
+  .btn-flat:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  /* Light mode: all flat buttons get a white card look for contrast on cream bg */
+  .light .btn-flat {
+    background: var(--bg-secondary);
+    border-color: #AAAAAA;
+    color: var(--text-primary);
+  }
+
+  .light .btn-flat:hover {
+    background: var(--bg-tertiary);
+    border-color: #888880;
+  }
+
+  /* Slightly raised buttons for dark mode (Actualizar / QR) */
+  .btn-secondary {
+    background: var(--bg-tertiary);
+    border-color: #383838;
+    color: var(--text-primary);
+  }
+
+  .btn-secondary:hover {
+    background: #222222;
+    border-color: #505050;
+    color: var(--text-primary);
+  }
+
+  /* Light mode override: btn-secondary looks the same as btn-flat */
+  .light .btn-secondary {
+    background: var(--bg-secondary);
+    border-color: #AAAAAA;
+    color: var(--text-primary);
+  }
+
+  .light .btn-secondary:hover {
+    background: var(--bg-tertiary);
+    border-color: #888880;
+  }
+
+  .btn-accent {
     border-color: var(--accent-primary);
+    color: var(--accent-primary);
+    background: var(--accent-dim);
+  }
+
+  .btn-accent:hover {
+    background: var(--accent-primary);
+    color: #080808;
+  }
+
+  /* Light mode accent: darker lime for readability */
+  .light .btn-accent {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+    background: var(--accent-dim);
+  }
+
+  .light .btn-accent:hover {
+    background: var(--accent-primary);
+    color: #ffffff;
+  }
+
+  .btn-danger {
+    border-color: rgba(255,51,51,0.35);
+    color: var(--danger);
+  }
+
+  .btn-danger:hover {
+    background: rgba(255,51,51,0.08);
+    border-color: var(--danger);
+  }
+
+  /* Light mode danger: stronger border */
+  .light .btn-danger {
+    border-color: rgba(204,34,34,0.5);
+    color: var(--danger);
+    background: var(--bg-secondary);
+  }
+
+  .light .btn-danger:hover {
+    background: rgba(204,34,34,0.06);
+    border-color: var(--danger);
   }
 }

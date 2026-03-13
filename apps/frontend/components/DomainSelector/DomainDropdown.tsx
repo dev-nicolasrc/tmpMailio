@@ -33,13 +33,29 @@ export function DomainDropdown({ onSelect, onClose }: DomainDropdownProps) {
   return (
     <div
       ref={ref}
-      className="absolute top-full mt-2 left-0 z-20 card min-w-[180px] py-1 shadow-glow-accent"
+      className="absolute top-full mt-1 left-0 z-20 py-1 min-w-[180px]"
+      style={{
+        background: "var(--bg-secondary)",
+        border: "1px solid var(--border-mid)",
+        borderLeft: "2px solid var(--accent-primary)",
+      }}
     >
       {domains.map((d) => (
         <button
           key={d.domain}
           onClick={() => onSelect(d.domain)}
-          className="w-full text-left px-4 py-2 text-sm text-text-secondary hover:text-accent-secondary hover:bg-bg-tertiary transition-colors font-mono"
+          className="w-full text-left px-4 py-2.5 font-mono text-[12px] transition-colors"
+          style={{ color: "var(--text-secondary)" }}
+          onMouseEnter={e => {
+            const el = e.currentTarget as HTMLElement
+            el.style.color = "var(--accent-primary)"
+            el.style.background = "var(--accent-dim)"
+          }}
+          onMouseLeave={e => {
+            const el = e.currentTarget as HTMLElement
+            el.style.color = "var(--text-secondary)"
+            el.style.background = "transparent"
+          }}
         >
           @{d.label}
         </button>

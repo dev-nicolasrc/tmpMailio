@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Space_Grotesk, JetBrains_Mono } from "next/font/google"
+import { Syne, Fira_Code } from "next/font/google"
 import { ThemeProvider } from "next-themes"
 import { NextIntlClientProvider } from "next-intl"
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server"
@@ -7,8 +7,17 @@ import { notFound } from "next/navigation"
 import { locales } from "@/i18n"
 import "../globals.css"
 
-const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-space" })
-const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" })
+const syne = Syne({
+  subsets: ["latin"],
+  variable: "--font-display",
+  weight: ["400", "500", "600", "700", "800"],
+})
+
+const firaCode = Fira_Code({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  weight: ["300", "400", "500"],
+})
 
 type Props = { children: React.ReactNode; params: { locale: string } }
 
@@ -56,7 +65,7 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
     <html
       lang={locale}
       suppressHydrationWarning
-      className={`${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
+      className={`${syne.variable} ${firaCode.variable}`}
     >
       <body>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>

@@ -10,13 +10,19 @@ export function ThemeToggle() {
 
   useEffect(() => setMounted(true), [])
 
+  const isDark = mounted && theme === "dark"
+
   return (
     <button
-      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="p-2 rounded-lg bg-bg-secondary border border-[var(--border)] text-text-secondary hover:text-accent-primary hover:border-accent-primary transition-all btn-glow"
+      onClick={() => setTheme(isDark ? "light" : "dark")}
+      className="btn-flat"
+      style={{ padding: "6px 12px", gap: "6px" }}
       aria-label="Toggle theme"
     >
-      {mounted && theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+      {isDark ? <Sun size={13} /> : <Moon size={13} />}
+      <span className="font-mono text-[10px] uppercase tracking-widest hidden sm:inline">
+        {isDark ? "LIGHT" : "DARK"}
+      </span>
     </button>
   )
 }
