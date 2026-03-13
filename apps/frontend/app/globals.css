@@ -43,7 +43,7 @@ html {
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-space), sans-serif;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
 }

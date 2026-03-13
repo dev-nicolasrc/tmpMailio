@@ -20,9 +20,9 @@ const config: Config = {
         danger:           "var(--danger)",
       },
       fontFamily: {
-        sans:  ["Inter", "sans-serif"],
-        heading: ["Space Grotesk", "sans-serif"],
-        mono:  ["JetBrains Mono", "monospace"],
+        sans:    ["var(--font-space)", "sans-serif"],
+        heading: ["var(--font-space)", "sans-serif"],
+        mono:    ["var(--font-mono)", "monospace"],
       },
       boxShadow: {
         "glow-accent": "0 0 20px rgba(108,99,255,0.4)",

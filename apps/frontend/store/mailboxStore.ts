@@ -53,15 +53,18 @@ export const useMailboxStore = create<MailboxStore>((set, get) => ({
   },
 
   selectEmail: async (emailId: string) => {
-    const res = await fetch(`${API}/api/email/${emailId}`)
+    const { mailbox } = get()
+    if (!mailbox) return
+    const res = await fetch(`${API}/api/email/${mailbox.id}/${emailId}`)
     const data = await res.json()
-    if (res.ok) set({ selectedEmail: data.email })
+    if (res.ok) set({ selectedEmail: { ...data.email, receivedAt: new Date(data.email.receivedAt) } })
   },
 
   clearSelectedEmail: () => set({ selectedEmail: null }),
 
   addIncomingEmail: (email: EmailHeader) => {
-    set((state) => ({ emails: [email, ...state.emails] }))
+    const normalized = { ...email, receivedAt: new Date(email.receivedAt) }
+    set((state) => ({ emails: [normalized, ...state.emails] }))
   },
 
   setExpired: () => {
@@ -79,6 +82,6 @@ export const useMailboxStore = create<MailboxStore>((set, get) => ({
     if (!mailbox) return
     const res = await fetch(`${API}/api/mailbox/${mailbox.id}/emails`)
     const data = await res.json()
-    if (res.ok) set({ emails: data.emails })
+    if (res.ok) set({ emails: data.emails.map((e: EmailHeader) => ({ ...e, receivedAt: new Date(e.receivedAt) })) })
   },
 }))

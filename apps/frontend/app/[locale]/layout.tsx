@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google"
+import { Space_Grotesk, JetBrains_Mono } from "next/font/google"
 import { ThemeProvider } from "next-themes"
 import { NextIntlClientProvider } from "next-intl"
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server"
@@ -7,7 +7,6 @@ import { notFound } from "next/navigation"
 import { locales } from "@/i18n"
 import "../globals.css"
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"], variable: "--font-space" })
 const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" })
 
@@ -40,10 +39,6 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
       images: ["/og-image.png"],
     },
     manifest: "/manifest.json",
-    icons: {
-      icon: "/icons/icon-192.png",
-      apple: "/icons/apple-touch-icon.png",
-    },
   }
 }
 
@@ -61,7 +56,7 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
     <html
       lang={locale}
       suppressHydrationWarning
-      className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
+      className={`${spaceGrotesk.variable} ${jetbrainsMono.variable}`}
     >
       <body>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>

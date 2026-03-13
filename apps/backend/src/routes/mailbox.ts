@@ -4,9 +4,11 @@ import {
   createMailbox,
   deleteMailbox,
   getMailboxById,
+  getMailboxToken,
 } from "../services/mailboxService"
 import { getEmailsByMailbox } from "../services/emailService"
-import { env } from "../config/env"
+import { registerMailboxExpiry } from "../services/cleanupService"
+import { getDomains } from "../services/mailtmClient"
 import { getIO } from "../server"
 
 const router = Router()
@@ -14,12 +16,19 @@ const router = Router()
 // POST /api/mailbox/create
 router.post("/create", createMailboxLimiter, async (req: Request, res: Response) => {
   try {
-    const domain = req.body.domain ?? env.DOMAINS[0]
-    if (!domain) {
-      res.status(400).json({ error: "No domains configured" })
+    // Get live domains from Mail.tm
+    const available = await getDomains()
+    if (available.length === 0) {
+      res.status(503).json({ error: "No domains available" })
       return
     }
+
+    // Use requested domain if valid, else pick first available
+    const requestedDomain = req.body.domain as string | undefined
+    const domain = available.find((d) => d.domain === requestedDomain)?.domain ?? available[0].domain
+
     const mailbox = await createMailbox(domain)
+    await registerMailboxExpiry(mailbox.id, mailbox.expiresAt)
     res.status(201).json({ mailbox })
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Failed to create mailbox"
@@ -43,12 +52,12 @@ router.delete("/:id", async (req: Request, res: Response) => {
 // GET /api/mailbox/:id/emails
 router.get("/:id/emails", async (req: Request, res: Response) => {
   const { id } = req.params
-  const mailbox = await getMailboxById(id)
-  if (!mailbox) {
+  const creds = await getMailboxToken(id)
+  if (!creds) {
     res.status(404).json({ error: "Mailbox not found" })
     return
   }
-  const emails = await getEmailsByMailbox(id)
+  const emails = await getEmailsByMailbox(id, creds.token)
   res.json({ emails })
 })
 

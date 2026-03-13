@@ -21,7 +21,9 @@
     "from": "De:",
     "open": "Abrir",
     "notifications": "Notificaciones",
-    "new": "Nuevo"
+    "new": "Nuevo",
+    "back": "← Bandeja",
+    "waiting": "Esperando correos..."
   },
   "viewer": {
     "close": "Cerrar",
@@ -31,7 +33,8 @@
     "viewHTML": "HTML",
     "viewText": "Texto plano",
     "downloadAttachment": "Descargar",
-    "attachments": "Adjuntos"
+    "attachments": "Adjuntos",
+    "empty": "Selecciona un correo para leerlo"
   },
   "faq": {
     "title": "Preguntas frecuentes",

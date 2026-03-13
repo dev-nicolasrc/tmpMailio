@@ -21,7 +21,9 @@
     "from": "From:",
     "open": "Open",
     "notifications": "Notifications",
-    "new": "New"
+    "new": "New",
+    "back": "← Inbox",
+    "waiting": "Waiting for emails..."
   },
   "viewer": {
     "close": "Close",
@@ -31,7 +33,8 @@
     "viewHTML": "HTML",
     "viewText": "Plain text",
     "downloadAttachment": "Download",
-    "attachments": "Attachments"
+    "attachments": "Attachments",
+    "empty": "Select an email to read it"
   },
   "faq": {
     "title": "Frequently asked questions",

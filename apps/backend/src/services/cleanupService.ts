@@ -1,25 +1,23 @@
 import cron from "node-cron"
-import { MailboxModel } from "../models/Mailbox"
-import { EmailModel } from "../models/Email"
+import { redis } from "../config/redis"
+import { deleteMailbox } from "./mailboxService"
 
 export function startCleanupJob(): void {
-  // Run every 5 minutes
+  // Every 5 minutes: find mailboxes whose TTL has expired in Redis
+  // (Redis already auto-deletes the keys, but we need to clean up Mail.tm accounts)
+  // We track expiring mailboxes via a separate sorted set: expiring:{timestamp} → mailboxId
   cron.schedule("*/5 * * * *", async () => {
-    const now = new Date()
     try {
-      // Mark expired mailboxes
-      const expired = await MailboxModel.find({
-        expiresAt: { $lt: now },
-        status: "active",
-      }).select("mailboxId")
+      const now = Date.now()
+      // Get all expired mailbox IDs from the expiry index
+      const expired = await redis.zrangebyscore("mailbox:expiry_index", 0, now)
 
       if (expired.length > 0) {
-        const ids = expired.map((m) => m.mailboxId)
-        await MailboxModel.updateMany({ mailboxId: { $in: ids } }, { status: "expired" })
-        // Remove emails older than 1 hour to keep storage lean
-        const cutoff = new Date(now.getTime() - 60 * 60 * 1000)
-        await EmailModel.deleteMany({ mailboxId: { $in: ids }, receivedAt: { $lt: cutoff } })
-        console.log(`[Cleanup] Expired ${ids.length} mailboxes`)
+        for (const mailboxId of expired) {
+          await deleteMailbox(mailboxId)
+        }
+        await redis.zremrangebyscore("mailbox:expiry_index", 0, now)
+        console.log(`[Cleanup] Removed ${expired.length} expired mailboxes`)
       }
     } catch (err) {
       console.error("[Cleanup] Error:", err)
@@ -27,4 +25,8 @@ export function startCleanupJob(): void {
   })
 
   console.log("[Cleanup] Cron job started (every 5 min)")
+}
+
+export async function registerMailboxExpiry(mailboxId: string, expiresAt: Date): Promise<void> {
+  await redis.zadd("mailbox:expiry_index", expiresAt.getTime(), mailboxId)
 }

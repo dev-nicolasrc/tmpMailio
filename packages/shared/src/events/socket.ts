@@ -1,4 +1,4 @@
-import type { Email } from "../types/email"
+import type { EmailHeader } from "../types/email"
 
 // Client -> Server
 export interface ClientToServerEvents {
@@ -8,7 +8,7 @@ export interface ClientToServerEvents {
 
 // Server -> Client
 export interface ServerToClientEvents {
-  new_email: (payload: { email: Email }) => void
+  new_email: (payload: { email: EmailHeader }) => void
   mailbox_expired: (payload: { mailboxId: string }) => void
   mailbox_deleted: (payload: { mailboxId: string }) => void
 }

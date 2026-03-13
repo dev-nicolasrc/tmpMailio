@@ -1,67 +1,64 @@
 import { randomBytes } from "crypto"
 import { redis } from "../config/redis"
-import { MailboxModel } from "../models/Mailbox"
 import { env } from "../config/env"
+import { createAccount, getToken, deleteAccount } from "./mailtmClient"
 import type { Mailbox } from "@tmpmail/shared"
 
-function randomUsername(): string {
-  const adjectives = ["swift", "calm", "bright", "cool", "dark", "fast", "bold", "keen"]
-  const nouns = ["fox", "wave", "star", "mist", "leaf", "rock", "flame", "cloud"]
-  const adj = adjectives[Math.floor(Math.random() * adjectives.length)]
-  const noun = nouns[Math.floor(Math.random() * nouns.length)]
-  const num = Math.floor(Math.random() * 9000) + 1000
-  return `${adj}.${noun}.${num}`
+// Password for Mail.tm accounts — random per mailbox, stored in Redis
+function randomPassword(): string {
+  return randomBytes(16).toString("hex")
 }
 
+// Redis key structure:
+//   mailbox:{id}  →  hash { address, domain, mailtmAccountId, mailtmToken, createdAt, expiresAt }
+//   knownMsgIds:{id}  →  set of already-seen Mail.tm message IDs
+
 export async function createMailbox(domain: string): Promise<Mailbox> {
-  if (!env.DOMAINS.includes(domain)) {
-    throw new Error(`Invalid domain: ${domain}`)
-  }
+  // Accept any domain from Mail.tm (validated upstream via getDomains)
+  const username = `user${randomBytes(5).toString("hex")}`
+  const address = `${username}@${domain}`
+  const password = randomPassword()
+
+  // Create account on Mail.tm
+  const account = await createAccount(address, password)
+  const token = await getToken(address, password)
 
   const mailboxId = randomBytes(12).toString("hex")
-  const username = randomUsername()
-  const address = `${username}@${domain}`
   const now = new Date()
   const expiresAt = new Date(now.getTime() + env.MAILBOX_TTL * 1000)
 
-  // Store in Redis with TTL (source of truth for active mailboxes)
   await redis.hset(`mailbox:${mailboxId}`, {
     address,
     domain,
+    mailtmAccountId: account.id,
+    mailtmToken: token,
     createdAt: now.toISOString(),
     expiresAt: expiresAt.toISOString(),
   })
   await redis.expire(`mailbox:${mailboxId}`, env.MAILBOX_TTL)
-  // Reverse lookup: address -> mailboxId (used by mail-receiver)
-  await redis.set(`address:${address.toLowerCase()}`, mailboxId, "EX", env.MAILBOX_TTL)
-
-  // Persist to MongoDB for logs
-  await MailboxModel.create({ mailboxId, address, domain, createdAt: now, expiresAt, status: "active" })
 
   return { id: mailboxId, address, domain, createdAt: now, expiresAt, status: "active" }
 }
 
 export async function deleteMailbox(mailboxId: string): Promise<void> {
   const data = await redis.hgetall(`mailbox:${mailboxId}`)
-  await redis.del(`mailbox:${mailboxId}`)
-  if (data?.address) {
-    await redis.del(`address:${data.address.toLowerCase()}`)
-  }
-  await MailboxModel.updateOne({ mailboxId }, { status: "deleted" })
-}
+  if (!data?.mailtmAccountId) return
 
-export async function extendMailboxTTL(mailboxId: string): Promise<void> {
-  const ttl = await redis.ttl(`mailbox:${mailboxId}`)
-  if (ttl <= 0) return
-  const newTTL = ttl + env.MAILBOX_TTL_EXTEND
-  await redis.expire(`mailbox:${mailboxId}`, newTTL)
-  const newExpiresAt = new Date(Date.now() + newTTL * 1000)
-  await MailboxModel.updateOne({ mailboxId }, { expiresAt: newExpiresAt })
+  // Delete Mail.tm account (best effort)
+  try {
+    await deleteAccount(data.mailtmAccountId, data.mailtmToken)
+  } catch (err) {
+    console.warn(`[Mailbox] Could not delete Mail.tm account ${data.mailtmAccountId}:`, err)
+  }
+
+  await redis.del(`mailbox:${mailboxId}`)
+  await redis.del(`knownMsgIds:${mailboxId}`)
 }
 
 export async function getMailboxById(mailboxId: string): Promise<Mailbox | null> {
   const data = await redis.hgetall(`mailbox:${mailboxId}`)
-  if (!data || !data.address) return null
+  if (!data?.address) return null
+
   const ttl = await redis.ttl(`mailbox:${mailboxId}`)
   return {
     id: mailboxId,
@@ -71,4 +68,21 @@ export async function getMailboxById(mailboxId: string): Promise<Mailbox | null>
     expiresAt: new Date(Date.now() + ttl * 1000),
     status: "active",
   }
+}
+
+export async function getMailboxToken(mailboxId: string): Promise<{ token: string; mailtmAccountId: string } | null> {
+  const data = await redis.hgetall(`mailbox:${mailboxId}`)
+  if (!data?.mailtmToken) return null
+  return { token: data.mailtmToken, mailtmAccountId: data.mailtmAccountId }
+}
+
+export async function getKnownMessageIds(mailboxId: string): Promise<Set<string>> {
+  const ids = await redis.smembers(`knownMsgIds:${mailboxId}`)
+  return new Set(ids)
+}
+
+export async function addKnownMessageId(mailboxId: string, messageId: string): Promise<void> {
+  const ttl = await redis.ttl(`mailbox:${mailboxId}`)
+  await redis.sadd(`knownMsgIds:${mailboxId}`, messageId)
+  if (ttl > 0) await redis.expire(`knownMsgIds:${mailboxId}`, ttl)
 }

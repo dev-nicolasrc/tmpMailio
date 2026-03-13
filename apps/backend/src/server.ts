@@ -20,36 +20,20 @@ const io = new Server<ClientToServerEvents, ServerToClientEvents>(httpServer, {
   cors: { origin: env.CORS_ORIGIN, methods: ["GET", "POST"] },
 })
 
-// Export io so routes can emit events
 let _io: typeof io
 export function getIO(): typeof io {
   return _io
 }
 
-// Middleware
 app.use(helmet())
 app.use(cors({ origin: env.CORS_ORIGIN }))
 app.use(express.json())
 app.set("trust proxy", 1)
 
-// Static uploads (attachments)
-app.use("/uploads", express.static(env.UPLOADS_DIR))
-
-// Routes
 app.use("/api/mailbox", mailboxRouter)
 app.use("/api/email", emailsRouter)
 app.use("/api/domains", domainsRouter)
 
-// Internal endpoint for mail-receiver script
-app.post("/internal/new-email", (req, res) => {
-  const { mailboxId, email } = req.body
-  if (mailboxId && email) {
-    io.to(mailboxId).emit("new_email", { email })
-  }
-  res.status(204).send()
-})
-
-// Health check
 app.get("/health", (_req, res) => res.json({ status: "ok" }))
 
 async function bootstrap(): Promise<void> {
