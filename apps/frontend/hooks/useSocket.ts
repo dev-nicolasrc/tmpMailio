@@ -1,11 +1,15 @@
 "use client"
 
 import { useEffect } from "react"
+import { useTranslations } from "next-intl"
 import { getSocket } from "@/lib/socket"
 import { useMailboxStore } from "@/store/mailboxStore"
+import { sendNotification } from "@/lib/notifications"
 
 export function useSocket() {
-  const { mailbox, addIncomingEmail, setExpired, setConnected } = useMailboxStore()
+  const { mailbox, addIncomingEmail, setConnected, createMailbox, showToast } = useMailboxStore()
+  const tToast = useTranslations("toast")
+  const tNotif = useTranslations("notifications")
 
   useEffect(() => {
     const socket = getSocket()
@@ -29,25 +33,21 @@ export function useSocket() {
 
     socket.on("new_email", ({ email }) => {
       addIncomingEmail(email)
-      // Play notification sound
       const audio = new Audio("/sounds/notification.mp3")
       audio.volume = 0.4
       audio.play().catch(() => {})
-      // Browser notification
-      if (Notification.permission === "granted") {
-        new Notification("TmpMail — Nuevo correo", {
-          body: `De: ${email.from}`,
-          icon: "/icons/icon-192.png",
-        })
-      }
+      sendNotification("TmpMail", `De: ${email.from}`)
     })
 
     socket.on("mailbox_expired", ({ mailboxId }) => {
-      if (mailboxId === mailbox.id) setExpired()
+      if (mailboxId !== mailbox.id) return
+      createMailbox()
+      showToast(tToast("mailboxRenewed"))
+      sendNotification("TmpMail", tNotif("renewed"))
     })
 
     socket.on("mailbox_deleted", ({ mailboxId }) => {
-      if (mailboxId === mailbox.id) setExpired()
+      if (mailboxId === mailbox.id) createMailbox()
     })
 
     return () => {
@@ -56,5 +56,5 @@ export function useSocket() {
       socket.off("mailbox_expired")
       socket.off("mailbox_deleted")
     }
-  }, [mailbox?.id, addIncomingEmail, setExpired])
+  }, [mailbox?.id, addIncomingEmail, createMailbox, showToast, tToast, tNotif])
 }

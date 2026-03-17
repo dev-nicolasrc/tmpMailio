@@ -1,4 +1,7 @@
 const createNextIntlPlugin = require("next-intl/plugin")
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
+})
 
 const withNextIntl = createNextIntlPlugin("./i18n.ts")
 
@@ -8,4 +11,4 @@ const nextConfig = {
   transpilePackages: ["@tmpmail/shared"],
 }
 
-module.exports = withNextIntl(nextConfig)
+module.exports = withBundleAnalyzer(withNextIntl(nextConfig))

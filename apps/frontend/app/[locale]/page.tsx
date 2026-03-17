@@ -7,13 +7,24 @@ import { useTranslations } from "next-intl"
 import { useMailbox } from "@/hooks/useMailbox"
 import { useSocket } from "@/hooks/useSocket"
 import { useClipboard } from "@/hooks/useClipboard"
+import dynamic from "next/dynamic"
 import { ThemeToggle } from "@/components/ui/ThemeToggle"
+import { Toast } from "@/components/ui/Toast"
 import { QRModal } from "@/components/ui/QRModal"
 import { ExpirationTimer } from "@/components/Timer/ExpirationTimer"
 import { InboxPanel } from "@/components/Inbox/InboxPanel"
-import { EmailViewer } from "@/components/EmailViewer/EmailViewer"
-import { FAQAccordion } from "@/components/FAQ/FAQAccordion"
+import { DomainDropdown } from "@/components/DomainSelector/DomainDropdown"
 import { Footer } from "@/components/Footer/Footer"
+import { useMailboxStore } from "@/store/mailboxStore"
+
+const EmailViewer = dynamic(
+  () => import("@/components/EmailViewer/EmailViewer").then((m) => ({ default: m.EmailViewer })),
+  { ssr: false }
+)
+
+const FAQAccordion = dynamic(
+  () => import("@/components/FAQ/FAQAccordion").then((m) => ({ default: m.FAQAccordion }))
+)
 
 /* Typewriter effect for the email address */
 function useTypewriter(text: string, speed = 28) {
@@ -52,9 +63,14 @@ export default function HomePage() {
 
   useSocket()
 
+  const { toastMessage } = useMailboxStore()
   const { copy, copied } = useClipboard()
   const [showQR, setShowQR] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [showDomainPicker, setShowDomainPicker] = useState(false)
+
+  const addrParts = (mailbox?.address ?? "").split("@")
+  const addrDomain = addrParts.length > 1 ? addrParts[1] : ""
 
   const displayedAddress = useTypewriter(mailbox?.address ?? "")
 
@@ -139,20 +155,54 @@ export default function HomePage() {
                 transition={{ delay: 0.2, duration: 0.4 }}
               >
                 {/* Email address box */}
-                <div className="address-box w-full max-w-lg px-5 py-4">
+                <div className="address-box w-full max-w-lg px-5 py-4" style={{ position: "relative" }}>
                   <div className="scanline" />
                   <div className="flex items-center justify-between gap-3 min-h-[28px]">
                     <span
-                      className="font-mono text-base md:text-lg break-all text-left"
+                      className="font-mono text-base md:text-lg text-left"
                       style={{ color: "var(--accent-primary)" }}
                     >
-                      {displayedAddress}
+                      {/* User part from typewriter */}
+                      {displayedAddress.includes("@")
+                        ? displayedAddress.split("@")[0]
+                        : displayedAddress}
+                      {/* @ separator */}
+                      {displayedAddress.includes("@") && "@"}
+                      {/* Clickeable domain */}
+                      {displayedAddress.includes("@") && (
+                        <span
+                          onClick={() => setShowDomainPicker(v => !v)}
+                          style={{
+                            cursor: "pointer",
+                            borderBottom: "1px solid rgba(184,255,53,0.4)",
+                            paddingBottom: "1px",
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: "3px",
+                          }}
+                        >
+                          {addrDomain}
+                          <span style={{ fontSize: "9px", opacity: 0.6 }}>▼</span>
+                        </span>
+                      )}
+                      {/* Cursor */}
                       {displayedAddress.length < (mailbox.address?.length ?? 0) ? (
-                        <span style={{ color: "var(--accent-primary)", animation: "blink-cursor 1s step-end infinite" }}>_</span>
+                        <span style={{ animation: "blink-cursor 1s step-end infinite" }}>_</span>
                       ) : (
                         <span className="cursor-blink" />
                       )}
                     </span>
+
+                    {/* Domain dropdown */}
+                    {showDomainPicker && (
+                      <DomainDropdown
+                        onSelect={(domain) => {
+                          handleNewMailbox(domain)
+                          setShowDomainPicker(false)
+                        }}
+                        onClose={() => setShowDomainPicker(false)}
+                      />
+                    )}
                     <div className="flex items-center gap-2 flex-shrink-0">
                       <button
                         onClick={() => copy(mailbox.address)}
@@ -297,6 +347,8 @@ export default function HomePage() {
         <QRModal address={mailbox.address} onClose={() => setShowQR(false)} />
       )}
 
+      {toastMessage && <Toast message={toastMessage} />}
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -304,9 +356,31 @@ export default function HomePage() {
             "@context": "https://schema.org",
             "@type": "WebApplication",
             name: "TmpMail",
+            url: "https://tmpmailio.com",
             applicationCategory: "UtilitiesApplication",
-            offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-            description: "Free temporary disposable email service",
+            operatingSystem: "Any",
+            browserRequirements: "Requires JavaScript",
+            inLanguage: ["es", "en"],
+            offers: {
+              "@type": "Offer",
+              price: "0",
+              priceCurrency: "USD",
+            },
+            description:
+              "Free temporary disposable email service. Create a throwaway address in seconds — no sign-up, no spam.",
+            author: {
+              "@type": "Organization",
+              name: "TmpMail",
+              url: "https://tmpmailio.com",
+            },
+            featureList: [
+              "Instant temporary email creation",
+              "No registration required",
+              "Real-time email delivery via WebSocket",
+              "10-minute default expiry with auto-extension",
+              "Attachment support up to 5 MB",
+              "QR code generation",
+            ],
           }),
         }}
       />

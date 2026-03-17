@@ -1,0 +1,108 @@
+<style>
+  body { background: #080808; }
+  h2 { color: #E8E4DC; margin-bottom: 6px; }
+  p.subtitle { color: #5A5A5A; margin-bottom: 32px; font-family: 'Fira Code', monospace; font-size: 13px; }
+
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 700px) { .cards { grid-template-columns: 1fr; } }
+
+  /* Mockup frame */
+  .mockup { background: #0D0D0D; border: 1px solid #1C1C1C; overflow: hidden; }
+  .mockup-header {
+    font-family: 'Fira Code', monospace; font-size: 10px; color: #3A3A3A;
+    padding: 8px 12px; border-bottom: 1px solid #1A1A1A;
+    text-transform: uppercase; letter-spacing: 2px;
+  }
+  .mockup-body { padding: 24px; min-height: 280px; display: flex; align-items: center; justify-content: center; }
+
+  /* Option A - Minimal glitch */
+  .opt-a {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; gap: 16px; width: 100%;
+  }
+  .glitch-code {
+    font-family: 'Fira Code', monospace; font-size: 64px; font-weight: 900;
+    color: #B8FF35; letter-spacing: -4px; line-height: 1;
+    text-shadow: 2px 0 #FF3333, -2px 0 rgba(184,255,53,0.5);
+    animation: glitch 4s infinite;
+  }
+  @keyframes glitch {
+    0%,90%,100% { text-shadow: 2px 0 #FF3333, -2px 0 rgba(184,255,53,0.5); }
+    91% { text-shadow: -3px 0 #FF3333, 3px 0 rgba(184,255,53,0.5); transform: translateX(2px); }
+    92% { text-shadow: 3px 0 #FF3333, -3px 0 rgba(184,255,53,0.5); transform: translateX(-2px); }
+    93% { text-shadow: 2px 0 #FF3333, -2px 0 rgba(184,255,53,0.5); transform: translateX(0); }
+  }
+  .opt-a-label {
+    font-family: 'Fira Code', monospace; font-size: 11px; color: #3A3A3A;
+    text-transform: uppercase; letter-spacing: 3px;
+  }
+  .opt-a-msg { font-family: 'Fira Code', monospace; font-size: 13px; color: #5A5A5A; }
+  .opt-a-btn {
+    font-family: 'Fira Code', monospace; font-size: 11px; color: #B8FF35;
+    border: 1px solid #B8FF35; padding: 8px 20px; background: none; cursor: pointer;
+    text-transform: uppercase; letter-spacing: 2px; margin-top: 4px;
+  }
+
+  /* Option B - Terminal style */
+  .opt-b {
+    display: flex; flex-direction: column; align-items: flex-start; width: 100%; gap: 6px;
+    font-family: 'Fira Code', monospace;
+  }
+  .term-line { font-size: 12px; }
+  .term-prompt { color: #B8FF35; }
+  .term-cmd { color: #E8E4DC; }
+  .term-output { color: #5A5A5A; }
+  .term-error { color: #FF3333; }
+  .term-404 { font-size: 42px; font-weight: 900; color: #1C1C1C; letter-spacing: -2px; margin: 8px 0 4px; }
+  .term-link { color: #B8FF35; text-decoration: none; font-size: 11px; margin-top: 8px; display: block; }
+  .term-cursor { animation: blink 1s step-end infinite; color: #B8FF35; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  /* Card labels */
+  .card-label {
+    font-family: 'Fira Code', monospace; font-size: 10px; color: #5A5A5A;
+    text-transform: uppercase; letter-spacing: 2px; margin-top: 12px;
+    padding: 0 4px;
+  }
+  .card-wrapper { cursor: pointer; }
+  .card-wrapper:hover .mockup { border-color: #B8FF35; }
+  .card-wrapper.selected .mockup { border-color: #B8FF35; box-shadow: 0 0 0 1px #B8FF35; }
+  .card-wrapper.selected .mockup-header { color: #B8FF35; }
+</style>
+
+<h2>Página 404 — ¿cuál estilo?</h2>
+<p class="subtitle">Ambas usan el mismo header/footer de la app. La diferencia es el tratamiento visual del error.</p>
+
+<div class="cards">
+  <div class="card-wrapper" data-choice="a" onclick="toggleSelect(this)">
+    <div class="mockup">
+      <div class="mockup-header">// opción A — Glitch + minimal</div>
+      <div class="mockup-body">
+        <div class="opt-a">
+          <span class="opt-a-label">// error</span>
+          <span class="glitch-code">404</span>
+          <span class="opt-a-msg">Esta página no existe.</span>
+          <button class="opt-a-btn">← Volver al inicio</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-label">404 grande con efecto glitch · botón de regreso</div>
+  </div>
+
+  <div class="card-wrapper" data-choice="b" onclick="toggleSelect(this)">
+    <div class="mockup">
+      <div class="mockup-header">// opción B — Terminal output</div>
+      <div class="mockup-body">
+        <div class="opt-b">
+          <div class="term-line"><span class="term-prompt">$</span> <span class="term-cmd">GET /ruta-inexistente</span></div>
+          <div class="term-line term-error">Error: 404 Not Found</div>
+          <div class="term-line term-output">La ruta solicitada no existe.</div>
+          <div class="term-404">404</div>
+          <div class="term-line term-output">¿Buscabas tu buzón temporal?</div>
+          <a class="term-link" href="#">→ Ir a tmpmailio.com/es<span class="term-cursor">_</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="card-label">Output de terminal · más en línea con la estética SIGNAL</div>
+  </div>
+</div>

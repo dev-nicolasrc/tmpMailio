@@ -1,0 +1,214 @@
+<style>
+  body { background: #080808; }
+  .section { margin-bottom: 48px; }
+
+  /* Address box replica */
+  .address-box {
+    background: #101010;
+    border: 1px solid #1C1C1C;
+    padding: 16px 20px;
+    max-width: 520px;
+    margin: 0 auto;
+    position: relative;
+    font-family: 'Fira Code', monospace;
+  }
+  .address-box .scanline {
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(184,255,53,0.3), transparent);
+    animation: scan 3s linear infinite;
+  }
+  @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
+
+  .address-row {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  }
+  .address-text {
+    font-size: 16px; color: #B8FF35; display: flex; align-items: baseline; gap: 0;
+    flex: 1;
+  }
+  .address-user { color: #B8FF35; }
+  .address-domain-wrapper { position: relative; display: inline-block; }
+  .address-domain {
+    color: #B8FF35;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(184,255,53,0.4);
+    padding-bottom: 1px;
+    user-select: none;
+    transition: border-color 0.15s;
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+  .address-domain:hover { border-color: #B8FF35; }
+  .address-domain .chevron {
+    font-size: 10px; opacity: 0.7; transition: transform 0.15s;
+  }
+  .address-domain.open .chevron { transform: rotate(180deg); }
+
+  /* Dropdown */
+  .domain-dropdown {
+    position: absolute; top: calc(100% + 8px); left: 0;
+    background: #101010; border: 1px solid #2A2A2A;
+    min-width: 200px; z-index: 100;
+    display: none;
+  }
+  .domain-dropdown.open { display: block; }
+  .domain-item {
+    padding: 10px 16px; font-size: 12px; cursor: pointer;
+    color: #5A5A5A; display: flex; align-items: center; gap: 8px;
+    transition: all 0.1s; font-family: 'Fira Code', monospace;
+    border-bottom: 1px solid #1A1A1A;
+  }
+  .domain-item:last-child { border-bottom: none; }
+  .domain-item:hover { background: #1A1A1A; color: #E8E4DC; }
+  .domain-item.active { color: #B8FF35; }
+  .domain-item .check { width: 12px; font-size: 10px; }
+
+  /* Right side: copy icon + badge */
+  .address-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .copy-icon { color: #5A5A5A; cursor: pointer; padding: 2px; }
+  .badge {
+    font-size: 9px; color: #5A5A5A; letter-spacing: 2px; text-transform: uppercase;
+    font-family: 'Fira Code', monospace;
+  }
+
+  /* Action buttons */
+  .btns { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 16px; }
+  .btn {
+    font-family: 'Fira Code', monospace; font-size: 12px; padding: 8px 16px;
+    border: 1px solid #2A2A2A; background: #101010; color: #5A5A5A;
+    cursor: pointer; display: flex; align-items: center; gap: 6px;
+    transition: all 0.15s;
+  }
+  .btn-accent { background: #B8FF35; color: #080808; border-color: #B8FF35; font-weight: 600; }
+
+  /* Labels */
+  .label-row {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 12px;
+  }
+  .sys-label {
+    font-family: 'Fira Code', monospace; font-size: 10px; color: #3A3A3A;
+    text-transform: uppercase; letter-spacing: 3px;
+  }
+  .tag {
+    font-family: 'Fira Code', monospace; font-size: 10px; color: #5A5A5A;
+    border: 1px solid #2A2A2A; padding: 2px 6px;
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: 24px; right: 24px;
+    background: #101010; border: 1px solid #2A2A2A; border-left: 3px solid #B8FF35;
+    padding: 12px 20px; font-family: 'Fira Code', monospace; font-size: 12px;
+    color: #E8E4DC; display: flex; align-items: center; gap: 10px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.5);
+    animation: slide-in 0.3s ease-out;
+  }
+  @keyframes slide-in { from { transform: translateX(120%); opacity:0; } to { transform: translateX(0); opacity:1; } }
+  .toast-dot { width: 6px; height: 6px; background: #B8FF35; flex-shrink: 0; }
+
+  h2 { color: #E8E4DC; margin-bottom: 6px; }
+  p.subtitle { color: #5A5A5A; margin-bottom: 28px; font-family: 'Fira Code', monospace; font-size: 13px; }
+  p.note { color: #3A3A3A; font-family: 'Fira Code', monospace; font-size: 11px; margin-top: 12px; text-align: center; }
+</style>
+
+<h2>Selector de dominio en el address-box</h2>
+<p class="subtitle">Haz clic en el dominio para ver el dropdown. Esto es un mockup interactivo.</p>
+
+<div class="section">
+  <div class="label-row">
+    <span class="sys-label">// hero · address-box</span>
+    <span class="tag">ESTADO ACTIVO</span>
+  </div>
+
+  <div class="address-box">
+    <div class="scanline"></div>
+    <div class="address-row">
+      <div class="address-text">
+        <span class="address-user">tmpx8a3k</span>
+        <span style="color:#B8FF35">@</span>
+        <div class="address-domain-wrapper">
+          <span class="address-domain" id="domainTrigger" onclick="toggleDomain()">
+            mail.tm
+            <span class="chevron" id="chevron">▼</span>
+          </span>
+          <div class="domain-dropdown" id="domainDropdown">
+            <div class="domain-item active">
+              <span class="check">✓</span>
+              mail.tm
+            </div>
+            <div class="domain-item">
+              <span class="check"></span>
+              maildrop.cc
+            </div>
+            <div class="domain-item">
+              <span class="check"></span>
+              guerrillamail.com
+            </div>
+            <div class="domain-item">
+              <span class="check"></span>
+              dispostable.com
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="address-right">
+        <span class="copy-icon">⧉</span>
+        <span class="badge">ACTIVO</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="btns">
+    <button class="btn btn-accent">⧉ Copiar</button>
+    <button class="btn">↺ Nuevo correo</button>
+    <button class="btn">⬜ Código QR</button>
+    <button class="btn" style="color:#FF3333; border-color:#2A2A2A;">✕ Borrar buzón</button>
+  </div>
+
+  <p class="note">// Al seleccionar un dominio → se genera un nuevo buzón con ese dominio automáticamente</p>
+</div>
+
+<div class="section">
+  <div class="label-row">
+    <span class="sys-label">// notificación de buzón renovado</span>
+  </div>
+  <div style="position:relative; height: 70px;">
+    <div class="toast" style="position:absolute; bottom:0; right:0;">
+      <div class="toast-dot"></div>
+      Buzón renovado automáticamente
+    </div>
+  </div>
+  <p class="note">// Toast que aparece 3s cuando el buzón expira y se auto-crea uno nuevo</p>
+</div>
+
+<script>
+  function toggleDomain() {
+    const trigger = document.getElementById('domainTrigger');
+    const dropdown = document.getElementById('domainDropdown');
+    const chevron = document.getElementById('chevron');
+    const isOpen = dropdown.classList.contains('open');
+    dropdown.classList.toggle('open');
+    trigger.classList.toggle('open');
+  }
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.address-domain-wrapper')) {
+      document.getElementById('domainDropdown').classList.remove('open');
+      document.getElementById('domainTrigger').classList.remove('open');
+    }
+  });
+
+  document.querySelectorAll('.domain-item').forEach(item => {
+    item.addEventListener('click', (e) => {
+      document.querySelectorAll('.domain-item').forEach(i => {
+        i.classList.remove('active');
+        i.querySelector('.check').textContent = '';
+      });
+      item.classList.add('active');
+      item.querySelector('.check').textContent = '✓';
+      document.querySelector('.address-user').textContent = 'tmpx8a3k';
+      document.querySelector('.address-domain').childNodes[0].textContent = item.textContent.replace('✓','').trim();
+      document.getElementById('domainDropdown').classList.remove('open');
+      document.getElementById('domainTrigger').classList.remove('open');
+    });
+  });
+</script>

@@ -1,0 +1,300 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Geist+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .page {
+    font-family: 'Space Grotesk', sans-serif;
+    background: #0A0A0F;
+    border: 1px solid rgba(108,99,255,0.25);
+    border-radius: 14px;
+    overflow: hidden;
+    color: #F0F0FF;
+    font-size: 11px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  /* NAV */
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 18px;
+    border-bottom: 1px solid rgba(108,99,255,0.15);
+    background: #0A0A0F;
+  }
+  .logo { font-weight: 700; font-size: 15px; color: #6C63FF; letter-spacing: -0.3px; }
+  .theme-btn {
+    background: #12121A; border: 1px solid rgba(108,99,255,0.2);
+    color: #8888AA; padding: 4px 10px; border-radius: 6px; font-size: 9px;
+    font-family: 'Space Grotesk', sans-serif; cursor: pointer;
+  }
+
+  /* HERO */
+  .hero {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 20px 18px 16px; gap: 10px;
+    border-bottom: 1px solid rgba(108,99,255,0.12);
+    background: linear-gradient(180deg, rgba(108,99,255,0.04) 0%, transparent 100%);
+  }
+  .hero-title {
+    font-weight: 700; font-size: 20px; color: #F0F0FF;
+    letter-spacing: -0.4px; text-align: center;
+  }
+  .email-display {
+    background: #12121A;
+    border: 1px solid rgba(108,99,255,0.4);
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-family: 'Geist Mono', monospace;
+    color: #00D4FF;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    width: 100%; max-width: 380px; text-align: center;
+    box-shadow: 0 0 18px rgba(108,99,255,0.12);
+  }
+  .action-row { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; align-items: center; }
+  .btn {
+    padding: 5px 12px; border-radius: 6px; font-size: 10px; font-weight: 600;
+    font-family: 'Space Grotesk', sans-serif; border: none; cursor: pointer;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .btn-primary { background: #6C63FF; color: white; }
+  .btn-secondary { background: #12121A; color: #6C63FF; border: 1px solid rgba(108,99,255,0.35); }
+  .btn-cyan { background: #12121A; color: #00D4FF; border: 1px solid rgba(0,212,255,0.3); }
+  .btn-danger { background: #12121A; color: #FF4466; border: 1px solid rgba(255,68,102,0.25); }
+  .timer-chip {
+    display: flex; align-items: center; gap: 5px;
+    background: rgba(108,99,255,0.07); border: 1px solid rgba(108,99,255,0.18);
+    padding: 3px 10px; border-radius: 20px; font-size: 9px; color: #8888AA;
+    font-family: 'Geist Mono', monospace;
+  }
+  .timer-dot { width: 6px; height: 6px; border-radius: 50%; background: #6C63FF; box-shadow: 0 0 5px #6C63FF; }
+
+  /* CLIENT AREA */
+  .client-area {
+    display: flex;
+    height: 280px;
+  }
+
+  /* EMAIL LIST */
+  .email-list {
+    width: 36%;
+    border-right: 1px solid rgba(108,99,255,0.12);
+    display: flex; flex-direction: column;
+    background: #0A0A0F;
+    overflow: hidden;
+  }
+  .list-header {
+    padding: 7px 12px;
+    border-bottom: 1px solid rgba(108,99,255,0.1);
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 9px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 1.5px; color: #8888AA;
+  }
+  .badge {
+    background: rgba(108,99,255,0.2); color: #6C63FF;
+    border-radius: 4px; padding: 1px 5px; font-size: 8px; font-family: 'Geist Mono', monospace;
+  }
+
+  /* spinner state */
+  .spinner-state {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    flex: 1; gap: 6px; color: rgba(136,136,170,0.4); font-size: 9px;
+  }
+  .spin {
+    width: 18px; height: 18px;
+    border: 2px solid rgba(108,99,255,0.15);
+    border-top-color: #6C63FF;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .email-row {
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(108,99,255,0.07);
+    cursor: pointer;
+  }
+  .email-row.active {
+    background: rgba(108,99,255,0.09);
+    border-left: 2px solid #6C63FF;
+    padding-left: 10px;
+  }
+  .row-top { display: flex; align-items: center; gap: 5px; margin-bottom: 2px; }
+  .unread-dot { width: 5px; height: 5px; border-radius: 50%; background: #00FF88; flex-shrink: 0; box-shadow: 0 0 4px #00FF88; }
+  .row-from { font-size: 10px; font-weight: 700; color: #F0F0FF; flex: 1; }
+  .row-from.read { font-weight: 500; color: #8888AA; }
+  .row-time { font-size: 8px; color: rgba(136,136,170,0.5); font-family: 'Geist Mono', monospace; }
+  .row-subject { font-size: 9px; color: #8888AA; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .row-preview { font-size: 8px; color: rgba(136,136,170,0.45); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1px; }
+
+  /* EMAIL VIEWER */
+  .email-viewer {
+    flex: 1;
+    display: flex; flex-direction: column;
+    background: #0D0D15;
+    overflow: hidden;
+  }
+  .viewer-header {
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(108,99,255,0.1);
+  }
+  .viewer-subject { font-size: 13px; font-weight: 700; color: #F0F0FF; margin-bottom: 4px; }
+  .viewer-meta { font-size: 9px; color: #8888AA; font-family: 'Geist Mono', monospace; }
+  .viewer-toolbar {
+    padding: 5px 14px; border-bottom: 1px solid rgba(108,99,255,0.07);
+    display: flex; gap: 5px;
+  }
+  .viewer-tab {
+    padding: 2px 8px; border-radius: 4px; font-size: 8px; font-weight: 600; cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .tab-active { background: rgba(108,99,255,0.2); color: #6C63FF; }
+  .tab-inactive { color: rgba(136,136,170,0.5); }
+  .viewer-body {
+    padding: 12px 14px;
+    font-size: 9.5px; color: #C0C0D8; line-height: 1.7;
+    flex: 1; overflow-y: auto;
+  }
+  .viewer-empty {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    flex: 1; gap: 6px; opacity: 0.25;
+  }
+  .viewer-empty-icon { font-size: 28px; }
+  .viewer-empty-text { font-size: 9px; color: #8888AA; }
+
+  /* ANNOTATIONS */
+  .annotation {
+    position: absolute;
+    background: rgba(108,99,255,0.9);
+    color: white;
+    font-size: 8px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 3px;
+    white-space: nowrap;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  /* LEGEND */
+  .legend {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 6px; padding: 14px 18px;
+    border-top: 1px solid rgba(108,99,255,0.1);
+    background: rgba(108,99,255,0.03);
+  }
+  .legend-item {
+    display: flex; align-items: flex-start; gap: 6px;
+    font-size: 9px; color: #8888AA;
+  }
+  .legend-num {
+    background: rgba(108,99,255,0.2); color: #6C63FF;
+    width: 16px; height: 16px; border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 8px; font-weight: 700; flex-shrink: 0;
+    font-family: 'Geist Mono', monospace;
+  }
+</style>
+
+<h2>Diseño final — TmpMail rediseñado</h2>
+<p class="subtitle">Layout A · Tipografía D · Sin ads · Todos los 9 puntos integrados</p>
+
+<div class="section">
+  <div class="page">
+    <!-- NAV -->
+    <div class="nav">
+      <span class="logo">TmpMail</span>
+      <span class="theme-btn">◑ Tema</span>
+    </div>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-title">Tu correo temporal, listo al instante</div>
+      <div class="email-display">xk7p3q@tmpmail.io</div>  <!-- ① -->
+      <div class="action-row">
+        <button class="btn btn-primary">⎘ Copiar correo</button>  <!-- ③ -->
+        <button class="btn btn-secondary">↺ Nuevo aleatorio</button>  <!-- ⑤ -->
+        <button class="btn btn-cyan">⊞ Código QR</button>  <!-- ④ -->
+        <button class="btn btn-danger">✕ Eliminar</button>
+      </div>
+      <div class="timer-chip"><span class="timer-dot"></span>Expira en 09:42</div>
+    </div>
+
+    <!-- CLIENT AREA: list + viewer -->
+    <div class="client-area">
+
+      <!-- EMAIL LIST: loading state (⑥) -->
+      <div class="email-list">
+        <div class="list-header">
+          <span>Bandeja</span>
+          <span class="badge">3</span>
+        </div>
+        <!-- Loaded state (⑦ real email client rows) -->
+        <div class="email-row active">
+          <div class="row-top">
+            <span class="unread-dot"></span>
+            <span class="row-from">GitHub</span>
+            <span class="row-time">09:41</span>
+          </div>
+          <div class="row-subject">Verifica tu cuenta de GitHub</div>
+          <div class="row-preview">Hola, alguien solicitó un código de verificación...</div>
+        </div>
+        <div class="email-row">
+          <div class="row-top">
+            <span class="row-from read">Notion</span>
+            <span class="row-time">09:38</span>
+          </div>
+          <div class="row-subject" style="color:#6666888">Bienvenido a tu espacio de trabajo</div>
+          <div class="row-preview">Empieza a organizar tus proyectos en Notion...</div>
+        </div>
+        <div class="email-row">
+          <div class="row-top">
+            <span class="row-from read">Vercel</span>
+            <span class="row-time">09:30</span>
+          </div>
+          <div class="row-subject" style="color:#6666888">Tu deploy fue exitoso</div>
+          <div class="row-preview">Production deployment ready at tmpmail-app.vercel.app</div>
+        </div>
+        <!-- spinner while loading new email -->
+        <div style="display:flex;align-items:center;gap:5px;padding:7px 12px;border-top:1px solid rgba(108,99,255,0.07)">
+          <div class="spin" style="width:10px;height:10px;border-width:1.5px"></div>
+          <span style="font-size:8px;color:rgba(136,136,170,0.4)">Esperando correos...</span>
+        </div>
+      </div>
+
+      <!-- EMAIL VIEWER: opens in right column (⑧) -->
+      <div class="email-viewer">
+        <div class="viewer-header">
+          <div class="viewer-subject">Verifica tu cuenta de GitHub</div>
+          <div class="viewer-meta">De: noreply@github.com &nbsp;·&nbsp; Para: xk7p3q@tmpmail.io &nbsp;·&nbsp; 09:41</div>
+        </div>
+        <div class="viewer-toolbar">
+          <span class="viewer-tab tab-active">HTML</span>
+          <span class="viewer-tab tab-inactive">Texto plano</span>
+        </div>
+        <div class="viewer-body">
+          <p>Hola,</p><br>
+          <p>Alguien solicitó un código de verificación único para la cuenta de GitHub asociada a este correo electrónico.</p><br>
+          <p>Tu código de verificación es: <strong style="color:#6C63FF;font-family:'Geist Mono',monospace;font-size:13px;letter-spacing:2px">847-293</strong></p><br>
+          <p style="color:rgba(136,136,170,0.5);font-size:8.5px">Si no solicitaste esto, ignora este mensaje. El código expirará en 15 minutos.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- LEGEND -->
+    <div class="legend">
+      <div class="legend-item"><span class="legend-num">①</span><span>Correo centrado como hero principal con Geist Mono</span></div>
+      <div class="legend-item"><span class="legend-num">②</span><span>Fuente Space Grotesk (headings) + Geist Mono (correo/código)</span></div>
+      <div class="legend-item"><span class="legend-num">③</span><span>Botón "Copiar correo" visible y prominente</span></div>
+      <div class="legend-item"><span class="legend-num">④</span><span>Botón "Código QR" en la fila de acciones</span></div>
+      <div class="legend-item"><span class="legend-num">⑤</span><span>Botón "Nuevo aleatorio" en la fila de acciones</span></div>
+      <div class="legend-item"><span class="legend-num">⑥</span><span>Spinner "Esperando correos..." siempre visible</span></div>
+      <div class="legend-item"><span class="legend-num">⑦</span><span>Bandeja estilo Gmail: remitente + asunto + preview</span></div>
+      <div class="legend-item"><span class="legend-num">⑧</span><span>Click en correo → abre en columna derecha (sin modal)</span></div>
+      <div class="legend-item"><span class="legend-num">⑨</span><span>Sin ningún espacio para publicidad</span></div>
+    </div>
+  </div>
+</div>

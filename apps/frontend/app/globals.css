@@ -96,6 +96,29 @@ body {
   to { transform: rotate(360deg); }
 }
 
+@keyframes glitch {
+  0%, 87%, 100% {
+    text-shadow: 2px 0 #FF3333, -2px 0 rgba(184,255,53,0.5);
+    transform: translateX(0);
+  }
+  88% {
+    text-shadow: -3px 0 #FF3333, 3px 0 rgba(184,255,53,0.5);
+    transform: translateX(2px);
+  }
+  89% {
+    text-shadow: 3px 0 #FF3333, -3px 0 rgba(184,255,53,0.5);
+    transform: translateX(-2px);
+  }
+  90% {
+    text-shadow: 2px 0 #FF3333, -2px 0 rgba(184,255,53,0.5);
+    transform: translateX(0);
+  }
+}
+
+.glitch {
+  animation: glitch 4s infinite;
+}
+
 /* ── Utilities ── */
 @layer utilities {
 

@@ -1,7 +1,8 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useTranslations } from "next-intl"
+import { sendNotification } from "@/lib/notifications"
 
 interface ExpirationTimerProps {
   expiresAt: Date
@@ -10,8 +11,15 @@ interface ExpirationTimerProps {
 
 export function ExpirationTimer({ expiresAt, onExpired }: ExpirationTimerProps) {
   const t = useTranslations("timer")
+  const tNotif = useTranslations("notifications")
   const totalMs = 10 * 60 * 1000
   const [remaining, setRemaining] = useState(0)
+  const warnedRef = useRef(false)
+
+  // Reset warning flag when a new mailbox is set
+  useEffect(() => {
+    warnedRef.current = false
+  }, [expiresAt])
 
   useEffect(() => {
     const tick = () => {
@@ -22,11 +30,15 @@ export function ExpirationTimer({ expiresAt, onExpired }: ExpirationTimerProps) 
         return
       }
       setRemaining(ms)
+      if (ms / 1000 <= 120 && !warnedRef.current) {
+        warnedRef.current = true
+        sendNotification("TmpMail", tNotif("expiringSoon"))
+      }
     }
     tick()
     const id = setInterval(tick, 1000)
     return () => clearInterval(id)
-  }, [expiresAt, onExpired])
+  }, [expiresAt, onExpired, tNotif])
 
   const minutes = Math.floor(remaining / 60000)
   const seconds = Math.floor((remaining % 60000) / 1000)

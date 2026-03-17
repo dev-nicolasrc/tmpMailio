@@ -1,8 +1,8 @@
 "use client"
 
-import { RefreshCw } from "lucide-react"
+import { RefreshCw, Bell, BellOff } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import type { EmailHeader } from "@tmpmail/shared"
 
 interface InboxPanelProps {
@@ -40,6 +40,19 @@ export function InboxPanel({ emails, selectedId, onSelect, onRefresh, isLoading 
   const t = useTranslations("inbox")
   const [readIds, setReadIds] = useState<Set<string>>(new Set())
   const [refreshing, setRefreshing] = useState(false)
+  const [notifPermission, setNotifPermission] = useState<NotificationPermission>("default")
+
+  useEffect(() => {
+    if (typeof window !== "undefined" && "Notification" in window) {
+      setNotifPermission(Notification.permission)
+    }
+  }, [])
+
+  const handleNotifClick = async () => {
+    if (typeof window === "undefined" || !("Notification" in window)) return
+    const result = await Notification.requestPermission()
+    setNotifPermission(result)
+  }
 
   const handleRefresh = async () => {
     setRefreshing(true)
@@ -80,15 +93,36 @@ export function InboxPanel({ emails, selectedId, onSelect, onRefresh, isLoading 
             </span>
           )}
         </div>
-        <button
-          onClick={handleRefresh}
-          disabled={refreshing}
-          className="btn-flat"
-          style={{ padding: "3px 9px" }}
-          title="Actualizar bandeja"
-        >
-          <RefreshCw size={11} className={refreshing ? "animate-spin" : ""} />
-        </button>
+        <div className="flex items-center gap-1">
+          {typeof window !== "undefined" && "Notification" in window && (
+            <button
+              onClick={handleNotifClick}
+              disabled={notifPermission === "denied"}
+              className="btn-flat"
+              style={{
+                padding: "3px 9px",
+                ...(notifPermission === "granted"
+                  ? { borderColor: "var(--accent-primary)", color: "var(--accent-primary)" }
+                  : {}),
+                ...(notifPermission === "denied"
+                  ? { opacity: 0.3, cursor: "not-allowed" }
+                  : {}),
+              }}
+              title={t("notifications")}
+            >
+              {notifPermission === "denied" ? <BellOff size={11} /> : <Bell size={11} />}
+            </button>
+          )}
+          <button
+            onClick={handleRefresh}
+            disabled={refreshing}
+            className="btn-flat"
+            style={{ padding: "3px 9px" }}
+            title="Actualizar bandeja"
+          >
+            <RefreshCw size={11} className={refreshing ? "animate-spin" : ""} />
+          </button>
+        </div>
       </div>
 
       {/* ── Email list ── */}

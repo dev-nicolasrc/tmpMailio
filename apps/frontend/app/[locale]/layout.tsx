@@ -11,12 +11,14 @@ const syne = Syne({
   subsets: ["latin"],
   variable: "--font-display",
   weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
 })
 
 const firaCode = Fira_Code({
   subsets: ["latin"],
   variable: "--font-mono",
   weight: ["300", "400", "500"],
+  display: "swap",
 })
 
 type Props = { children: React.ReactNode; params: { locale: string } }
@@ -26,8 +28,14 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
   const canonical = process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.com"
 
   return {
-    title: t("title"),
+    title: {
+      default: t("title"),
+      template: `%s | TmpMail`,
+    },
     description: t("description"),
+    keywords: locale === "es"
+      ? ["correo temporal", "email desechable", "correo desechable", "email temporal gratis", "inbox temporal", "correo fake"]
+      : ["temporary email", "disposable email", "throwaway email", "fake email", "temp mail", "free temporary inbox"],
     metadataBase: new URL(canonical),
     alternates: {
       canonical: `/${locale}`,
@@ -38,16 +46,22 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
       description: t("description"),
       url: `${canonical}/${locale}`,
       siteName: "TmpMail",
-      images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+      images: [{ url: `/${locale}/opengraph-image`, width: 1200, height: 630, alt: t("title") }],
       type: "website",
+      locale: locale === "es" ? "es_ES" : "en_US",
     },
     twitter: {
       card: "summary_large_image",
       title: t("title"),
       description: t("description"),
-      images: ["/og-image.png"],
+      images: [`/${locale}/opengraph-image`],
     },
     manifest: "/manifest.json",
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: { index: true, follow: true, "max-image-preview": "large" },
+    },
   }
 }
 

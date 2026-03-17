@@ -75,5 +75,50 @@
   "meta": {
     "title": "TmpMail — Correo Temporal Gratis",
     "description": "Crea un correo desechable en segundos. Sin registro, sin spam. Tu email temporal se autodestruye en 10 minutos."
+  },
+  "toast": {
+    "mailboxRenewed": "Buzón renovado automáticamente"
+  },
+  "notifications": {
+    "expiringSoon": "Tu buzón expira en 2 minutos",
+    "renewed": "Se ha creado una nueva dirección"
+  },
+  "notFound": {
+    "label": "// error",
+    "message": "Esta página no existe.",
+    "back": "← Volver al inicio"
+  },
+  "legal": {
+    "updated": "Última actualización: marzo 2026",
+    "privacy": {
+      "title": "Privacidad",
+      "s1Title": "Datos que NO recopilamos",
+      "s1Body": "TmpMail no almacena direcciones IP, no requiere registro y no usa cookies de rastreo ni análisis de comportamiento. No existe ningún perfil de usuario asociado a tu uso del servicio.",
+      "s2Title": "Datos que procesamos temporalmente",
+      "s2Body": "El contenido de los correos recibidos se almacena en memoria (Redis) únicamente durante el tiempo de vida del buzón, por defecto 10 minutos. Los correos se eliminan automáticamente al expirar el buzón.",
+      "s3Title": "Servicios de terceros",
+      "s3Body": "TmpMail utiliza la API de Mail.tm para recibir correos. Consulta la política de privacidad de Mail.tm para más información sobre el tratamiento de datos en su plataforma.",
+      "s4Title": "Contacto",
+      "s4Body": "Para cualquier consulta sobre privacidad, escríbenos a contacto@tmpmailio.com."
+    },
+    "terms": {
+      "title": "Términos",
+      "s1Title": "Uso aceptable",
+      "s1Body": "TmpMail es un servicio de correo temporal para uso personal y legítimo: pruebas de software, registros en sitios web, evitar spam. Está estrictamente prohibido usar este servicio para enviar o recibir contenido ilegal, realizar spam masivo o suplantar identidades.",
+      "s2Title": "Sin garantías",
+      "s2Body": "El servicio se ofrece \"tal cual\" sin garantías de disponibilidad, velocidad de entrega ni conservación de mensajes. No uses TmpMail para comunicaciones críticas, confidenciales o legalmente relevantes.",
+      "s3Title": "Limitación de responsabilidad",
+      "s3Body": "TmpMail no es responsable de pérdida de datos, correos no entregados, interrupciones del servicio ni daños de ningún tipo derivados del uso del servicio."
+    },
+    "contact": {
+      "title": "Contacto",
+      "subtitle": "Respuesta en 24–48 horas",
+      "emailLabel": "Tu email de respuesta",
+      "subjectLabel": "Asunto",
+      "messageLabel": "Mensaje",
+      "messagePlaceholder": "Describe tu consulta (mínimo 20 caracteres)...",
+      "send": "Enviar →",
+      "subjects": ["Problema técnico", "Sugerencia", "Abuso o spam", "Otro"]
+    }
   }
 }

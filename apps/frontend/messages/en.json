@@ -75,5 +75,50 @@
   "meta": {
     "title": "TmpMail — Free Temporary Email",
     "description": "Create a disposable email in seconds. No sign-up, no spam. Your temporary email self-destructs in 10 minutes."
+  },
+  "toast": {
+    "mailboxRenewed": "Mailbox automatically renewed"
+  },
+  "notifications": {
+    "expiringSoon": "Your mailbox expires in 2 minutes",
+    "renewed": "A new address has been created"
+  },
+  "notFound": {
+    "label": "// error",
+    "message": "This page does not exist.",
+    "back": "← Back to home"
+  },
+  "legal": {
+    "updated": "Last updated: March 2026",
+    "privacy": {
+      "title": "Privacy",
+      "s1Title": "Data we do NOT collect",
+      "s1Body": "TmpMail does not store IP addresses, requires no registration, and uses no tracking or analytics cookies. No user profile is created from your use of the service.",
+      "s2Title": "Data we process temporarily",
+      "s2Body": "Email content is stored in memory (Redis) only for the duration of the mailbox lifetime, 10 minutes by default. There is no permanent storage. Emails are automatically deleted when the mailbox expires.",
+      "s3Title": "Third-party services",
+      "s3Body": "TmpMail uses the Mail.tm API to receive emails. Please review Mail.tm's privacy policy for information about data handling on their platform.",
+      "s4Title": "Contact",
+      "s4Body": "For any privacy-related inquiries, contact us at contacto@tmpmailio.com."
+    },
+    "terms": {
+      "title": "Terms",
+      "s1Title": "Acceptable use",
+      "s1Body": "TmpMail is a temporary email service for personal and legitimate use: software testing, website registrations, avoiding spam. It is strictly prohibited to use this service to send or receive illegal content, perform mass spam, or impersonate others.",
+      "s2Title": "No warranties",
+      "s2Body": "The service is provided \"as is\" without warranties of availability, delivery speed, or message retention. Do not use TmpMail for critical, confidential, or legally significant communications.",
+      "s3Title": "Limitation of liability",
+      "s3Body": "TmpMail is not liable for data loss, undelivered emails, service interruptions, or any damages of any kind arising from the use of the service."
+    },
+    "contact": {
+      "title": "Contact",
+      "subtitle": "Response within 24–48 hours",
+      "emailLabel": "Your reply email",
+      "subjectLabel": "Subject",
+      "messageLabel": "Message",
+      "messagePlaceholder": "Describe your inquiry (minimum 20 characters)...",
+      "send": "Send →",
+      "subjects": ["Technical issue", "Suggestion", "Abuse or spam", "Other"]
+    }
   }
 }

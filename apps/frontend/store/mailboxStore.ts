@@ -11,6 +11,7 @@ interface MailboxStore {
   selectedEmail: Email | null
   isConnected: boolean
   isLoading: boolean
+  toastMessage: string | null
 
   createMailbox: (domain?: string) => Promise<void>
   deleteMailbox: () => Promise<void>
@@ -20,6 +21,8 @@ interface MailboxStore {
   setExpired: () => void
   setConnected: (connected: boolean) => void
   loadEmails: () => Promise<void>
+  showToast: (message: string) => void
+  clearToast: () => void
 }
 
 export const useMailboxStore = create<MailboxStore>((set, get) => ({
@@ -28,6 +31,7 @@ export const useMailboxStore = create<MailboxStore>((set, get) => ({
   selectedEmail: null,
   isConnected: false,
   isLoading: false,
+  toastMessage: null,
 
   createMailbox: async (domain?: string) => {
     set({ isLoading: true })
@@ -76,6 +80,13 @@ export const useMailboxStore = create<MailboxStore>((set, get) => ({
   },
 
   setConnected: (connected: boolean) => set({ isConnected: connected }),
+
+  showToast: (message: string) => {
+    set({ toastMessage: message })
+    setTimeout(() => set({ toastMessage: null }), 3000)
+  },
+
+  clearToast: () => set({ toastMessage: null }),
 
   loadEmails: async () => {
     const { mailbox } = get()

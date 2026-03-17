@@ -1,0 +1,264 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Geist+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  .demo {
+    font-family: 'Space Grotesk', sans-serif;
+    background: #0A0A0F;
+    border: 1px solid rgba(108,99,255,0.2);
+    border-radius: 12px;
+    overflow: hidden;
+    font-size: 11px;
+    color: #F0F0FF;
+  }
+  /* NAV */
+  .demo-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 14px;
+    border-bottom: 1px solid rgba(108,99,255,0.15);
+    background: #0A0A0F;
+  }
+  .demo-logo { font-weight: 700; font-size: 13px; color: #6C63FF; font-family: 'Space Grotesk', sans-serif; }
+  .demo-nav-btn { background: #12121A; border: 1px solid rgba(108,99,255,0.2); color: #8888AA; padding: 3px 8px; border-radius: 5px; font-size: 9px; }
+
+  /* HERO */
+  .demo-hero {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 18px 14px 14px;
+    gap: 10px;
+    border-bottom: 1px solid rgba(108,99,255,0.1);
+  }
+  .demo-title { font-weight: 700; font-size: 16px; color: #F0F0FF; text-align: center; letter-spacing: -0.3px; }
+  .demo-subtitle { font-size: 9px; color: #8888AA; text-align: center; }
+  .demo-email-box {
+    background: #12121A;
+    border: 1px solid rgba(108,99,255,0.35);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-family: 'Geist Mono', monospace;
+    color: #00D4FF;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+    width: 100%;
+    max-width: 340px;
+    letter-spacing: 0.5px;
+  }
+  .demo-actions { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+  .demo-btn {
+    padding: 4px 10px; border-radius: 5px; font-size: 9px; font-weight: 600;
+    font-family: 'Space Grotesk', sans-serif; border: none; cursor: pointer; display: flex; align-items: center; gap: 3px;
+  }
+  .btn-copy { background: #6C63FF; color: white; }
+  .btn-new { background: #12121A; color: #6C63FF; border: 1px solid rgba(108,99,255,0.4); }
+  .btn-qr { background: #12121A; color: #00D4FF; border: 1px solid rgba(0,212,255,0.3); }
+  .btn-del { background: #12121A; color: #FF4466; border: 1px solid rgba(255,68,102,0.3); }
+  .timer-chip {
+    display: flex; align-items: center; gap: 4px;
+    background: rgba(108,99,255,0.08); border: 1px solid rgba(108,99,255,0.2);
+    padding: 2px 8px; border-radius: 20px; font-size: 9px; color: #8888AA;
+  }
+  .timer-dot { width: 5px; height: 5px; border-radius: 50%; background: #6C63FF; }
+
+  /* INBOX AREA */
+  .demo-inbox-area { display: flex; min-height: 130px; }
+  .demo-list {
+    width: 38%; border-right: 1px solid rgba(108,99,255,0.12);
+    display: flex; flex-direction: column;
+  }
+  .demo-list-header {
+    padding: 6px 10px; border-bottom: 1px solid rgba(108,99,255,0.1);
+    font-size: 9px; font-weight: 600; color: #8888AA; text-transform: uppercase; letter-spacing: 1px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .demo-email-row {
+    padding: 7px 10px; border-bottom: 1px solid rgba(108,99,255,0.08);
+    cursor: pointer; transition: background 0.15s;
+  }
+  .demo-email-row.active { background: rgba(108,99,255,0.1); border-left: 2px solid #6C63FF; }
+  .demo-email-row.unread .row-from { font-weight: 700; color: #F0F0FF; }
+  .row-from { font-size: 10px; font-weight: 500; color: #F0F0FF; }
+  .row-subject { font-size: 9px; color: #8888AA; margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .row-time { font-size: 8px; color: rgba(136,136,170,0.5); font-family: 'Geist Mono', monospace; }
+  .row-top { display: flex; justify-content: space-between; align-items: center; }
+  .unread-dot { width: 5px; height: 5px; border-radius: 50%; background: #00FF88; flex-shrink: 0; }
+  .spinner-area { display: flex; align-items: center; justify-content: center; padding: 20px; flex: 1; gap: 6px; color: #8888AA; font-size: 9px; }
+  .spin { width: 14px; height: 14px; border: 2px solid rgba(108,99,255,0.2); border-top-color: #6C63FF; border-radius: 50%; animation: spin 0.8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* EMAIL VIEWER */
+  .demo-viewer {
+    flex: 1; display: flex; flex-direction: column;
+    background: #0D0D15;
+  }
+  .demo-viewer-header {
+    padding: 7px 12px; border-bottom: 1px solid rgba(108,99,255,0.1);
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .viewer-subject { font-size: 11px; font-weight: 700; color: #F0F0FF; }
+  .viewer-meta { font-size: 9px; color: #8888AA; font-family: 'Geist Mono', monospace; }
+  .viewer-body { padding: 10px 12px; font-size: 9px; color: #8888AA; line-height: 1.6; flex: 1; }
+  .viewer-empty { display: flex; align-items: center; justify-content: center; flex: 1; flex-direction: column; gap: 4px; padding: 20px; }
+  .viewer-empty-icon { font-size: 22px; opacity: 0.2; }
+  .viewer-empty-text { font-size: 9px; color: rgba(136,136,170,0.4); }
+</style>
+
+<h2>Elige el layout de la página</h2>
+<p class="subtitle">Cómo se organizan el hero, la bandeja y el visor de correos</p>
+
+<div class="cards">
+
+  <!-- LAYOUT A: Hero compacto arriba + split view abajo -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="demo">
+        <!-- Nav -->
+        <div class="demo-nav">
+          <span class="demo-logo">TmpMail</span>
+          <span class="demo-nav-btn">☀ Tema</span>
+        </div>
+        <!-- Hero centrado compacto -->
+        <div class="demo-hero">
+          <div class="demo-title">Tu correo temporal, listo</div>
+          <div class="demo-email-box">xk7p3q@tmpmail.io</div>
+          <div class="demo-actions">
+            <button class="demo-btn btn-copy">⎘ Copiar</button>
+            <button class="demo-btn btn-new">↺ Nuevo</button>
+            <button class="demo-btn btn-qr">⊞ QR</button>
+            <button class="demo-btn btn-del">✕ Eliminar</button>
+          </div>
+          <div class="timer-chip"><span class="timer-dot"></span>Expira en 09:42</div>
+        </div>
+        <!-- Split view: lista + visor -->
+        <div class="demo-inbox-area">
+          <div class="demo-list">
+            <div class="demo-list-header"><span>Bandeja</span><span style="color:#6C63FF">3</span></div>
+            <div class="demo-email-row unread active">
+              <div class="row-top"><span class="row-from">GitHub</span><span class="row-time">09:41</span></div>
+              <div class="row-subject">Verifica tu cuenta de GitHub</div>
+            </div>
+            <div class="demo-email-row">
+              <div class="row-top"><span class="row-from">Notion</span><span class="row-time">09:38</span></div>
+              <div class="row-subject">Bienvenido a tu espacio</div>
+            </div>
+            <div class="demo-email-row">
+              <div class="row-top"><span class="row-from">Vercel</span><span class="row-time">09:30</span></div>
+              <div class="row-subject">Tu deploy fue exitoso</div>
+            </div>
+          </div>
+          <div class="demo-viewer">
+            <div class="demo-viewer-header">
+              <div class="viewer-subject">Verifica tu cuenta de GitHub</div>
+              <div class="viewer-meta">De: noreply@github.com · 09:41</div>
+            </div>
+            <div class="viewer-body">
+              Hola,<br><br>
+              Alguien solicitó un código de verificación para tu cuenta asociada a este correo electrónico...
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Hero compacto + split view <span style="background:rgba(108,99,255,0.15);color:#6C63FF;font-size:10px;padding:1px 6px;border-radius:3px;margin-left:4px">Recomendado</span></h3>
+      <p>El correo ocupa el centro de atención arriba. Debajo, lista + visor lado a lado como Gmail/Outlook. Máxima eficiencia.</p>
+    </div>
+  </div>
+
+  <!-- LAYOUT B: Hero grande centrado + inbox debajo scrolleable -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="demo">
+        <div class="demo-nav">
+          <span class="demo-logo">TmpMail</span>
+          <span class="demo-nav-btn">☀ Tema</span>
+        </div>
+        <!-- Hero grande -->
+        <div class="demo-hero" style="padding: 22px 14px 16px; gap: 12px;">
+          <div class="demo-title" style="font-size:19px">Correo Temporal Gratuito</div>
+          <div style="font-size:9px;color:#8888AA;max-width:280px;text-align:center">Genera un correo desechable al instante. Sin registro.</div>
+          <div class="demo-email-box" style="font-size:15px">xk7p3q@tmpmail.io</div>
+          <div class="demo-actions">
+            <button class="demo-btn btn-copy" style="padding:5px 14px;font-size:10px">⎘ Copiar correo</button>
+            <button class="demo-btn btn-new" style="padding:5px 14px;font-size:10px">↺ Nuevo</button>
+            <button class="demo-btn btn-qr" style="padding:5px 14px;font-size:10px">⊞ QR</button>
+          </div>
+          <div class="timer-chip"><span class="timer-dot"></span>Expira en 09:42 · <span style="color:#FF4466">Eliminar</span></div>
+        </div>
+        <!-- Inbox lista vertical scrolleable -->
+        <div style="border-top: 1px solid rgba(108,99,255,0.1);">
+          <div class="demo-list-header" style="padding: 6px 14px;">Bandeja de entrada <span style="color:#6C63FF;margin-left:4px">3 mensajes</span></div>
+          <div class="demo-email-row unread" style="padding: 8px 14px;">
+            <div class="row-top"><span class="row-from">GitHub · noreply@github.com</span><span class="row-time">09:41</span></div>
+            <div class="row-subject">Verifica tu cuenta de GitHub — Hola, alguien solicitó...</div>
+          </div>
+          <div class="demo-email-row" style="padding: 8px 14px;">
+            <div class="row-top"><span class="row-from">Notion · team@notion.so</span><span class="row-time">09:38</span></div>
+            <div class="row-subject">Bienvenido a tu espacio de trabajo en Notion</div>
+          </div>
+          <div style="padding: 8px 14px; font-size:8px; color: rgba(136,136,170,0.3); text-align:center">→ Click en un correo para abrirlo en modal</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Hero grande + lista vertical + modal</h3>
+      <p>Landing más impactante arriba. Los correos se abren en modal al hacer click. Más parecido a temp-mail.io de referencia.</p>
+    </div>
+  </div>
+
+  <!-- LAYOUT C: Full email client (nav lateral + split) -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="demo" style="display:flex;flex-direction:column">
+        <div class="demo-nav">
+          <span class="demo-logo">TmpMail</span>
+          <div style="display:flex;gap:6px;align-items:center">
+            <div class="demo-email-box" style="padding:3px 10px;font-size:10px;max-width:none;width:auto">xk7p3q@tmpmail.io</div>
+            <button class="demo-btn btn-copy" style="font-size:8px">⎘</button>
+            <button class="demo-btn btn-new" style="font-size:8px">↺</button>
+            <button class="demo-btn btn-qr" style="font-size:8px">⊞</button>
+          </div>
+          <span class="demo-nav-btn">☀</span>
+        </div>
+        <!-- Tres columnas: lista + visor -->
+        <div style="display:flex;flex:1;min-height:190px">
+          <div class="demo-list" style="width:35%">
+            <div class="demo-list-header"><span>Bandeja</span><div class="spin"></div></div>
+            <div class="demo-email-row unread active">
+              <div class="row-top"><span class="unread-dot"></span><span class="row-from" style="flex:1;margin:0 4px">GitHub</span><span class="row-time">09:41</span></div>
+              <div class="row-subject" style="padding-left:9px">Verifica tu cuenta</div>
+            </div>
+            <div class="demo-email-row">
+              <div class="row-top"><span class="row-from">Notion</span><span class="row-time">09:38</span></div>
+              <div class="row-subject">Bienvenido a tu espacio</div>
+            </div>
+            <div class="demo-email-row">
+              <div class="row-top"><span class="row-from">Vercel</span><span class="row-time">09:30</span></div>
+              <div class="row-subject">Deploy exitoso 🚀</div>
+            </div>
+          </div>
+          <div class="demo-viewer">
+            <div class="demo-viewer-header">
+              <div class="viewer-subject">Verifica tu cuenta de GitHub</div>
+              <div class="viewer-meta">De: noreply@github.com · 09:41</div>
+            </div>
+            <div class="viewer-body">
+              Hola,<br><br>
+              Alguien solicitó un código de verificación para tu cuenta...
+            </div>
+          </div>
+        </div>
+        <div style="padding:5px 10px;border-top:1px solid rgba(108,99,255,0.1);display:flex;gap:6px;align-items:center;justify-content:center">
+          <div class="timer-chip"><span class="timer-dot"></span>09:42</div>
+          <button class="demo-btn btn-del" style="font-size:8px">✕ Eliminar buzón</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Full cliente de correo (email en nav)</h3>
+      <p>El correo va en la barra de navegación. Todo el cuerpo es el cliente de correo. Máximo espacio para leer emails. Más minimalista.</p>
+    </div>
+  </div>
+
+</div>

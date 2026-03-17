@@ -1,0 +1,177 @@
+<style>
+  body { background: #080808; }
+  h2 { color: #E8E4DC; margin-bottom: 6px; }
+  p.subtitle { color: #5A5A5A; margin-bottom: 32px; font-family: 'Fira Code', monospace; font-size: 13px; }
+
+  .mockup { background: #0D0D0D; border: 1px solid #1C1C1C; overflow: hidden; max-width: 700px; margin: 0 auto; }
+  .mockup-header {
+    font-family: 'Fira Code', monospace; font-size: 10px; color: #3A3A3A;
+    padding: 8px 14px; border-bottom: 1px solid #1A1A1A;
+    text-transform: uppercase; letter-spacing: 2px; display: flex; justify-content: space-between;
+  }
+  .mockup-body { padding: 28px 32px; }
+
+  /* Simulated nav */
+  .sim-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 0; border-bottom: 1px solid #1C1C1C; margin-bottom: 28px;
+  }
+  .sim-logo { font-family: 'Fira Code', monospace; font-size: 14px; font-weight: 900; }
+  .sim-logo span:first-child { color: #B8FF35; }
+  .sim-logo span:last-child { color: #E8E4DC; }
+  .sim-nav-right { font-family: 'Fira Code', monospace; font-size: 10px; color: #3A3A3A; }
+
+  /* Legal content area */
+  .legal-header { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #1C1C1C; }
+  .legal-sys-label {
+    font-family: 'Fira Code', monospace; font-size: 10px; color: #3A3A3A;
+    text-transform: uppercase; letter-spacing: 3px; margin-bottom: 8px;
+    display: block;
+  }
+  .legal-title {
+    font-family: 'Fira Code', monospace; font-size: 22px; font-weight: 700; color: #E8E4DC;
+    letter-spacing: -1px;
+  }
+  .legal-date { font-family: 'Fira Code', monospace; font-size: 11px; color: #3A3A3A; margin-top: 4px; }
+
+  .legal-section { margin-bottom: 20px; }
+  .legal-section-title {
+    font-family: 'Fira Code', monospace; font-size: 12px; color: #B8FF35;
+    text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .legal-section-title::before { content: '//'; color: #2A2A2A; }
+  .legal-text { font-family: 'Fira Code', monospace; font-size: 12px; color: #5A5A5A; line-height: 1.7; }
+  .legal-text strong { color: #E8E4DC; }
+
+  /* Contact form variant */
+  .contact-field { margin-bottom: 12px; }
+  .contact-label { font-family: 'Fira Code', monospace; font-size: 10px; color: #3A3A3A; letter-spacing: 2px; text-transform: uppercase; display: block; margin-bottom: 6px; }
+  .contact-input {
+    width: 100%; background: #0A0A0A; border: 1px solid #1C1C1C; color: #E8E4DC;
+    font-family: 'Fira Code', monospace; font-size: 12px; padding: 10px 14px;
+    box-sizing: border-box;
+  }
+  .contact-input:focus { outline: none; border-color: #B8FF35; }
+  .contact-textarea { min-height: 80px; resize: vertical; }
+  .contact-btn {
+    font-family: 'Fira Code', monospace; font-size: 11px; color: #080808;
+    background: #B8FF35; border: none; padding: 10px 24px; cursor: pointer;
+    text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin-top: 4px;
+  }
+
+  /* Tabs */
+  .page-tabs { display: flex; gap: 0; margin-bottom: 32px; border-bottom: 1px solid #1C1C1C; }
+  .page-tab {
+    font-family: 'Fira Code', monospace; font-size: 11px; padding: 8px 20px;
+    cursor: pointer; color: #3A3A3A; text-transform: uppercase; letter-spacing: 2px;
+    border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all 0.15s;
+  }
+  .page-tab.active { color: #B8FF35; border-bottom-color: #B8FF35; }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .sim-footer { font-family: 'Fira Code', monospace; font-size: 10px; color: #2A2A2A; text-align: center; padding-top: 20px; border-top: 1px solid #1C1C1C; margin-top: 20px; }
+</style>
+
+<h2>Páginas legales — layout</h2>
+<p class="subtitle">Las tres páginas comparten el mismo layout. Usa las pestañas para ver cada variante.</p>
+
+<div class="mockup">
+  <div class="mockup-header">
+    <span>// tmpmailio.com</span>
+    <span id="currentPath">/es/privacy</span>
+  </div>
+  <div class="mockup-body">
+
+    <!-- Nav -->
+    <div class="sim-nav">
+      <div class="sim-logo"><span>TMP</span><span>MAIL</span></div>
+      <div class="sim-nav-right">DARK ◐</div>
+    </div>
+
+    <!-- Page tabs (selector, not part of the real app) -->
+    <div class="page-tabs">
+      <div class="page-tab active" onclick="showTab('privacy', '/es/privacy', this)">Privacidad</div>
+      <div class="page-tab" onclick="showTab('terms', '/es/terms', this)">Términos</div>
+      <div class="page-tab" onclick="showTab('contact', '/es/contact', this)">Contacto</div>
+    </div>
+
+    <!-- Privacy -->
+    <div class="tab-content active" id="tab-privacy">
+      <div class="legal-header">
+        <span class="legal-sys-label">// política de privacidad</span>
+        <div class="legal-title">Privacidad</div>
+        <div class="legal-date">Última actualización: marzo 2026</div>
+      </div>
+      <div class="legal-section">
+        <div class="legal-section-title">Datos que NO recopilamos</div>
+        <div class="legal-text">TmpMail <strong>no almacena direcciones IP</strong>, no requiere registro, no usa cookies de rastreo. Los correos se eliminan automáticamente al expirar el buzón.</div>
+      </div>
+      <div class="legal-section">
+        <div class="legal-section-title">Datos que sí procesamos</div>
+        <div class="legal-text">El contenido de los correos recibidos se almacena temporalmente en memoria (Redis) por <strong>10 minutos</strong>. No hay persistencia permanente.</div>
+      </div>
+      <div class="legal-section">
+        <div class="legal-section-title">Servicios de terceros</div>
+        <div class="legal-text">Usamos la API de <strong>Mail.tm</strong> para recibir correos. Consulta su política de privacidad para más detalles.</div>
+      </div>
+    </div>
+
+    <!-- Terms -->
+    <div class="tab-content" id="tab-terms">
+      <div class="legal-header">
+        <span class="legal-sys-label">// términos de uso</span>
+        <div class="legal-title">Términos</div>
+        <div class="legal-date">Última actualización: marzo 2026</div>
+      </div>
+      <div class="legal-section">
+        <div class="legal-section-title">Uso aceptable</div>
+        <div class="legal-text">TmpMail es un servicio de correo temporal para <strong>uso personal y legítimo</strong>: pruebas, registros en sitios web, evitar spam. Está prohibido usarlo para actividades ilegales o spam masivo.</div>
+      </div>
+      <div class="legal-section">
+        <div class="legal-section-title">Sin garantías</div>
+        <div class="legal-text">El servicio se ofrece <strong>"tal cual"</strong>, sin garantías de disponibilidad o entrega. No uses este servicio para comunicaciones críticas o confidenciales.</div>
+      </div>
+      <div class="legal-section">
+        <div class="legal-section-title">Limitación de responsabilidad</div>
+        <div class="legal-text">TmpMail no es responsable de pérdida de datos, correos no entregados, ni daños derivados del uso del servicio.</div>
+      </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="tab-content" id="tab-contact">
+      <div class="legal-header">
+        <span class="legal-sys-label">// contacto</span>
+        <div class="legal-title">Contacto</div>
+        <div class="legal-date">Respuesta en 24–48h</div>
+      </div>
+      <div class="contact-field">
+        <label class="contact-label">Email de respuesta</label>
+        <input class="contact-input" type="email" placeholder="tu@email.com">
+      </div>
+      <div class="contact-field">
+        <label class="contact-label">Asunto</label>
+        <input class="contact-input" type="text" placeholder="Problema / Sugerencia / Otro">
+      </div>
+      <div class="contact-field">
+        <label class="contact-label">Mensaje</label>
+        <textarea class="contact-input contact-textarea" placeholder="Describe tu consulta..."></textarea>
+      </div>
+      <button class="contact-btn">Enviar →</button>
+    </div>
+
+    <div class="sim-footer">TmpMail · tmpmailio.com · Correo temporal gratuito</div>
+  </div>
+</div>
+
+<script>
+function showTab(name, path, el) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.page-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  el.classList.add('active');
+  document.getElementById('currentPath').textContent = path;
+}
+</script>

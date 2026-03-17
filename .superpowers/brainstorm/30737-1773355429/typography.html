@@ -1,0 +1,151 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&family=Space+Mono:wght@400;700&family=Geist+Mono:wght@400;500;700&family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+  .font-preview {
+    background: #0A0A0F;
+    border: 1px solid rgba(108,99,255,0.25);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 8px;
+  }
+  .font-preview .label-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: rgba(108,99,255,0.7);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .font-preview .heading {
+    font-size: 26px;
+    font-weight: 700;
+    color: #F0F0FF;
+    margin-bottom: 4px;
+    line-height: 1.2;
+  }
+  .font-preview .email {
+    font-size: 18px;
+    font-weight: 500;
+    color: #00D4FF;
+    margin-bottom: 8px;
+  }
+  .font-preview .body-text {
+    font-size: 13px;
+    color: #8888AA;
+  }
+  .font-preview .btn-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .font-preview .btn {
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+  }
+  .font-preview .btn-purple { background: #6C63FF; color: white; }
+  .font-preview .btn-outline { background: transparent; color: #6C63FF; border: 1px solid #6C63FF; }
+  .font-preview .tag {
+    display: inline-block;
+    font-size: 10px;
+    background: rgba(108,99,255,0.15);
+    color: #6C63FF;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+</style>
+
+<h2>Elige la tipografía "tech"</h2>
+<p class="subtitle">Evalúa cómo se verían los titulares, el correo temporal y los botones de acción</p>
+
+<div class="cards">
+
+  <!-- OPCIÓN A: Oxanium -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="font-preview">
+        <span class="label-tag">Opción A — Oxanium + JetBrains Mono</span>
+        <div class="heading" style="font-family:'Oxanium',sans-serif">Correo Temporal<span class="tag">Recomendada</span></div>
+        <div class="email" style="font-family:'JetBrains Mono',monospace">xk7p3@tmpmail.io</div>
+        <div class="body-text" style="font-family:'Oxanium',sans-serif">Bandeja de entrada · 0 mensajes nuevos</div>
+        <div class="btn-row">
+          <button class="btn btn-purple" style="font-family:'Oxanium',sans-serif">Copiar</button>
+          <button class="btn btn-outline" style="font-family:'Oxanium',sans-serif">Nuevo correo</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Oxanium + JetBrains Mono</h3>
+      <p>Futurista/gaming, bordes limpios. Excelente para tech. El email en mono refuerza que es una dirección técnica.</p>
+    </div>
+  </div>
+
+  <!-- OPCIÓN B: Orbitron -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="font-preview">
+        <span class="label-tag">Opción B — Orbitron + IBM Plex Mono</span>
+        <div class="heading" style="font-family:'Orbitron',sans-serif;font-size:20px;letter-spacing:2px">Correo Temporal</div>
+        <div class="email" style="font-family:'IBM Plex Mono',monospace">xk7p3@tmpmail.io</div>
+        <div class="body-text" style="font-family:'IBM Plex Mono',monospace">Bandeja de entrada · 0 mensajes nuevos</div>
+        <div class="btn-row">
+          <button class="btn btn-purple" style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:1px">Copiar</button>
+          <button class="btn btn-outline" style="font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:1px">Nuevo</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Orbitron + IBM Plex Mono</h3>
+      <p>Muy sci-fi, estilo NASA/cyberpunk. Impacto visual máximo. Puede resultar difícil de leer en textos largos.</p>
+    </div>
+  </div>
+
+  <!-- OPCIÓN C: Rajdhani -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="font-preview">
+        <span class="label-tag">Opción C — Rajdhani + Space Mono</span>
+        <div class="heading" style="font-family:'Rajdhani',sans-serif;font-size:28px;letter-spacing:3px;font-weight:700">CORREO TEMPORAL</div>
+        <div class="email" style="font-family:'Space Mono',monospace;font-size:16px">xk7p3@tmpmail.io</div>
+        <div class="body-text" style="font-family:'Rajdhani',sans-serif;letter-spacing:1px">BANDEJA DE ENTRADA · 0 mensajes</div>
+        <div class="btn-row">
+          <button class="btn btn-purple" style="font-family:'Rajdhani',sans-serif;letter-spacing:2px;font-size:11px">COPIAR</button>
+          <button class="btn btn-outline" style="font-family:'Rajdhani',sans-serif;letter-spacing:2px;font-size:11px">NUEVO</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Rajdhani + Space Mono</h3>
+      <p>Tech militar/industrial. Geometric condensed con tracking alto. Estilo HUD/terminal muy marcado.</p>
+    </div>
+  </div>
+
+  <!-- OPCIÓN D: Geist Mono -->
+  <div class="card" data-choice="d" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="font-preview">
+        <span class="label-tag">Opción D — Space Grotesk Bold + Geist Mono (refinado)</span>
+        <div class="heading" style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.5px">Correo Temporal</div>
+        <div class="email" style="font-family:'Geist Mono',monospace;letter-spacing:1px">xk7p3@tmpmail.io</div>
+        <div class="body-text" style="font-family:'Space Grotesk',sans-serif">Bandeja de entrada · 0 mensajes nuevos</div>
+        <div class="btn-row">
+          <button class="btn btn-purple" style="font-family:'Space Grotesk',sans-serif;font-weight:600">Copiar</button>
+          <button class="btn btn-outline" style="font-family:'Space Grotesk',sans-serif;font-weight:600">Nuevo correo</button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Space Grotesk + Geist Mono</h3>
+      <p>Evolución del actual. Más "developer tool" que futurista. Legibilidad máxima, look similar a Vercel/Linear.</p>
+    </div>
+  </div>
+
+</div>
