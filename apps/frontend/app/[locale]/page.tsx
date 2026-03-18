@@ -279,9 +279,9 @@ export default function HomePage() {
 
               </div>
             ) : (
-              /* Skeleton */
+              /* Skeleton — height matches address-box: py-4 (16px) + min-h-[28px] + py-4 (16px) = 60px */
               <div
-                className="w-full max-w-lg h-16 animate-pulse"
+                className="w-full max-w-lg h-[60px] animate-pulse"
                 style={{ background: "var(--bg-secondary)", border: "1px solid var(--border)" }}
               />
             )}

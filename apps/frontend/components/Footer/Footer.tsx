@@ -35,10 +35,10 @@ export function Footer() {
 
         <nav className="flex items-center gap-1 flex-wrap justify-center">
           {[
-            { href: "/privacy", label: t("privacy") },
-            { href: "/terms", label: t("terms") },
-            { href: "/contact", label: t("contact") },
-            { href: "/about", label: t("about") },
+            { href: `/${locale}/privacy`, label: t("privacy") },
+            { href: `/${locale}/terms`, label: t("terms") },
+            { href: `/${locale}/contact`, label: t("contact") },
+            { href: `/${locale}/about`, label: t("about") },
           ].map(link => (
             <Link
               key={link.href}
