@@ -5,7 +5,17 @@ type Props = { params: { locale: string } }
 
 export async function generateMetadata({ params: { locale } }: Props): Promise<Metadata> {
   const t = await getTranslations({ locale, namespace: "legal.terms" })
-  return { title: t("title") }
+  return {
+    title: t("title"),
+    alternates: {
+      canonical: `https://tmpmailio.com/${locale}/terms`,
+      languages: {
+        es: "https://tmpmailio.com/es/terms",
+        en: "https://tmpmailio.com/en/terms",
+        "x-default": "https://tmpmailio.com/en/terms",
+      },
+    },
+  }
 }
 
 export default async function TermsPage({ params: { locale } }: Props) {

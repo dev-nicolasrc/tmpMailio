@@ -11,7 +11,7 @@
   --accent-secondary: #B8FF35;
   --accent-dim:     rgba(184, 255, 53, 0.08);
   --text-primary:   #E8E4DC;
-  --text-secondary: #5A5A5A;
+  --text-secondary: #828282;
   --success:        #B8FF35;
   --danger:         #FF3333;
   --border:         #1C1C1C;
@@ -50,7 +50,7 @@ body {
   font-family: var(--font-mono), "Fira Code", monospace;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.6;
 }
 
@@ -85,6 +85,19 @@ body {
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes heroFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-h1 {
+  animation: heroFadeIn 0.4s ease 0.1s both;
+}
+
+.animate-mailbox-in {
+  animation: heroFadeIn 0.4s ease both;
 }
 
 @keyframes slideRight {
@@ -192,13 +205,16 @@ body {
   .btn-flat {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 6px;
     padding: 6px 14px;
+    min-height: 48px;
+    min-width: 48px;
     border: 1px solid var(--border-mid);
     border-radius: 0;
     color: var(--text-secondary);
     font-family: var(--font-mono), monospace;
-    font-size: 11px;
+    font-size: 0.875rem;
     letter-spacing: 0.02em;
     cursor: pointer;
     transition: all 0.15s ease;

@@ -39,14 +39,14 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
     metadataBase: new URL(canonical),
     alternates: {
       canonical: `/${locale}`,
-      languages: { es: "/es", en: "/en" },
+      languages: { es: "/es", en: "/en", "x-default": "/en" },
     },
     openGraph: {
       title: t("title"),
       description: t("description"),
       url: `${canonical}/${locale}`,
       siteName: "TmpMail",
-      images: [{ url: `/${locale}/opengraph-image`, width: 1200, height: 630, alt: t("title") }],
+      images: [{ url: `${canonical}/${locale}/opengraph-image`, width: 1200, height: 630, alt: t("title") }],
       type: "website",
       locale: locale === "es" ? "es_ES" : "en_US",
     },
@@ -54,9 +54,16 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
       card: "summary_large_image",
       title: t("title"),
       description: t("description"),
-      images: [`/${locale}/opengraph-image`],
+      images: [`${canonical}/${locale}/opengraph-image`],
     },
     manifest: "/manifest.json",
+    icons: {
+      icon: [{ url: "/favicon.ico", sizes: "32x32", type: "image/x-icon" }],
+      apple: "/apple-touch-icon.png",
+    },
+    other: {
+      "theme-color": "#0a0a0a",
+    },
     robots: {
       index: true,
       follow: true,
@@ -64,6 +71,8 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
     },
   }
 }
+
+export const revalidate = 3600 // revalidar cada hora
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }))
@@ -81,7 +90,42 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
       suppressHydrationWarning
       className={`${syne.variable} ${firaCode.variable}`}
     >
+      <head>
+        <link rel="preconnect" href={process.env.NEXT_PUBLIC_SOCKET_URL ?? "https://api.tmpmailio.com"} />
+        <link rel="dns-prefetch" href={process.env.NEXT_PUBLIC_SOCKET_URL ?? "https://api.tmpmailio.com"} />
+      </head>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "TmpMailio",
+              url: "https://tmpmailio.com",
+              contactPoint: {
+                "@type": "ContactPoint",
+                url: "https://tmpmailio.com/contact",
+                contactType: "customer support",
+                availableLanguage: ["Spanish", "English"],
+              },
+              privacyPolicy: "https://tmpmailio.com/privacy",
+              termsOfService: "https://tmpmailio.com/terms",
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "TmpMailio",
+              url: "https://tmpmailio.com",
+              inLanguage: locale,
+            }),
+          }}
+        />
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           <NextIntlClientProvider messages={messages}>
             {children}

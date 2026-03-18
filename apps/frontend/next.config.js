@@ -9,6 +9,7 @@ const withNextIntl = createNextIntlPlugin("./i18n.ts")
 const nextConfig = {
   reactStrictMode: true,
   transpilePackages: ["@tmpmail/shared"],
+  poweredByHeader: false,
 }
 
 module.exports = withBundleAnalyzer(withNextIntl(nextConfig))

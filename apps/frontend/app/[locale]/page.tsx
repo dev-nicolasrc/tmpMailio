@@ -1,9 +1,8 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { motion } from "framer-motion"
 import { Copy, Check, RefreshCw, QrCode, Trash2 } from "lucide-react"
-import { useTranslations } from "next-intl"
+import { useTranslations, useLocale } from "next-intl"
 import { useMailbox } from "@/hooks/useMailbox"
 import { useSocket } from "@/hooks/useSocket"
 import { useClipboard } from "@/hooks/useClipboard"
@@ -49,6 +48,9 @@ function useTypewriter(text: string, speed = 28) {
 
 export default function HomePage() {
   const t = useTranslations("hero")
+  const tAbout = useTranslations("about")
+  const tSeo = useTranslations("seoContent")
+  const locale = useLocale()
   const {
     mailbox,
     emails,
@@ -119,12 +121,9 @@ export default function HomePage() {
       <main className="flex-1 flex flex-col">
 
         {/* ── Hero ── */}
-        <motion.section
+        <section
           className="w-full flex-shrink-0 grid-bg py-12 px-5 md:px-10"
           style={{ borderBottom: "1px solid var(--border)" }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
         >
           <div className="max-w-2xl mx-auto flex flex-col items-center gap-6 text-center">
 
@@ -137,23 +136,19 @@ export default function HomePage() {
             </span>
 
             {/* Title */}
-            <motion.h1
-              className="font-display font-extrabold text-3xl md:text-5xl leading-none tracking-tight"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1, duration: 0.4 }}
+            <h1
+              className="hero-h1 font-display font-extrabold text-3xl md:text-5xl leading-none tracking-tight"
               style={{ color: "var(--text-primary)" }}
             >
               {t("title")}
-            </motion.h1>
+            </h1>
+            {/* Subtitle — app status visible as subheading, not H1 */}
+            <p className="text-base" style={{ color: "var(--text-secondary)" }}>
+              {t("subtitle")}
+            </p>
 
             {mailbox ? (
-              <motion.div
-                className="w-full flex flex-col items-center gap-4"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.4 }}
-              >
+              <div className="w-full flex flex-col items-center gap-4 animate-mailbox-in">
                 {/* Email address box */}
                 <div className="address-box w-full max-w-lg px-5 py-4" style={{ position: "relative" }}>
                   <div className="scanline" />
@@ -211,10 +206,12 @@ export default function HomePage() {
                           background: "none",
                           border: "none",
                           cursor: "pointer",
-                          padding: "2px",
+                          minHeight: "48px",
+                          minWidth: "48px",
                           color: copied ? "var(--accent-primary)" : "var(--text-secondary)",
                           display: "flex",
                           alignItems: "center",
+                          justifyContent: "center",
                           transition: "color 0.15s ease",
                         }}
                       >
@@ -270,7 +267,12 @@ export default function HomePage() {
                 {/* Timer */}
                 <ExpirationTimer expiresAt={new Date(mailbox.expiresAt)} />
 
-              </motion.div>
+                {/* Trust badge */}
+                <p className="text-xs" style={{ color: "var(--text-secondary)" }}>
+                  {t("trustBadge")}
+                </p>
+
+              </div>
             ) : (
               /* Skeleton */
               <div
@@ -279,7 +281,7 @@ export default function HomePage() {
               />
             )}
           </div>
-        </motion.section>
+        </section>
 
         {/* ── Email client ── */}
         <section className="flex-1 flex flex-col px-5 md:px-10 py-6">
@@ -338,7 +340,107 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* ── SEO Content ── */}
+        <div className="w-full max-w-2xl mx-auto px-5 md:px-10 py-10 flex flex-col gap-10">
+
+          {/* What is TmpMail */}
+          <section id="what-is-tmpmail" aria-labelledby="what-is-heading">
+            <h2
+              id="what-is-heading"
+              className="font-display font-bold text-xl mb-4"
+              style={{ color: "var(--text-primary)" }}
+            >
+              {tSeo("whatIs.title")}
+            </h2>
+            <p
+              className="font-mono text-sm leading-relaxed"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              {tSeo("whatIs.body")}
+            </p>
+          </section>
+
+          {/* How it works */}
+          <section id="how-it-works" aria-labelledby="how-heading">
+            <h2
+              id="how-heading"
+              className="font-display font-bold text-xl mb-2"
+              style={{ color: "var(--text-primary)" }}
+            >
+              {tSeo("howItWorks.title")}
+            </h2>
+            <p
+              className="font-mono text-sm mb-4"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              {tSeo("howItWorks.intro")}
+            </p>
+            <ol className="flex flex-col gap-2">
+              {(tSeo.raw("howItWorks.steps") as string[]).map((step, i) => (
+                <li
+                  key={i}
+                  className="flex items-start gap-3 font-mono text-sm leading-relaxed"
+                  style={{ color: "var(--text-secondary)" }}
+                >
+                  <span
+                    className="flex-shrink-0 font-mono text-xs mt-0.5"
+                    style={{ color: "var(--accent-primary)" }}
+                  >
+                    {String(i + 1).padStart(2, "0")}.
+                  </span>
+                  {step}
+                </li>
+              ))}
+            </ol>
+          </section>
+
+          {/* Why use */}
+          <section id="why-use-tmpmail" aria-labelledby="why-heading">
+            <h2
+              id="why-heading"
+              className="font-display font-bold text-xl mb-2"
+              style={{ color: "var(--text-primary)" }}
+            >
+              {tSeo("whyUse.title")}
+            </h2>
+            <p
+              className="font-mono text-sm mb-4"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              {tSeo("whyUse.intro")}
+            </p>
+            <ul className="flex flex-col gap-2">
+              {(tSeo.raw("whyUse.reasons") as string[]).map((reason, i) => (
+                <li
+                  key={i}
+                  className="flex items-start gap-3 font-mono text-sm leading-relaxed"
+                  style={{ color: "var(--text-secondary)" }}
+                >
+                  <span style={{ color: "var(--accent-primary)", flexShrink: 0 }}>✓</span>
+                  {reason}
+                </li>
+              ))}
+            </ul>
+          </section>
+
+        </div>
+
         <FAQAccordion />
+
+        {/* ── About / Features ── */}
+        <section className="max-w-lg mx-auto px-4 py-8 text-center">
+          <p className="text-base leading-relaxed mb-6" style={{ color: "var(--text-secondary)" }}>
+            {tAbout("body")}
+          </p>
+          <ul className="grid grid-cols-2 gap-2 text-sm text-left">
+            {(tAbout.raw("features") as string[]).map((feature, i) => (
+              <li key={i} className="flex items-center gap-2" style={{ color: "var(--text-secondary)" }}>
+                <span style={{ color: "var(--accent-primary)" }}>✓</span>
+                {feature}
+              </li>
+            ))}
+          </ul>
+        </section>
       </main>
 
       <Footer />
@@ -354,33 +456,26 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "WebApplication",
-            name: "TmpMail",
-            url: "https://tmpmailio.com",
-            applicationCategory: "UtilitiesApplication",
-            operatingSystem: "Any",
-            browserRequirements: "Requires JavaScript",
-            inLanguage: ["es", "en"],
+            "@type": "SoftwareApplication",
+            name: "TmpMailio",
+            alternateName: "TmpMail",
+            url: `https://tmpmailio.com/${locale}`,
+            description: locale === "es"
+              ? "Genera direcciones de email temporales al instante, sin registro. Recibe correos en tiempo real y protege tu bandeja de entrada del spam."
+              : "Instantly generate temporary email addresses with no sign-up. Receive emails in real time and protect your inbox from spam.",
+            applicationCategory: "Utilities",
+            operatingSystem: "Requires a web browser",
+            inLanguage: locale,
+            featureList: locale === "es"
+              ? "Creación instantánea de email temporal, Sin registro requerido, Entrega de correo en tiempo real, Auto-destrucción en 10 minutos"
+              : "Instant temporary email creation, No registration required, Real-time email delivery, Auto-destructs in 10 minutes",
+            isAccessibleForFree: true,
             offers: {
               "@type": "Offer",
               price: "0",
               priceCurrency: "USD",
+              availability: "https://schema.org/OnlineOnly",
             },
-            description:
-              "Free temporary disposable email service. Create a throwaway address in seconds — no sign-up, no spam.",
-            author: {
-              "@type": "Organization",
-              name: "TmpMail",
-              url: "https://tmpmailio.com",
-            },
-            featureList: [
-              "Instant temporary email creation",
-              "No registration required",
-              "Real-time email delivery via WebSocket",
-              "10-minute default expiry with auto-extension",
-              "Attachment support up to 5 MB",
-              "QR code generation",
-            ],
           }),
         }}
       />

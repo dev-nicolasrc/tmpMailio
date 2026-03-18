@@ -1,7 +1,9 @@
 {
   "hero": {
-    "title": "Your temporary email is ready",
-    "subtitle": "Use this address to sign up on any site. It self-destructs in {minutes} minutes.",
+    "title": "Free Temporary Email — Ready in Seconds",
+    "subtitle": "Your temporary email is ready",
+    "description": "Use this address to sign up on any site. It self-destructs in {minutes} minutes.",
+    "trustBadge": "Over 5 million emails generated",
     "copy": "Copy",
     "copied": "Copied!",
     "newEmail": "New email",
@@ -65,6 +67,17 @@
       }
     ]
   },
+  "about": {
+    "body": "TmpMailio instantly generates temporary email addresses — no sign-up, no password. Use it to protect your inbox from spam, register on trial sites, verify accounts, or stay private online. Every address self-destructs automatically, deleting all received messages. Works in any browser, no install required. 100% free.",
+    "features": [
+      "No registration or password",
+      "Emails delivered in real time",
+      "Auto-destructs in 10 minutes",
+      "Supports attachments up to 5 MB",
+      "Generate QR code for your address",
+      "100% free, no ads"
+    ]
+  },
   "footer": {
     "tagline": "Temporary email, real privacy.",
     "privacy": "Privacy",
@@ -74,7 +87,37 @@
   },
   "meta": {
     "title": "TmpMail — Free Temporary Email",
-    "description": "Create a disposable email in seconds. No sign-up, no spam. Your temporary email self-destructs in 10 minutes."
+    "description": "Create a disposable email in seconds. No sign-up, no spam. Your temporary email self-destructs in 10 minutes.",
+    "lastUpdated": "Updated: March 2026"
+  },
+  "seoContent": {
+    "whatIs": {
+      "title": "What is TmpMail?",
+      "body": "TmpMail is a free temporary, disposable email service that lets you create an email address in seconds — no registration, no password required. Each generated address is unique, fully functional, and automatically expires after 10 minutes. It's the perfect tool for protecting your online privacy: use it to sign up for websites you don't fully trust, test applications, receive one-time verification codes, or any situation where you don't want to share your real email. Unlike traditional email providers, TmpMail stores no personal data, requires no identity verification, shows no ads, and never sells your information to third parties. When the address expires, all messages are permanently deleted. Your privacy is the priority."
+    },
+    "howItWorks": {
+      "title": "How TmpMail works",
+      "intro": "Using a temporary email has never been simpler. No app to install, no account to create.",
+      "steps": [
+        "Open TmpMail — a unique temporary email address is instantly generated for you. No choices required.",
+        "Copy the address with one click and use it anywhere you need: sign-up forms, newsletters, account verifications, giveaways, or any service that asks for an email.",
+        "Receive emails in real time directly in TmpMail's inbox. Messages appear within seconds.",
+        "Read the email, copy the verification code or link you need. Nothing else to do.",
+        "The address and all messages expire automatically after 10 minutes. Generate a new one at any time with a single click."
+      ]
+    },
+    "whyUse": {
+      "title": "Why use a disposable temporary email",
+      "intro": "Your email address is the gateway to spam, tracking, and privacy breaches. A temporary email closes that door.",
+      "reasons": [
+        "Keep your main inbox free from spam and unwanted marketing emails.",
+        "Sign up for websites and apps without revealing your real identity or personal email.",
+        "Test paid services, demos, and trials without exposing your primary account.",
+        "Receive one-time verification codes without the site storing your email permanently.",
+        "Avoid cross-site tracking that uses your email as a unique identifier.",
+        "Zero setup, zero data stored: no account to hack, no password to remember."
+      ]
+    }
   },
   "toast": {
     "mailboxRenewed": "Mailbox automatically renewed"

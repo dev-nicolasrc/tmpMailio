@@ -1,7 +1,9 @@
 {
   "hero": {
-    "title": "Tu correo temporal está listo",
-    "subtitle": "Usa esta dirección para registrarte en cualquier sitio. Se autodestruye en {minutes} minutos.",
+    "title": "Correo Temporal Gratis — Listo en Segundos",
+    "subtitle": "Tu correo temporal está listo",
+    "description": "Usa esta dirección para registrarte en cualquier sitio. Se autodestruye en {minutes} minutos.",
+    "trustBadge": "Más de 5 millones de correos generados",
     "copy": "Copiar",
     "copied": "Copiado!",
     "newEmail": "Nuevo correo",
@@ -65,6 +67,17 @@
       }
     ]
   },
+  "about": {
+    "body": "TmpMailio genera direcciones de correo electrónico temporales al instante, sin registro ni contraseña. Úsala para proteger tu bandeja de entrada del spam, registrarte en sitios de prueba, verificar cuentas o mantener tu privacidad en línea. Cada dirección se autodestruye automáticamente, eliminando todos los mensajes recibidos. Compatible con cualquier navegador, sin instalación ni configuración necesaria. 100% gratuito.",
+    "features": [
+      "Sin registro ni contraseña",
+      "Correos recibidos en tiempo real",
+      "Auto-destrucción en 10 minutos",
+      "Compatible con adjuntos hasta 5 MB",
+      "Genera código QR de tu dirección",
+      "100% gratuito, sin anuncios"
+    ]
+  },
   "footer": {
     "tagline": "Correo temporal, privacidad real.",
     "privacy": "Privacidad",
@@ -74,7 +87,37 @@
   },
   "meta": {
     "title": "TmpMail — Correo Temporal Gratis",
-    "description": "Crea un correo desechable en segundos. Sin registro, sin spam. Tu email temporal se autodestruye en 10 minutos."
+    "description": "Crea un correo desechable en segundos. Sin registro, sin spam. Tu email temporal se autodestruye en 10 minutos.",
+    "lastUpdated": "Actualizado: marzo 2026"
+  },
+  "seoContent": {
+    "whatIs": {
+      "title": "¿Qué es TmpMail?",
+      "body": "TmpMail es un servicio de correo electrónico temporal y desechable que te permite crear una dirección de email en segundos, sin registro y sin contraseña. Cada dirección generada es única, completamente funcional y expira automáticamente después de 10 minutos. Es la herramienta perfecta para proteger tu privacidad en línea: úsala para registrarte en sitios web que no conoces, probar aplicaciones, recibir códigos de verificación o cualquier situación en la que no quieras compartir tu correo personal. A diferencia de los servicios de email tradicionales, TmpMail no almacena datos personales, no requiere verificación de identidad, no tiene publicidad y no vende tus datos a terceros. Cuando la dirección expira, todos los mensajes se eliminan permanentemente. Tu privacidad es la prioridad."
+    },
+    "howItWorks": {
+      "title": "Cómo funciona TmpMail",
+      "intro": "Usar un correo temporal nunca fue tan sencillo. No necesitas instalar ninguna aplicación ni crear una cuenta.",
+      "steps": [
+        "Abre TmpMail — se genera automáticamente una dirección de correo temporal única para ti. No tienes que elegir nada.",
+        "Copia la dirección con un clic y úsala donde la necesites: formularios de registro, newsletters, verificaciones de cuenta, sorteos o cualquier servicio que pida un email.",
+        "Recibe los emails en tiempo real directamente en la bandeja de entrada de TmpMail. Los mensajes aparecen en segundos.",
+        "Lee el contenido del email, copia el código de verificación o el enlace que necesitas. No hace falta hacer nada más.",
+        "La dirección y todos los mensajes expiran automáticamente en 10 minutos. Puedes generar una nueva en cualquier momento con un clic."
+      ]
+    },
+    "whyUse": {
+      "title": "Por qué usar un correo temporal desechable",
+      "intro": "El email es la puerta de entrada al spam, el rastreo y las brechas de privacidad. Un correo temporal cierra esa puerta.",
+      "reasons": [
+        "Protege tu bandeja de entrada principal del spam y las listas de marketing no deseadas.",
+        "Regístrate en sitios web y aplicaciones sin revelar tu identidad real ni tu email personal.",
+        "Prueba servicios de pago, demos y trials sin comprometer tu cuenta principal.",
+        "Recibe códigos de verificación de un solo uso sin que el sitio guarde tu email.",
+        "Evita el rastreo entre sitios que usan el email como identificador único.",
+        "Cero configuración y cero datos guardados: no hay cuenta que hackear ni contraseña que recordar."
+      ]
+    }
   },
   "toast": {
     "mailboxRenewed": "Buzón renovado automáticamente"
