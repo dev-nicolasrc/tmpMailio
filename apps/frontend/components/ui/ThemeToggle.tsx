@@ -20,7 +20,7 @@ export function ThemeToggle() {
       aria-label="Toggle theme"
     >
       {isDark ? <Sun size={13} /> : <Moon size={13} />}
-      <span className="font-mono text-[10px] uppercase tracking-widest hidden sm:inline">
+      <span className="font-mono text-xs uppercase tracking-widest hidden sm:inline">
         {isDark ? "LIGHT" : "DARK"}
       </span>
     </button>

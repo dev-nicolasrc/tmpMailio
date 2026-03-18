@@ -47,7 +47,7 @@ export function ContactForm() {
       {/* Email */}
       <div>
         <label
-          className="font-mono text-[10px] tracking-widest uppercase block mb-2"
+          className="font-mono text-xs tracking-widest uppercase block mb-2"
           style={{ color: "var(--text-secondary)" }}
         >
           {t("emailLabel")}
@@ -64,7 +64,7 @@ export function ContactForm() {
           onBlur={(e) => (e.target.style.borderColor = errors.email ? "var(--danger)" : "var(--border-mid)")}
         />
         {errors.email && (
-          <span className="font-mono text-[11px] mt-1 block" style={{ color: "var(--danger)" }}>
+          <span className="font-mono text-xs mt-1 block" style={{ color: "var(--danger)" }}>
             {errors.email}
           </span>
         )}
@@ -73,7 +73,7 @@ export function ContactForm() {
       {/* Subject */}
       <div>
         <label
-          className="font-mono text-[10px] tracking-widest uppercase block mb-2"
+          className="font-mono text-xs tracking-widest uppercase block mb-2"
           style={{ color: "var(--text-secondary)" }}
         >
           {t("subjectLabel")}
@@ -96,7 +96,7 @@ export function ContactForm() {
           ))}
         </select>
         {errors.subject && (
-          <span className="font-mono text-[11px] mt-1 block" style={{ color: "var(--danger)" }}>
+          <span className="font-mono text-xs mt-1 block" style={{ color: "var(--danger)" }}>
             {errors.subject}
           </span>
         )}
@@ -105,7 +105,7 @@ export function ContactForm() {
       {/* Message */}
       <div>
         <label
-          className="font-mono text-[10px] tracking-widest uppercase block mb-2"
+          className="font-mono text-xs tracking-widest uppercase block mb-2"
           style={{ color: "var(--text-secondary)" }}
         >
           {t("messageLabel")}
@@ -124,7 +124,7 @@ export function ContactForm() {
           onBlur={(e) => (e.target.style.borderColor = errors.message ? "var(--danger)" : "var(--border-mid)")}
         />
         {errors.message && (
-          <span className="font-mono text-[11px] mt-1 block" style={{ color: "var(--danger)" }}>
+          <span className="font-mono text-xs mt-1 block" style={{ color: "var(--danger)" }}>
             {errors.message}
           </span>
         )}

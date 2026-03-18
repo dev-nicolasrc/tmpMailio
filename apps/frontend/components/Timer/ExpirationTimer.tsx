@@ -51,7 +51,7 @@ export function ExpirationTimer({ expiresAt, onExpired }: ExpirationTimerProps) 
 
   return (
     <div
-      className="flex items-center gap-2.5 px-4 py-2 font-mono text-[11px]"
+      className="flex items-center gap-2.5 px-4 py-2 font-mono text-xs"
       style={{
         border: `1px solid ${accentColor}`,
         borderLeft: `3px solid ${accentColor}`,

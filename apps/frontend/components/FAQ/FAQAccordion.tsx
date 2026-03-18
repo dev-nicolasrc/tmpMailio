@@ -1,7 +1,5 @@
 "use client"
 
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
 import { useTranslations } from "next-intl"
 
 interface FAQItem { q: string; a: string }
@@ -9,19 +7,16 @@ interface FAQItem { q: string; a: string }
 export function FAQAccordion() {
   const t = useTranslations("faq")
   const items = t.raw("items") as FAQItem[]
-  const [open, setOpen] = useState<number | null>(null)
 
   return (
-    <section
-      className="w-full max-w-2xl mx-auto py-14 px-5 md:px-10"
-    >
+    <section className="w-full max-w-2xl mx-auto py-14 px-5 md:px-10">
       {/* Section header */}
       <div
         className="flex items-center gap-4 mb-8 pb-4"
         style={{ borderBottom: "1px solid var(--border)" }}
       >
         <span
-          className="font-mono text-[10px] tracking-widest uppercase"
+          className="font-mono text-xs tracking-widest uppercase"
           style={{ color: "var(--text-secondary)" }}
         >
           // preguntas frecuentes
@@ -37,61 +32,47 @@ export function FAQAccordion() {
       <div className="flex flex-col">
         {items.map((item, i) => {
           const num = String(i + 1).padStart(2, "0")
-          const isOpen = open === i
 
           return (
-            <div
+            <details
               key={i}
+              className="group"
               style={{ borderBottom: "1px solid var(--border)" }}
             >
-              <button
-                className="w-full flex items-start gap-4 px-0 py-4 text-left transition-colors group"
-                onClick={() => setOpen(isOpen ? null : i)}
-                aria-expanded={isOpen}
+              <summary
+                className="w-full flex items-start gap-4 px-0 py-4 text-left cursor-pointer list-none"
+                style={{ WebkitAppearance: "none" }}
               >
                 <span
-                  className="font-mono text-[10px] flex-shrink-0 mt-0.5"
-                  style={{ color: isOpen ? "var(--accent-primary)" : "var(--text-secondary)", opacity: 0.5 }}
+                  className="font-mono text-xs flex-shrink-0 mt-0.5"
+                  style={{ color: "var(--text-secondary)", opacity: 0.5 }}
                 >
                   {num}
                 </span>
                 <span
-                  className="flex-1 font-mono text-[13px] leading-relaxed"
-                  style={{ color: isOpen ? "var(--text-primary)" : "var(--text-secondary)" }}
+                  className="flex-1 font-mono text-sm leading-relaxed"
+                  style={{ color: "var(--text-secondary)" }}
                 >
                   {item.q}
                 </span>
                 <span
-                  className="font-mono text-base flex-shrink-0 ml-3 transition-transform"
-                  style={{ color: "var(--accent-primary)", transform: isOpen ? "rotate(45deg)" : "none" }}
+                  className="font-mono text-base flex-shrink-0 ml-3 transition-transform group-open:rotate-45"
+                  style={{ color: "var(--accent-primary)" }}
                 >
                   +
                 </span>
-              </button>
+              </summary>
 
-              <AnimatePresence initial={false}>
-                {isOpen && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.2, ease: "easeInOut" }}
-                    style={{ overflow: "hidden" }}
-                  >
-                    <p
-                      className="pl-9 pr-4 pb-4 font-mono text-[12px] leading-relaxed"
-                      style={{ color: "var(--text-secondary)" }}
-                    >
-                      {item.a}
-                    </p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+              <p
+                className="pl-9 pr-4 pb-4 font-mono text-xs leading-relaxed"
+                style={{ color: "var(--text-secondary)" }}
+              >
+                {item.a}
+              </p>
+            </details>
           )
         })}
       </div>
-
     </section>
   )
 }

@@ -10,6 +10,9 @@ const nextConfig = {
   reactStrictMode: true,
   transpilePackages: ["@tmpmail/shared"],
   poweredByHeader: false,
+  experimental: {
+    optimizePackageImports: ["lucide-react"],
+  },
 }
 
 module.exports = withBundleAnalyzer(withNextIntl(nextConfig))

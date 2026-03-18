@@ -5,6 +5,7 @@ import Link from "next/link"
 
 export function Footer() {
   const t = useTranslations("footer")
+  const tMeta = useTranslations("meta")
   const locale = useLocale()
   const otherLocale = locale === "es" ? "en" : "es"
 
@@ -22,10 +23,13 @@ export function Footer() {
             TMPMAIL
           </span>
           <span
-            className="font-mono text-[10px] hidden md:block"
+            className="font-mono text-xs hidden md:block"
             style={{ color: "var(--text-secondary)" }}
           >
             — {t("tagline")}
+          </span>
+          <span className="font-mono text-xs hidden md:block" style={{ color: "var(--text-secondary)" }}>
+            © {new Date().getFullYear()} TmpMailio
           </span>
         </div>
 
@@ -38,7 +42,7 @@ export function Footer() {
             <Link
               key={link.href}
               href={link.href}
-              className="font-mono text-[11px] px-3 py-1.5 transition-colors"
+              className="font-mono text-sm px-3 py-1.5 transition-colors"
               style={{ color: "var(--text-secondary)" }}
               onMouseEnter={e => ((e.target as HTMLElement).style.color = "var(--text-primary)")}
               onMouseLeave={e => ((e.target as HTMLElement).style.color = "var(--text-secondary)")}
@@ -49,7 +53,7 @@ export function Footer() {
 
           <Link
             href={`/${otherLocale}`}
-            className="font-mono text-[11px] px-3 py-1.5 transition-all"
+            className="font-mono text-sm px-3 py-1.5 transition-all"
             style={{
               border: "1px solid var(--border-mid)",
               color: "var(--text-secondary)",
@@ -69,6 +73,9 @@ export function Footer() {
           </Link>
         </nav>
       </div>
+      <p className="text-center font-mono text-xs py-2" style={{ color: "var(--text-secondary)", borderTop: "1px solid var(--border)" }}>
+        {tMeta("lastUpdated")}
+      </p>
     </footer>
   )
 }

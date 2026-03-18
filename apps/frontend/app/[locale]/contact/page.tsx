@@ -18,7 +18,7 @@ export default async function ContactPage({ params: { locale } }: Props) {
         <article className="max-w-2xl mx-auto py-14 px-5 md:px-10">
           <header className="mb-10 pb-6" style={{ borderBottom: "1px solid var(--border)" }}>
             <span
-              className="font-mono text-[10px] tracking-widest uppercase block mb-3"
+              className="font-mono text-xs tracking-widest uppercase block mb-3"
               style={{ color: "var(--text-secondary)" }}
             >
               // contacto
@@ -30,7 +30,7 @@ export default async function ContactPage({ params: { locale } }: Props) {
               {t("title")}
             </h1>
             <p
-              className="font-mono text-[11px] block mt-2"
+              className="font-mono text-xs block mt-2"
               style={{ color: "var(--text-secondary)" }}
             >
               {t("subtitle")}

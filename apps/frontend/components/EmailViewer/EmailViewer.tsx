@@ -178,7 +178,7 @@ export function EmailViewer({ email, isMobile, onBack }: EmailViewerProps) {
       >
         <span style={{ fontSize: 40, opacity: 0.1 }}>✉</span>
         <p
-          className="font-mono text-[11px] tracking-widest uppercase"
+          className="font-mono text-xs tracking-widest uppercase"
           style={{ color: "var(--text-secondary)", opacity: 0.4 }}
         >
           {t("empty")}
@@ -228,7 +228,7 @@ export function EmailViewer({ email, isMobile, onBack }: EmailViewerProps) {
           {/* From */}
           <div className="flex items-center gap-2.5">
             <span
-              className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center font-mono text-[10px] font-bold"
+              className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center font-mono text-xs font-bold"
               style={{
                 background: "var(--accent-dim)",
                 border: "1px solid var(--accent-primary)",
@@ -239,13 +239,13 @@ export function EmailViewer({ email, isMobile, onBack }: EmailViewerProps) {
             </span>
             <div className="flex items-baseline gap-2 min-w-0">
               <span
-                className="font-mono text-[10px] uppercase tracking-wider flex-shrink-0"
+                className="font-mono text-xs uppercase tracking-wider flex-shrink-0"
                 style={{ color: "var(--text-secondary)", opacity: 0.6 }}
               >
                 <User size={9} className="inline mr-1" />De
               </span>
               <span
-                className="font-mono text-[11px] truncate"
+                className="font-mono text-xs truncate"
                 style={{ color: "var(--text-primary)" }}
               >
                 {email.from}
@@ -256,13 +256,13 @@ export function EmailViewer({ email, isMobile, onBack }: EmailViewerProps) {
           {/* Date */}
           <div className="flex items-center gap-2.5 pl-8">
             <span
-              className="font-mono text-[10px] uppercase tracking-wider flex-shrink-0"
+              className="font-mono text-xs uppercase tracking-wider flex-shrink-0"
               style={{ color: "var(--text-secondary)", opacity: 0.6 }}
             >
               <Calendar size={9} className="inline mr-1" />Fecha
             </span>
             <span
-              className="font-mono text-[11px]"
+              className="font-mono text-xs"
               style={{ color: "var(--text-secondary)" }}
             >
               {formattedDate}
@@ -305,7 +305,7 @@ export function EmailViewer({ email, isMobile, onBack }: EmailViewerProps) {
           style={{ borderTop: "1px solid var(--border)", background: "var(--bg-secondary)" }}
         >
           <p
-            className="font-mono text-[10px] uppercase tracking-widest mb-2.5"
+            className="font-mono text-xs uppercase tracking-widest mb-2.5"
             style={{ color: "var(--text-secondary)" }}
           >
             {t("attachments")} · {email.attachments.length}

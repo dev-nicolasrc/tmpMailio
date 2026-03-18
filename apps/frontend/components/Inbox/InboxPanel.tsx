@@ -75,14 +75,14 @@ export function InboxPanel({ emails, selectedId, onSelect, onRefresh, isLoading 
       >
         <div className="flex items-center gap-2.5">
           <span
-            className="font-mono text-[10px] tracking-widest uppercase"
+            className="font-mono text-xs tracking-widest uppercase"
             style={{ color: "var(--text-secondary)" }}
           >
             {t("title")}
           </span>
           {emails.length > 0 && (
             <span
-              className="font-mono text-[10px] px-1.5 py-0.5 leading-none"
+              className="font-mono text-xs px-1.5 py-0.5 leading-none"
               style={{
                 background: "var(--accent-dim)",
                 border: "1px solid var(--accent-primary)",
@@ -100,7 +100,6 @@ export function InboxPanel({ emails, selectedId, onSelect, onRefresh, isLoading 
               disabled={notifPermission === "denied"}
               className="btn-flat"
               style={{
-                padding: "3px 9px",
                 ...(notifPermission === "granted"
                   ? { borderColor: "var(--accent-primary)", color: "var(--accent-primary)" }
                   : {}),
@@ -117,7 +116,6 @@ export function InboxPanel({ emails, selectedId, onSelect, onRefresh, isLoading 
             onClick={handleRefresh}
             disabled={refreshing}
             className="btn-flat"
-            style={{ padding: "3px 9px" }}
             title="Actualizar bandeja"
           >
             <RefreshCw size={11} className={refreshing ? "animate-spin" : ""} />
@@ -146,12 +144,12 @@ export function InboxPanel({ emails, selectedId, onSelect, onRefresh, isLoading 
             </div>
             <div>
               <p
-                className="font-mono text-[11px] uppercase tracking-widest mb-1.5"
+                className="font-mono text-xs uppercase tracking-widest mb-1.5"
                 style={{ color: "var(--text-primary)" }}
               >
                 {t("empty")}
               </p>
-              <p className="font-mono text-[10px]" style={{ color: "var(--text-secondary)" }}>
+              <p className="font-mono text-xs" style={{ color: "var(--text-secondary)" }}>
                 {t("emptyHint")}
               </p>
             </div>
@@ -182,7 +180,7 @@ export function InboxPanel({ emails, selectedId, onSelect, onRefresh, isLoading 
               >
                 {/* Avatar */}
                 <span
-                  className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-mono text-[11px] font-bold"
+                  className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-mono text-xs font-bold"
                   style={{
                     background: isSelected ? "var(--accent-dim)" : "var(--bg-tertiary)",
                     border: `1px solid ${isSelected ? "var(--accent-primary)" : "var(--border-mid)"}`,
@@ -218,7 +216,7 @@ export function InboxPanel({ emails, selectedId, onSelect, onRefresh, isLoading 
                       </span>
                     </span>
                     <span
-                      className="font-mono text-[10px] flex-shrink-0"
+                      className="font-mono text-xs flex-shrink-0"
                       style={{ color: "var(--text-secondary)", opacity: 0.5 }}
                     >
                       {timeAgo(email.receivedAt)}
@@ -227,7 +225,7 @@ export function InboxPanel({ emails, selectedId, onSelect, onRefresh, isLoading 
 
                   {/* Row 2: subject */}
                   <p
-                    className="font-mono text-[11px] truncate"
+                    className="font-mono text-xs truncate"
                     style={{
                       color: isSelected ? "var(--accent-primary)" : isRead ? "var(--text-secondary)" : "var(--text-primary)",
                       opacity: isRead ? 0.7 : 1,
@@ -252,7 +250,7 @@ export function InboxPanel({ emails, selectedId, onSelect, onRefresh, isLoading 
           style={{ background: "var(--accent-primary)", boxShadow: "0 0 6px var(--accent-primary)" }}
         />
         <span
-          className="font-mono text-[10px] tracking-widest uppercase"
+          className="font-mono text-xs tracking-widest uppercase"
           style={{ color: "var(--text-secondary)" }}
         >
           {t("waiting")}

@@ -101,16 +101,25 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              name: "TmpMailio",
+              "@id": "https://tmpmailio.com/#organization",
+              name: "TmpMail",
+              alternateName: "TmpMailio",
               url: "https://tmpmailio.com",
+              logo: {
+                "@type": "ImageObject",
+                url: "https://tmpmailio.com/icon-512.png",
+                width: 512,
+                height: 512,
+              },
               contactPoint: {
                 "@type": "ContactPoint",
-                url: "https://tmpmailio.com/contact",
+                url: `https://tmpmailio.com/${locale}/contact`,
+                email: "contacto@tmpmailio.com",
                 contactType: "customer support",
                 availableLanguage: ["Spanish", "English"],
               },
-              privacyPolicy: "https://tmpmailio.com/privacy",
-              termsOfService: "https://tmpmailio.com/terms",
+              privacyPolicy: `https://tmpmailio.com/${locale}/privacy`,
+              termsOfService: `https://tmpmailio.com/${locale}/terms`,
             }),
           }}
         />
@@ -120,9 +129,13 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "WebSite",
-              name: "TmpMailio",
+              "@id": "https://tmpmailio.com/#website",
+              name: "TmpMail",
               url: "https://tmpmailio.com",
-              inLanguage: locale,
+              inLanguage: ["es", "en"],
+              publisher: {
+                "@id": "https://tmpmailio.com/#organization",
+              },
             }),
           }}
         />

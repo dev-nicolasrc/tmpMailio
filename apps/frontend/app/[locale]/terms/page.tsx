@@ -33,7 +33,7 @@ export default async function TermsPage({ params: { locale } }: Props) {
         <article className="max-w-2xl mx-auto py-14 px-5 md:px-10">
           <header className="mb-10 pb-6" style={{ borderBottom: "1px solid var(--border)" }}>
             <span
-              className="font-mono text-[10px] tracking-widest uppercase block mb-3"
+              className="font-mono text-xs tracking-widest uppercase block mb-3"
               style={{ color: "var(--text-secondary)" }}
             >
               // {locale === "es" ? "términos de uso" : "terms of use"}
@@ -45,7 +45,7 @@ export default async function TermsPage({ params: { locale } }: Props) {
               {t("terms.title")}
             </h1>
             <time
-              className="font-mono text-[11px] block mt-2"
+              className="font-mono text-xs block mt-2"
               style={{ color: "var(--text-secondary)" }}
             >
               {t("updated")}
@@ -56,7 +56,7 @@ export default async function TermsPage({ params: { locale } }: Props) {
             {sections.map((s, i) => (
               <section key={i}>
                 <h2
-                  className="font-mono text-[11px] tracking-widest uppercase mb-3 flex items-center gap-2"
+                  className="font-mono text-xs tracking-widest uppercase mb-3 flex items-center gap-2"
                   style={{ color: "var(--accent-primary)" }}
                 >
                   <span style={{ color: "var(--border-mid)" }}>//</span>

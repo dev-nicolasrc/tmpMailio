@@ -109,7 +109,7 @@ export default function HomePage() {
             <span style={{ color: "var(--text-primary)" }}>MAIL</span>
           </span>
           <span
-            className="hidden md:block text-[10px] font-mono px-2 py-0.5"
+            className="hidden md:block text-xs font-mono px-2 py-0.5"
             style={{ border: "1px solid var(--border-mid)", color: "var(--text-secondary)" }}
           >
             v2
@@ -129,7 +129,7 @@ export default function HomePage() {
 
             {/* Label */}
             <span
-              className="font-mono text-[10px] tracking-widest uppercase"
+              className="font-mono text-xs tracking-widest uppercase"
               style={{ color: "var(--text-secondary)" }}
             >
               // correo temporal · disposable mail
@@ -291,14 +291,14 @@ export default function HomePage() {
             style={{ borderBottom: "1px solid var(--border)" }}
           >
             <span
-              className="font-mono text-[10px] tracking-widest uppercase"
+              className="font-mono text-xs tracking-widest uppercase"
               style={{ color: "var(--text-secondary)" }}
             >
               // cliente de correo
             </span>
             {emails.length > 0 && (
               <span
-                className="font-mono text-[10px]"
+                className="font-mono text-xs"
                 style={{ color: "var(--accent-primary)" }}
               >
                 [{emails.length}]
@@ -456,20 +456,28 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "SoftwareApplication",
-            name: "TmpMailio",
-            alternateName: "TmpMail",
+            "@type": "WebApplication",
+            "@id": `https://tmpmailio.com/${locale}/#webapp`,
+            name: "TmpMail",
+            alternateName: "TmpMailio",
             url: `https://tmpmailio.com/${locale}`,
             description: locale === "es"
-              ? "Genera direcciones de email temporales al instante, sin registro. Recibe correos en tiempo real y protege tu bandeja de entrada del spam."
-              : "Instantly generate temporary email addresses with no sign-up. Receive emails in real time and protect your inbox from spam.",
-            applicationCategory: "Utilities",
-            operatingSystem: "Requires a web browser",
+              ? "Crea un correo desechable gratis en segundos. Sin registro, sin spam, sin datos guardados. Tu email temporal expira en 10 minutos y protege tu privacidad."
+              : "Create your free disposable email in seconds. No sign-up, no spam, no data stored. Your temporary address expires in 10 minutes and protects your privacy.",
+            applicationCategory: "UtilitiesApplication",
+            operatingSystem: "All",
             inLanguage: locale,
-            featureList: locale === "es"
-              ? "Creación instantánea de email temporal, Sin registro requerido, Entrega de correo en tiempo real, Auto-destrucción en 10 minutos"
-              : "Instant temporary email creation, No registration required, Real-time email delivery, Auto-destructs in 10 minutes",
             isAccessibleForFree: true,
+            featureList: locale === "es"
+              ? ["Creación instantánea de email temporal", "Sin registro requerido", "Entrega de correo en tiempo real", "Auto-destrucción en 10 minutos", "Sin publicidad", "Genera código QR"]
+              : ["Instant temporary email creation", "No registration required", "Real-time email delivery", "Auto-destructs in 10 minutes", "No ads", "Generate QR code"],
+            image: "https://tmpmailio.com/og-image.png",
+            publisher: {
+              "@type": "Organization",
+              "@id": "https://tmpmailio.com/#organization",
+              name: "TmpMail",
+              url: "https://tmpmailio.com",
+            },
             offers: {
               "@type": "Offer",
               price: "0",

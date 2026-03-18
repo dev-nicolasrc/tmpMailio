@@ -11,7 +11,7 @@ export default async function NotFound() {
       style={{ background: "var(--bg-primary)" }}
     >
       <span
-        className="font-mono text-[10px] tracking-widest uppercase"
+        className="font-mono text-xs tracking-widest uppercase"
         style={{ color: "var(--text-secondary)" }}
       >
         {t("label")}
