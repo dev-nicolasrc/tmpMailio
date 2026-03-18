@@ -8,6 +8,7 @@ import { useSocket } from "@/hooks/useSocket"
 import { useClipboard } from "@/hooks/useClipboard"
 import dynamic from "next/dynamic"
 import { ThemeToggle } from "@/components/ui/ThemeToggle"
+import { LocaleSwitcher } from "@/components/ui/LocaleSwitcher"
 import { Toast } from "@/components/ui/Toast"
 import { QRModal } from "@/components/ui/QRModal"
 import { ExpirationTimer } from "@/components/Timer/ExpirationTimer"
@@ -115,7 +116,10 @@ export default function HomePage() {
             v2
           </span>
         </div>
-        <ThemeToggle />
+        <div className="flex items-center gap-2">
+          <LocaleSwitcher />
+          <ThemeToggle />
+        </div>
       </header>
 
       <main className="flex-1 flex flex-col">
@@ -242,8 +246,9 @@ export default function HomePage() {
                     onClick={() => handleNewMailbox()}
                     disabled={isLoading}
                     className="btn-flat btn-secondary"
+                    aria-label={t("newEmail")}
                   >
-                    <RefreshCw size={12} className={isLoading ? "animate-spin" : ""} />
+                    <RefreshCw size={12} className={isLoading ? "animate-spin" : ""} aria-hidden="true" />
                     {t("newEmail")}
                   </button>
 
@@ -451,6 +456,23 @@ export default function HomePage() {
 
       {toastMessage && <Toast message={toastMessage} />}
 
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "TmpMail",
+                item: `https://tmpmailio.com/${locale}`,
+              },
+            ],
+          }),
+        }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

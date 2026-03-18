@@ -38,6 +38,7 @@ export function Footer() {
             { href: "/privacy", label: t("privacy") },
             { href: "/terms", label: t("terms") },
             { href: "/contact", label: t("contact") },
+            { href: "/about", label: t("about") },
           ].map(link => (
             <Link
               key={link.href}

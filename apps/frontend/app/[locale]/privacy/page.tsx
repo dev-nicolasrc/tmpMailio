@@ -30,6 +30,19 @@ export default async function PrivacyPage({ params: { locale } }: Props) {
 
   return (
     <div className="min-h-screen flex flex-col" style={{ background: "var(--bg-primary)" }}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              { "@type": "ListItem", position: 1, name: "TmpMail", item: `https://tmpmailio.com/${locale}` },
+              { "@type": "ListItem", position: 2, name: t("privacy.title"), item: `https://tmpmailio.com/${locale}/privacy` },
+            ],
+          }),
+        }}
+      />
       <main className="flex-1">
         <article className="max-w-2xl mx-auto py-14 px-5 md:px-10">
           <header className="mb-10 pb-6" style={{ borderBottom: "1px solid var(--border)" }}>

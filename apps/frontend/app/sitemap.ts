@@ -1,19 +1,36 @@
 import { MetadataRoute } from "next"
 import { locales } from "@/i18n"
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://tmpmailio.com"
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://tmpmailio.com"
 
-  return locales.map((locale) => ({
+const subpages = ["privacy", "terms"]
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const homeEntries: MetadataRoute.Sitemap = locales.map((locale) => ({
     url: `${baseUrl}/${locale}`,
     lastModified: new Date(),
-    changeFrequency: "daily",
-    priority: locale === "es" ? 1.0 : 0.9,
     alternates: {
       languages: {
         es: `${baseUrl}/es`,
         en: `${baseUrl}/en`,
+        "x-default": `${baseUrl}/en`,
       },
     },
   }))
+
+  const subpageEntries: MetadataRoute.Sitemap = subpages.flatMap((page) =>
+    locales.map((locale) => ({
+      url: `${baseUrl}/${locale}/${page}`,
+      lastModified: new Date(),
+      alternates: {
+        languages: {
+          es: `${baseUrl}/es/${page}`,
+          en: `${baseUrl}/en/${page}`,
+          "x-default": `${baseUrl}/en/${page}`,
+        },
+      },
+    }))
+  )
+
+  return [...homeEntries, ...subpageEntries]
 }

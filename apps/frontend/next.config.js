@@ -13,6 +13,15 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ["lucide-react"],
   },
+  async redirects() {
+    return [
+      // Redirect bare /privacy and /terms to locale-prefixed versions (301 permanent)
+      { source: "/privacy", destination: "/en/privacy", permanent: true },
+      { source: "/terms", destination: "/en/terms", permanent: true },
+      { source: "/contact", destination: "/en/contact", permanent: true },
+      { source: "/about", destination: "/en/about", permanent: true },
+    ]
+  },
 }
 
 module.exports = withBundleAnalyzer(withNextIntl(nextConfig))

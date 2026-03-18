@@ -83,11 +83,12 @@
     "privacy": "Privacy",
     "terms": "Terms",
     "contact": "Contact",
+    "about": "About",
     "language": "Language"
   },
   "meta": {
-    "title": "TmpMail — Free Temporary Email",
-    "description": "Create a disposable email in seconds. No sign-up, no spam. Your temporary email self-destructs in 10 minutes.",
+    "title": "TmpMail — Free Disposable Temporary Email | No Registration",
+    "description": "Create your free disposable email in seconds. No sign-up, no spam, no data stored. Your temporary address expires in 10 minutes and protects your privacy.",
     "lastUpdated": "Updated: March 2026"
   },
   "seoContent": {
@@ -130,6 +131,19 @@
     "label": "// error",
     "message": "This page does not exist.",
     "back": "← Back to home"
+  },
+  "aboutPage": {
+    "label": "// about us",
+    "title": "About TmpMail",
+    "who": "Who we are",
+    "whoBody": "TmpMail is a free temporary email service, built to protect people's privacy online. We are an independent team focused on making digital privacy tools accessible to everyone.",
+    "contact": "Contact",
+    "contactBody": "For any inquiries, suggestions, or abuse reports, reach us at",
+    "privacy": "Privacy",
+    "privacyBody": "We store no personal data. Email addresses and received messages are automatically deleted when the mailbox expires (10 minutes by default). No tracking cookies, no ads, no user profiles.",
+    "privacyLink": "Full privacy policy",
+    "terms": "Terms of use",
+    "termsLink": "Read terms of use"
   },
   "legal": {
     "updated": "Last updated: March 2026",
