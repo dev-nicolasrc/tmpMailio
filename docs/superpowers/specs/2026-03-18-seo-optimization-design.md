@@ -29,31 +29,38 @@ Tres ramas/PRs independientes ordenadas por prioridad. Cada fase se deployea y v
 
 ### 1.1 — Eliminar opacity:0 del SSR HTML (Spec 3.1)
 
-**Problema:** El hero (`motion.section`) y el H1 (`motion.h1`) renderizan con `opacity:0` en el HTML del servidor. Framer Motion los anima client-side con 1.5-2s de delay, bloqueando el LCP.
+**Problema:** El `motion.div` que envuelve el widget del mailbox (dirección de email) renderiza con `opacity:0` en el HTML del servidor. Framer Motion lo anima client-side con `initial={{ opacity: 0, y: 8 }}`, introduciendo 1.5-2s de delay antes del primer paint visible — bloqueando el LCP.
 
-**Solución:** Reemplazar `motion.section` y `motion.h1` en el hero por elementos HTML regulares con animación CSS:
+**Archivo afectado:** `apps/frontend/app/[locale]/page.tsx` — buscar `motion.div` con `initial={{ opacity: 0` cerca del bloque del mailbox.
+
+**Solución:** Reemplazar el `motion.div` del mailbox por un `<div>` regular con animación CSS usando `animation-fill-mode: both` para que el elemento pinte inmediatamente con opacidad 1 antes de que la animación empiece:
 
 ```css
 /* globals.css */
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(16px); }
+  from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 .animate-fade-in-up {
-  animation: fadeInUp 0.5s ease-out forwards;
+  animation: fadeInUp 0.4s ease-out both;
+  /* "both" = aplica el estado "from" antes de que empiece,
+     PERO el elemento ya es visible en el SSR HTML porque no tiene
+     style="opacity:0" inline — solo se anima cuando JS hidrata */
 }
 ```
 
+**Nota importante:** El CSS anterior funciona para la animación post-hidratación. El fix del LCP está en **eliminar el `style="opacity:0"` que Framer Motion inyecta en el SSR** — cosa que sucede automáticamente al reemplazar `motion.div` por `div`. El elemento en el HTML estático tendrá `opacity:1` por defecto.
+
 ```tsx
 /* page.tsx — antes */
-<motion.section initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}>
+<motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
 
 /* page.tsx — después */
-<section className="animate-fade-in-up">
+<div className="animate-fade-in-up">
 ```
 
-**Archivos:** `app/[locale]/page.tsx`, `app/globals.css`
-**Verificación:** DevTools Performance → LCP element debe tener opacity>0 en el primer frame de paint.
+**Archivos:** `apps/frontend/app/[locale]/page.tsx`, `apps/frontend/app/globals.css`
+**Verificación:** `curl -s https://tmpmailio.com/es | grep -i "opacity:0"` → debe retornar vacío.
 
 ---
 
@@ -126,67 +133,98 @@ export async function generateMetadata({ params }: { params: { locale: string } 
 </section>
 ```
 
-**Copy ES (~500 palabras):**
+**Copy ES (~320 palabras visibles en homepage con Fase 1; ~500+ al añadir FAQ en Fase 2):**
 
 ```json
 {
   "about": {
     "title": "¿Qué es TmpMail?",
-    "body": "TmpMail es un servicio de correo electrónico temporal y desechable que te permite crear una dirección de email en segundos, sin registro y sin contraseña. Cada dirección generada es única, funcional y expira automáticamente después de 10 minutos. Es la herramienta perfecta para proteger tu privacidad en línea: úsala para registrarte en sitios web, probar aplicaciones, recibir códigos de verificación o cualquier situación en la que no quieras compartir tu correo personal. TmpMail no almacena datos personales, no requiere verificación de identidad y no tiene publicidad. Tu privacidad es la prioridad."
+    "body": "TmpMail es un servicio de correo electrónico temporal y desechable que te permite crear una dirección de email en segundos, sin registro y sin contraseña. Cada dirección generada es única, completamente funcional y expira automáticamente después de 10 minutos. Es la herramienta perfecta para proteger tu privacidad en línea: úsala para registrarte en sitios web que no conoces, probar aplicaciones, recibir códigos de verificación SMS o cualquier situación en la que no quieras compartir tu correo personal. A diferencia de los servicios de email tradicionales, TmpMail no almacena datos personales, no requiere verificación de identidad, no tiene publicidad y no vende tus datos a terceros. Cuando la dirección expira, todos los mensajes se eliminan permanentemente. Tu privacidad es la prioridad.",
+    "note": "~100 palabras"
   },
   "howItWorks": {
-    "title": "Cómo funciona",
-    "step1": "Abre TmpMail — se genera automáticamente una dirección de correo temporal única para ti.",
-    "step2": "Copia la dirección y úsala donde la necesites: formularios, registros, verificaciones.",
-    "step3": "Recibe los emails en tiempo real directamente en la bandeja de TmpMail.",
-    "step4": "La dirección expira en 10 minutos. Puedes generar una nueva en cualquier momento.",
-    "step5": "Sin spam. Sin rastreo. Sin datos guardados."
+    "title": "Cómo funciona TmpMail",
+    "intro": "Usar un correo temporal nunca fue tan sencillo. No necesitas instalar ninguna aplicación ni crear una cuenta.",
+    "step1": "Abre TmpMail — se genera automáticamente una dirección de correo temporal única para ti. No tienes que elegir nada.",
+    "step2": "Copia la dirección con un clic y úsala donde la necesites: formularios de registro, newsletters, verificaciones de cuenta, sorteos o cualquier servicio que pida un email.",
+    "step3": "Recibe los emails en tiempo real directamente en la bandeja de entrada de TmpMail. Los mensajes aparecen en segundos.",
+    "step4": "Lee el contenido del email, copia el código de verificación o el enlace que necesitas. No hace falta hacer nada más.",
+    "step5": "La dirección y todos los mensajes expiran automáticamente en 10 minutos. Puedes generar una dirección nueva en cualquier momento con un clic.",
+    "note": "~110 palabras"
   },
   "whyUse": {
-    "title": "Por qué usar un correo temporal",
-    "reason1": "Protege tu correo principal del spam y las listas de marketing.",
-    "reason2": "Regístrate en sitios web sin revelar tu identidad real.",
-    "reason3": "Prueba servicios y aplicaciones de forma segura.",
-    "reason4": "Recibe códigos de verificación sin comprometer tu privacidad.",
-    "reason5": "Evita el seguimiento entre sitios basado en tu email.",
-    "reason6": "Cero configuración: no necesitas crear una cuenta ni recordar contraseñas."
+    "title": "Por qué usar un correo temporal desechable",
+    "intro": "El email es la puerta de entrada al spam, el rastreo y las brechas de privacidad. Un correo temporal cierra esa puerta.",
+    "reason1": "Protege tu bandeja de entrada principal del spam y las listas de marketing no deseadas.",
+    "reason2": "Regístrate en sitios web y aplicaciones sin revelar tu identidad real ni tu email personal.",
+    "reason3": "Prueba servicios de pago, demos y trials sin comprometer tu cuenta principal.",
+    "reason4": "Recibe códigos de verificación de un solo uso sin que el sitio guarde tu email.",
+    "reason5": "Evita el rastreo entre sitios que usan el email como identificador único.",
+    "reason6": "Cero configuración y cero datos guardados: no hay cuenta que hackear ni contraseña que recordar.",
+    "note": "~110 palabras"
   }
 }
 ```
 
-**Copy EN (~500 palabras):**
+**Total aproximado en homepage:** ~320 palabras. El FAQ con `<details>/<summary>` (Fase 2, item 2.9) añade ~150-200 palabras adicionales indexables, alcanzando las 500+ palabras objetivo al completar Fase 2.
+
+**Copy EN (~315 visible words in homepage with Phase 1; ~500+ after adding FAQ in Phase 2):**
 
 ```json
 {
   "about": {
     "title": "What is TmpMail?",
-    "body": "TmpMail is a temporary, disposable email service that lets you create an email address in seconds — no registration, no password required. Each generated address is unique, fully functional, and automatically expires after 10 minutes. It's the perfect tool for protecting your online privacy: use it to sign up for websites, test applications, receive verification codes, or any situation where you don't want to share your real email. TmpMail stores no personal data, requires no identity verification, and shows no ads. Your privacy is the priority."
+    "body": "TmpMail is a free temporary, disposable email service that lets you create an email address in seconds — no registration, no password required. Each generated address is unique, fully functional, and automatically expires after 10 minutes. It's the perfect tool for protecting your online privacy: use it to sign up for websites you don't fully trust, test applications, receive one-time verification codes, or any situation where you don't want to share your real email. Unlike traditional email providers, TmpMail stores no personal data, requires no identity verification, shows no ads, and never sells your information to third parties. When the address expires, all messages are permanently deleted. Your privacy is the priority.",
+    "note": "~105 words"
   },
   "howItWorks": {
-    "title": "How it works",
-    "step1": "Open TmpMail — a unique temporary email address is instantly generated for you.",
-    "step2": "Copy the address and use it wherever you need: forms, sign-ups, verifications.",
-    "step3": "Receive emails in real time directly in TmpMail's inbox.",
-    "step4": "The address expires in 10 minutes. Generate a new one at any time.",
-    "step5": "No spam. No tracking. No data stored."
+    "title": "How TmpMail works",
+    "intro": "Using a temporary email has never been simpler. No app to install, no account to create.",
+    "step1": "Open TmpMail — a unique temporary email address is instantly generated for you. No choices required.",
+    "step2": "Copy the address with one click and use it anywhere you need: sign-up forms, newsletters, account verifications, giveaways, or any service that asks for an email.",
+    "step3": "Receive emails in real time directly in TmpMail's inbox. Messages appear within seconds.",
+    "step4": "Read the email, copy the verification code or link you need. Nothing else to do.",
+    "step5": "The address and all messages expire automatically after 10 minutes. Generate a new one at any time with a single click.",
+    "note": "~110 words"
   },
   "whyUse": {
-    "title": "Why use a temporary email",
-    "reason1": "Protect your primary inbox from spam and marketing lists.",
-    "reason2": "Sign up for websites without revealing your real identity.",
-    "reason3": "Test services and applications safely.",
-    "reason4": "Receive verification codes without compromising your privacy.",
-    "reason5": "Avoid cross-site tracking based on your email address.",
-    "reason6": "Zero setup: no account to create, no password to remember."
+    "title": "Why use a disposable temporary email",
+    "intro": "Your email address is the gateway to spam, tracking, and privacy breaches. A temporary email closes that door.",
+    "reason1": "Keep your main inbox free from spam and unwanted marketing emails.",
+    "reason2": "Sign up for websites and apps without revealing your real identity or personal email.",
+    "reason3": "Test paid services, demos, and trials without exposing your primary account.",
+    "reason4": "Receive one-time verification codes without the site storing your email permanently.",
+    "reason5": "Avoid cross-site tracking that uses your email as a unique identifier.",
+    "reason6": "Zero setup, zero data stored: no account to hack, no password to remember.",
+    "note": "~110 words"
   }
 }
 ```
+
+**Total aproximado en homepage:** ~325 words. The FAQ with `<details>/<summary>` (Phase 2, item 2.9) adds ~150-200 additional indexable words, reaching the 500+ word target after Phase 2 is complete.
 
 **Archivos:** `app/[locale]/page.tsx`, `messages/es.json`, `messages/en.json`
 
 ---
 
-### 1.5 — Configuración Cloudflare CDN (Spec 1.1)
+### 1.5 — Verificar ISR y añadir revalidation en homepage (Spec 3.3)
+
+**Problema:** El TTFB del origen es ~695-858ms. Si el ISR (Incremental Static Regeneration) no está configurado en la homepage, cada visita regenera el HTML en el servidor.
+
+**Solución:**
+1. Verificar que el header `x-nextjs-cache: HIT` llega en respuestas subsiguientes: `curl -I https://tmpmailio.com/es | grep x-nextjs-cache`
+2. Si no hay cache HIT, añadir en la homepage:
+   ```ts
+   // apps/frontend/app/[locale]/page.tsx
+   export const revalidate = 3600; // revalidar cada hora
+   ```
+3. Si el origen sigue lento con ISR activo, evaluar migrar el servidor de Brasil a Europa (la audiencia objetivo es hispanohablante global, no solo Brasil).
+
+**Archivos:** `apps/frontend/app/[locale]/page.tsx`
+
+---
+
+### 1.6 — Configuración Cloudflare CDN (Spec 1.1)
 
 **Tipo:** Infraestructura (instrucciones manuales)
 **Impacto:** TTFB 695ms → <100ms para usuarios fuera de Brasil.
@@ -205,7 +243,7 @@ Se genera archivo `docs/infra/cloudflare-setup.md` con instrucciones detalladas.
 
 ---
 
-### 1.6 — Security headers en nginx (Spec 2.1)
+### 1.7 — Security headers en nginx (Spec 2.1)
 
 **Tipo:** Infraestructura (archivo de config nginx)
 
@@ -234,14 +272,21 @@ Se genera archivo `docs/infra/nginx-security.conf` listo para incluir.
 
 ### 2.1 — Eliminar Framer Motion completamente (Spec 13.1)
 
-Fase 1 ya eliminó las instancias del hero. Fase 2 completa la migración:
+Fase 1 ya eliminó el `motion.div` del mailbox. Fase 2 completa la migración eliminando los usos restantes conocidos:
 
-- Identificar todos los usos restantes de `motion.*` en el codebase.
-- Reemplazar con CSS animations o transiciones nativas.
-- `npm uninstall framer-motion` una vez sin ningún import.
-- Ahorro: **172 KB** del bundle JS.
+**Archivos con imports de `framer-motion` a migrar:**
+- `apps/frontend/components/FAQ/FAQAccordion.tsx` — usa `motion` y `AnimatePresence` para la animación de apertura/cierre del accordion. Como el item 2.9 reemplaza el accordion con `<details>/<summary>`, este archivo queda sin usos de Framer Motion.
+- `apps/frontend/components/ui/QRModal.tsx` — usa `motion` para el fade-in del modal. Reemplazar con CSS `@keyframes fadeIn` + clase `.animate-fade-in`.
 
-**Archivos:** Todos los componentes que importen `framer-motion`.
+**Pasos:**
+1. Verificar no quedan imports: `grep -r "framer-motion" apps/frontend/`
+2. Reemplazar animaciones restantes con CSS.
+3. `npm uninstall framer-motion` (desde `apps/frontend/`).
+4. Build y verificar que no hay errores.
+
+**Ahorro: ~172 KB** del bundle JS.
+
+**Archivos:** `apps/frontend/components/FAQ/FAQAccordion.tsx`, `apps/frontend/components/ui/QRModal.tsx`, `apps/frontend/package.json`.
 
 ---
 
@@ -260,20 +305,39 @@ No requiere cambios en componentes. Next.js realiza tree-shaking automático.
 
 ---
 
-### 2.3 — Cambiar redirect raíz a 308 permanente (Spec 4.1)
+### 2.3 — Cambiar redirect raíz a 301 permanente (Spec 4.1)
 
 **Problema:** `https://tmpmailio.com/` → `/es` vía 307 temporal basado en cookie `NEXT_LOCALE`. Google no transfiere link equity con 307.
 
-**Solución en middleware.ts:**
+**Nota sobre el status code:** El audit recomienda 301. Se usa 301 (no 308) para máxima compatibilidad con crawlers que no siguen 308.
+
+**Solución:** El middleware actual usa `createMiddleware` de `next-intl`, que detecta el locale desde la cookie y hace el redirect automáticamente como 307. Para convertirlo a 301 permanente sin depender de la cookie, hay que interceptar la ruta raíz **antes** de que `createMiddleware` la procese:
+
 ```ts
-// Redirigir siempre a /en como x-default, sin depender de cookie
-if (pathname === '/') {
-  return NextResponse.redirect(new URL('/en', req.url), 308);
+// middleware.ts
+import { NextRequest, NextResponse } from 'next/server';
+import createMiddleware from 'next-intl/middleware';
+
+const intlMiddleware = createMiddleware({ /* config existente */ });
+
+export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  // Interceptar raíz ANTES de next-intl para redirect permanente
+  if (pathname === '/') {
+    return NextResponse.redirect(new URL('/en', request.url), 301);
+  }
+
+  return intlMiddleware(request);
 }
+
+export const config = {
+  matcher: ['/((?!api|_next|.*\\..*).*)'],
+};
 ```
 
-**Archivos:** `middleware.ts`
-**Verificación:** `curl -I https://tmpmailio.com/ | grep -i "location\|status"`
+**Archivos:** `apps/frontend/middleware.ts`
+**Verificación:** `curl -I https://tmpmailio.com/ | grep -i "location\|301"`
 
 ---
 
@@ -361,7 +425,7 @@ Añadir dos bloques JSON-LD al layout raíz (independiente del locale):
 **Organization** (mejorar el existente):
 - Añadir `logo` (512x512 PNG), `contactPoint`, `sameAs` (redes sociales si existen).
 
-**Archivos:** `app/[locale]/layout.tsx`
+**Archivos:** `apps/frontend/app/layout.tsx` (el layout raíz, fuera de la carpeta `[locale]`, para que se renderice una sola vez para todo el sitio y no se duplique en cada locale).
 
 ---
 
@@ -378,7 +442,7 @@ Añadir dos bloques JSON-LD al layout raíz (independiente del locale):
 ```
 
 **Beneficios:** Sin JS necesario, accesible por defecto, Google indexa el contenido.
-**Archivos:** Componente FAQ (`components/FAQ/` o similar).
+**Archivos:** `apps/frontend/components/FAQ/FAQAccordion.tsx` (mismo archivo que se migra en 2.1 al eliminar Framer Motion — ambos cambios van en el mismo commit).
 
 ---
 
@@ -392,7 +456,17 @@ Se actualiza `docs/infra/nginx-security.conf`.
 
 ---
 
-### 2.11 — Auditoría Socket.IO (Spec 13.3)
+### 2.11 — Investigar fetchPriority="low" en webpack runtime (Spec 3.4)
+
+**Problema:** El runtime chunk de webpack se carga con `fetchPriority="low"`, lo que puede retrasar la hidratación. La configuración `optimizePackageImports` de Lucide (2.2) puede resolver esto como efecto secundario al reducir el número de chunks.
+
+**Acción:** Después de aplicar 2.2, verificar con DevTools Network si el webpack runtime ya no tiene `fetchPriority="low"`. Si persiste, buscar si hay una opción en `next.config.js` para controlarlo o abrir un issue en Next.js.
+
+**Archivo:** `apps/frontend/next.config.js` (si hay fix disponible)
+
+---
+
+### 2.12 — Auditoría Socket.IO (Spec 13.3)
 
 Leer el código de uso de Socket.IO en el codebase e identificar:
 - Qué features específicas de Socket.IO se usan (rooms, namespaces, auto-reconnect, etc.)
@@ -403,6 +477,8 @@ Entregar documento `docs/infra/socketio-audit.md` con:
 - Lista de archivos usando Socket.IO
 - Features usadas
 - Recomendación: migrar / mantener / migrar en Fase 4
+
+---
 
 ---
 
@@ -418,7 +494,7 @@ Entregar documento `docs/infra/socketio-audit.md` con:
 |---|------|-------------|------------|
 | 3.1 | 5.1 | Añadir `x-default` hreflang en `<head>` | `layout.tsx` |
 | 3.2 | 5.3 | Añadir `<LocaleSwitcher>` en header | `layout.tsx` + componente |
-| 3.3 | 6.1 | Sitemap: x-default + subpáginas (privacy, terms) | `sitemap.ts` |
+| 3.3 | 6.1 | Sitemap: x-default + subpáginas (privacy, terms) | `apps/frontend/app/sitemap.ts` |
 | 3.4 | 7.1 | Separar bloques User-Agent en robots.txt + directiva `Sitemap:` | `public/robots.txt` |
 | 3.5 | 4.2 | Redirects `/privacy` y `/terms` de 307 → 301 | `next.config.js` |
 | 3.6 | 9.4 | BreadcrumbList JSON-LD en homepage y subpáginas | `page.tsx`, subpáginas |
@@ -430,7 +506,8 @@ Entregar documento `docs/infra/socketio-audit.md` con:
 | 3.12 | 11.4 | `og:locale` y `og:locale:alternate` en metadata | `layout.tsx` |
 | 3.13 | 12.3 | `aria-label` en botón de refresh + `aria-hidden` en icon | `page.tsx` |
 | 3.14 | 12.4 | Investigar y resolver error 500 del service worker | `public/`, `next.config.js` |
-| 3.15 | 5.2 | Verificar output final `hreflang` (React prop → HTML attr) | verificación |
+
+**Nota de verificación (Spec 5.2):** React convierte automáticamente la prop `hrefLang` → atributo HTML `hreflang`. Next.js `alternates.languages` también genera el atributo correcto. Verificar con `curl https://tmpmailio.com/es | grep hreflang` — si el output es `hreflang="es"` en minúsculas, no hay nada que corregir.
 
 ### Meta titles propuestos
 
@@ -474,26 +551,30 @@ TmpMail is a free temporary email service, built to protect people's privacy onl
 
 ## Estructura de archivos afectados
 
+Todos los paths son relativos a la raíz del repositorio (`/app/`).
+
 ### Crear
 - `docs/infra/cloudflare-setup.md`
 - `docs/infra/nginx-security.conf`
 - `docs/infra/socketio-audit.md`
-- `app/apps/frontend/app/[locale]/about/page.tsx`
+- `apps/frontend/app/[locale]/about/page.tsx`
 
 ### Modificar
-- `app/apps/frontend/app/[locale]/layout.tsx`
-- `app/apps/frontend/app/[locale]/page.tsx`
-- `app/apps/frontend/app/[locale]/privacy/page.tsx`
-- `app/apps/frontend/app/[locale]/terms/page.tsx`
-- `app/apps/frontend/app/globals.css`
-- `app/apps/frontend/app/sitemap.ts`
-- `app/apps/frontend/middleware.ts`
-- `app/apps/frontend/next.config.js`
-- `app/apps/frontend/public/robots.txt`
-- `app/apps/frontend/messages/en.json`
-- `app/apps/frontend/messages/es.json`
-- Componente FAQ
-- Componentes que usen `framer-motion` o `lucide-react`
+- `apps/frontend/app/layout.tsx` ← schemas WebSite + Organization (raíz)
+- `apps/frontend/app/[locale]/layout.tsx`
+- `apps/frontend/app/[locale]/page.tsx`
+- `apps/frontend/app/[locale]/privacy/page.tsx`
+- `apps/frontend/app/[locale]/terms/page.tsx`
+- `apps/frontend/app/globals.css`
+- `apps/frontend/app/sitemap.ts`
+- `apps/frontend/middleware.ts`
+- `apps/frontend/next.config.js`
+- `apps/frontend/public/robots.txt`
+- `apps/frontend/messages/en.json`
+- `apps/frontend/messages/es.json`
+- `apps/frontend/components/FAQ/FAQAccordion.tsx`
+- `apps/frontend/components/ui/QRModal.tsx`
+- Componentes que importen `lucide-react`
 
 ---
 
@@ -531,8 +612,8 @@ curl -I https://tmpmailio.com/es | grep -iE "strict-transport|x-frame|x-content-
 ```bash
 # Framer Motion eliminado del bundle
 # (verificar con next build output y bundle analyzer)
-# Redirect 308
-curl -I https://tmpmailio.com/ | grep -i "location\|301\|308"
+# Redirect 301
+curl -I https://tmpmailio.com/ | grep -i "location\|301"
 # Schema WebApplication correcto
 curl -s https://tmpmailio.com/es | python3 -m json.tool | grep -i "tmpmailio.com/es"
 ```
