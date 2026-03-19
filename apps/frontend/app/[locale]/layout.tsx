@@ -73,8 +73,6 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
   }
 }
 
-export const revalidate = 3600 // revalidar cada hora
-
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }))
 }
@@ -95,7 +93,7 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
         <link rel="preconnect" href={process.env.NEXT_PUBLIC_SOCKET_URL ?? "https://api.tmpmailio.com"} />
         <link rel="dns-prefetch" href={process.env.NEXT_PUBLIC_SOCKET_URL ?? "https://api.tmpmailio.com"} />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

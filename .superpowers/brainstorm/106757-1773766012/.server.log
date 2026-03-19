@@ -4,3 +4,4 @@
 {"source":"user-event","type":"click","text":"// opción A — Glitch + minimal\n      \n        \n          // error\n          404\n          Esta página no existe.\n          ← Volver al inicio\n        \n      \n    \n    404 grande con efecto glitch · botón de regreso","choice":"a","id":null,"timestamp":1773766527785}
 {"type":"screen-added","file":"/app/.superpowers/brainstorm/106757-1773766012/legal-pages.html"}
 {"type":"screen-added","file":"/app/.superpowers/brainstorm/106757-1773766012/waiting.html"}
+{"type":"server-stopped","reason":"idle timeout"}

@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react"
 import { Copy, Check, RefreshCw, QrCode, Trash2 } from "lucide-react"
 import { useTranslations, useLocale } from "next-intl"
+import { buildFaqSchema } from "@/lib/schema/faq"
 import { useMailbox } from "@/hooks/useMailbox"
 import { useSocket } from "@/hooks/useSocket"
 import { useClipboard } from "@/hooks/useClipboard"
@@ -51,6 +52,7 @@ export default function HomePage() {
   const t = useTranslations("hero")
   const tAbout = useTranslations("about")
   const tSeo = useTranslations("seoContent")
+  const tToast = useTranslations("toast")
   const locale = useLocale()
   const {
     mailbox,
@@ -62,6 +64,7 @@ export default function HomePage() {
     selectEmail,
     clearSelectedEmail,
     loadEmails,
+    showToast,
   } = useMailbox()
 
   useSocket()
@@ -270,7 +273,13 @@ export default function HomePage() {
                 </div>
 
                 {/* Timer */}
-                <ExpirationTimer expiresAt={new Date(mailbox.expiresAt)} />
+                <ExpirationTimer
+                  expiresAt={new Date(mailbox.expiresAt)}
+                  onExpired={async () => {
+                    await createMailbox()
+                    showToast(tToast("mailboxRenewed"))
+                  }}
+                />
 
                 {/* Trust badge */}
                 <p className="text-xs" style={{ color: "var(--text-secondary)" }}>
@@ -508,6 +517,10 @@ export default function HomePage() {
             },
           }),
         }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildFaqSchema(locale as "es" | "en")) }}
       />
     </div>
   )

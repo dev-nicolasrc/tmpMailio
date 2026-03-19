@@ -156,7 +156,19 @@
       "s3Title": "Servicios de terceros",
       "s3Body": "TmpMail utiliza la API de Mail.tm para recibir correos. Consulta la política de privacidad de Mail.tm para más información sobre el tratamiento de datos en su plataforma.",
       "s4Title": "Contacto",
-      "s4Body": "Para cualquier consulta sobre privacidad, escríbenos a contacto@tmpmailio.com."
+      "s4Body": "Para cualquier consulta sobre privacidad, escríbenos a contacto@tmpmailio.com.",
+      "responsibleTitle": "Responsable del tratamiento",
+      "responsibleBody": "El responsable del tratamiento de los datos es TmpMailio, servicio disponible desde 2024. Puedes contactarnos en contacto@tmpmailio.com para cualquier consulta relacionada con el tratamiento de tus datos personales.",
+      "legalBasisTitle": "Marco legal aplicable",
+      "legalBasisBody": "Este servicio opera bajo el Reglamento General de Protección de Datos (RGPD, UE 2016/679) y la Ley Orgánica de Protección de Datos Personales y garantía de los derechos digitales (LOPDGDD, España). Al usar TmpMail, aceptas que el tratamiento de los datos descritos en esta política es necesario para la prestación del servicio.",
+      "cookiesTitle": "Cookies",
+      "cookiesBody": "TmpMail no utiliza cookies de rastreo, publicidad ni analítica. Únicamente se usa localStorage del navegador para recordar la preferencia de tema (claro/oscuro) y las opciones de dominio seleccionadas. Estos datos nunca se transmiten a nuestros servidores.",
+      "rightsTitle": "Tus derechos",
+      "rightsBody": "En virtud del RGPD, tienes derecho de acceso, rectificación, supresión (\"derecho al olvido\"), portabilidad y oposición al tratamiento de tus datos. Dado que TmpMail no almacena ningún dato identificativo asociado a ti, el ejercicio de estos derechos es automático: al expirar tu buzón, todos los datos asociados se eliminan permanentemente. Para consultas adicionales, escríbenos a contacto@tmpmailio.com.",
+      "internationalTitle": "Transferencias internacionales",
+      "internationalBody": "Los servidores de TmpMail están ubicados en la Unión Europea. No realizamos transferencias de datos a terceros países fuera del Espacio Económico Europeo. El proveedor de infraestructura de correo (Mail.tm) opera bajo legislación de la UE.",
+      "modificationsTitle": "Modificaciones de esta política",
+      "modificationsBody": "Nos reservamos el derecho de actualizar esta política de privacidad para reflejar cambios en el servicio o en la legislación aplicable. La fecha de última actualización aparece en la cabecera de este documento. El uso continuado del servicio tras una modificación implica la aceptación de los nuevos términos."
     },
     "terms": {
       "title": "Términos",
@@ -175,7 +187,12 @@
       "messageLabel": "Mensaje",
       "messagePlaceholder": "Describe tu consulta (mínimo 20 caracteres)...",
       "send": "Enviar →",
-      "subjects": ["Problema técnico", "Sugerencia", "Abuso o spam", "Otro"]
+      "subjects": [
+        "Problema técnico",
+        "Sugerencia",
+        "Abuso o spam",
+        "Otro"
+      ]
     }
   }
 }

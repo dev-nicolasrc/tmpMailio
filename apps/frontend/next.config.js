@@ -13,13 +13,21 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ["lucide-react"],
   },
-  async redirects() {
+  // Bare-path locale redirects (/privacy, /terms, etc.) are handled by middleware
+  // with language detection — removed hardcoded /en redirects from here.
+  async headers() {
     return [
-      // Redirect bare /privacy and /terms to locale-prefixed versions (301 permanent)
-      { source: "/privacy", destination: "/en/privacy", permanent: true },
-      { source: "/terms", destination: "/en/terms", permanent: true },
-      { source: "/contact", destination: "/en/contact", permanent: true },
-      { source: "/about", destination: "/en/about", permanent: true },
+      {
+        // Prevent browsers and CDNs from caching HTML pages.
+        // _next/static/ assets use content-based hashes so they can stay immutable.
+        source: "/((?!_next/static|_next/image|favicon.ico|icons|sounds|manifest.json).*)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "no-store, no-cache, must-revalidate",
+          },
+        ],
+      },
     ]
   },
 }

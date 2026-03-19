@@ -41,9 +41,11 @@ export function InboxPanel({ emails, selectedId, onSelect, onRefresh, isLoading 
   const [readIds, setReadIds] = useState<Set<string>>(new Set())
   const [refreshing, setRefreshing] = useState(false)
   const [notifPermission, setNotifPermission] = useState<NotificationPermission>("default")
+  const [supportsNotifications, setSupportsNotifications] = useState(false)
 
   useEffect(() => {
-    if (typeof window !== "undefined" && "Notification" in window) {
+    if ("Notification" in window) {
+      setSupportsNotifications(true)
       setNotifPermission(Notification.permission)
     }
   }, [])
@@ -94,7 +96,7 @@ export function InboxPanel({ emails, selectedId, onSelect, onRefresh, isLoading 
           )}
         </div>
         <div className="flex items-center gap-1">
-          {typeof window !== "undefined" && "Notification" in window && (
+          {supportsNotifications && (
             <button
               onClick={handleNotifClick}
               disabled={notifPermission === "denied"}

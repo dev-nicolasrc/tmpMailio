@@ -23,12 +23,12 @@
   --bg-primary:     #F0ECE4;
   --bg-secondary:   #FAFAF7;
   --bg-tertiary:    #E4E0D8;
-  --accent-primary: #5C8000;
-  --accent-secondary: #5C8000;
-  --accent-dim:     rgba(92, 128, 0, 0.08);
+  --accent-primary: #456500;
+  --accent-secondary: #456500;
+  --accent-dim:     rgba(69, 101, 0, 0.08);
   --text-primary:   #111111;
   --text-secondary: #888880;
-  --success:        #5C8000;
+  --success:        #456500;
   --danger:         #CC2222;
   --border:         #D8D3CA;
   --border-mid:     #C0BAB0;

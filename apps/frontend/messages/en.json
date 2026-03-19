@@ -156,7 +156,19 @@
       "s3Title": "Third-party services",
       "s3Body": "TmpMail uses the Mail.tm API to receive emails. Please review Mail.tm's privacy policy for information about data handling on their platform.",
       "s4Title": "Contact",
-      "s4Body": "For any privacy-related inquiries, contact us at contacto@tmpmailio.com."
+      "s4Body": "For any privacy-related inquiries, contact us at contacto@tmpmailio.com.",
+      "responsibleTitle": "Data Controller",
+      "responsibleBody": "The data controller is TmpMailio, a service available since 2024. You can contact us at contacto@tmpmailio.com for any inquiries related to the processing of your personal data.",
+      "legalBasisTitle": "Legal Basis",
+      "legalBasisBody": "This service operates under the General Data Protection Regulation (GDPR, EU 2016/679). By using TmpMail, you acknowledge that the processing of data described in this policy is necessary for the provision of the service.",
+      "cookiesTitle": "Cookies",
+      "cookiesBody": "TmpMail does not use tracking, advertising, or analytics cookies. Only browser localStorage is used to remember your theme preference (light/dark) and selected domain options. This data is never transmitted to our servers.",
+      "rightsTitle": "Your Rights",
+      "rightsBody": "Under the GDPR, you have the right to access, rectify, erase (\"right to be forgotten\"), port, and object to the processing of your data. Since TmpMail stores no identifiable data linked to you, these rights are automatically exercised: when your mailbox expires, all associated data is permanently deleted. For additional inquiries, contact us at contacto@tmpmailio.com.",
+      "internationalTitle": "International Transfers",
+      "internationalBody": "TmpMail servers are located in the European Union. We do not transfer data to third countries outside the European Economic Area. Our email infrastructure provider (Mail.tm) operates under EU legislation.",
+      "modificationsTitle": "Policy Changes",
+      "modificationsBody": "We reserve the right to update this privacy policy to reflect changes in the service or applicable law. The date of the last update appears at the top of this document. Continued use of the service after a change implies acceptance of the new terms."
     },
     "terms": {
       "title": "Terms",
@@ -175,7 +187,12 @@
       "messageLabel": "Message",
       "messagePlaceholder": "Describe your inquiry (minimum 20 characters)...",
       "send": "Send →",
-      "subjects": ["Technical issue", "Suggestion", "Abuse or spam", "Other"]
+      "subjects": [
+        "Technical issue",
+        "Suggestion",
+        "Abuse or spam",
+        "Other"
+      ]
     }
   }
 }

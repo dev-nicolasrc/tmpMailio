@@ -22,10 +22,16 @@ export default async function PrivacyPage({ params: { locale } }: Props) {
   const t = await getTranslations({ locale, namespace: "legal" })
 
   const sections = [
-    { title: t("privacy.s1Title"), body: t("privacy.s1Body") },
-    { title: t("privacy.s2Title"), body: t("privacy.s2Body") },
-    { title: t("privacy.s3Title"), body: t("privacy.s3Body") },
-    { title: t("privacy.s4Title"), body: t("privacy.s4Body") },
+    { title: t("privacy.responsibleTitle"), body: t("privacy.responsibleBody") },
+    { title: t("privacy.legalBasisTitle"),  body: t("privacy.legalBasisBody") },
+    { title: t("privacy.s1Title"),          body: t("privacy.s1Body") },
+    { title: t("privacy.s2Title"),          body: t("privacy.s2Body") },
+    { title: t("privacy.cookiesTitle"),     body: t("privacy.cookiesBody") },
+    { title: t("privacy.rightsTitle"),      body: t("privacy.rightsBody") },
+    { title: t("privacy.s3Title"),          body: t("privacy.s3Body") },
+    { title: t("privacy.internationalTitle"), body: t("privacy.internationalBody") },
+    { title: t("privacy.modificationsTitle"), body: t("privacy.modificationsBody") },
+    { title: t("privacy.s4Title"),          body: t("privacy.s4Body") },
   ]
 
   return (

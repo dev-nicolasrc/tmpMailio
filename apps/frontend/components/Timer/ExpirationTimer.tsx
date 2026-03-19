@@ -15,10 +15,12 @@ export function ExpirationTimer({ expiresAt, onExpired }: ExpirationTimerProps) 
   const totalMs = 10 * 60 * 1000
   const [remaining, setRemaining] = useState(0)
   const warnedRef = useRef(false)
+  const expiredRef = useRef(false)
 
-  // Reset warning flag when a new mailbox is set
+  // Reset flags when a new mailbox is set
   useEffect(() => {
     warnedRef.current = false
+    expiredRef.current = false
   }, [expiresAt])
 
   useEffect(() => {
@@ -26,7 +28,10 @@ export function ExpirationTimer({ expiresAt, onExpired }: ExpirationTimerProps) 
       const ms = new Date(expiresAt).getTime() - Date.now()
       if (ms <= 0) {
         setRemaining(0)
-        onExpired?.()
+        if (!expiredRef.current) {
+          expiredRef.current = true
+          onExpired?.()
+        }
         return
       }
       setRemaining(ms)
