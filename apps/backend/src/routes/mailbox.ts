@@ -32,33 +32,44 @@ router.post("/create", createMailboxLimiter, async (req: Request, res: Response)
     res.status(201).json({ mailbox })
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Failed to create mailbox"
-    res.status(400).json({ error: message })
+    const status = message.includes("429") ? 429 : 400
+    res.status(status).json({ error: message })
   }
 })
 
 // DELETE /api/mailbox/:id
 router.delete("/:id", async (req: Request, res: Response) => {
-  const { id } = req.params
-  const mailbox = await getMailboxById(id)
-  if (!mailbox) {
-    res.status(404).json({ error: "Mailbox not found" })
-    return
+  try {
+    const { id } = req.params
+    const mailbox = await getMailboxById(id)
+    if (!mailbox) {
+      res.status(404).json({ error: "Mailbox not found" })
+      return
+    }
+    await deleteMailbox(id)
+    getIO().to(id).emit("mailbox_deleted", { mailboxId: id })
+    res.status(204).send()
+  } catch (err) {
+    console.error("[Mailbox] DELETE error:", err)
+    res.status(500).json({ error: "Failed to delete mailbox" })
   }
-  await deleteMailbox(id)
-  getIO().to(id).emit("mailbox_deleted", { mailboxId: id })
-  res.status(204).send()
 })
 
 // GET /api/mailbox/:id/emails
 router.get("/:id/emails", async (req: Request, res: Response) => {
-  const { id } = req.params
-  const creds = await getMailboxToken(id)
-  if (!creds) {
-    res.status(404).json({ error: "Mailbox not found" })
-    return
+  try {
+    const { id } = req.params
+    const creds = await getMailboxToken(id)
+    if (!creds) {
+      res.status(404).json({ error: "Mailbox not found" })
+      return
+    }
+    const emails = await getEmailsByMailbox(id, creds.token)
+    res.json({ emails })
+  } catch (err) {
+    console.error("[Mailbox] GET emails error:", err)
+    res.status(500).json({ error: "Failed to fetch emails" })
   }
-  const emails = await getEmailsByMailbox(id, creds.token)
-  res.json({ emails })
 })
 
 export default router

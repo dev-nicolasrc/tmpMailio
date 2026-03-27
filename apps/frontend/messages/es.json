@@ -43,27 +43,27 @@
     "items": [
       {
         "q": "¿Qué es un correo temporal?",
-        "a": "Un correo temporal o desechable es una dirección de email que se autodestruye después de un tiempo. Es ideal para registrarte en sitios web sin revelar tu email real ni recibir spam."
+        "a": "Un correo temporal o desechable es una dirección de email que se autodestruye después de un tiempo. Las direcciones de TmpMail expiran en 10 minutos por defecto, eliminando todos los mensajes automáticamente. Son perfectas para registrarte en sitios web sin revelar tu email real ni recibir spam."
       },
       {
         "q": "¿Es seguro usar un correo desechable?",
-        "a": "Sí, es seguro para el uso previsto: evitar spam y proteger tu privacidad. No lo uses para información sensible, ya que cualquier persona con el enlace puede ver los correos."
+        "a": "Sí, es seguro para el uso previsto: evitar spam y proteger tu privacidad. TmpMail no almacena direcciones IP, no requiere registro y no usa cookies de rastreo. No lo uses para información sensible, ya que cualquier persona con el enlace puede ver los correos."
       },
       {
         "q": "¿Cuánto tiempo dura el correo temporal?",
-        "a": "Por defecto dura 10 minutos. Cada correo que recibes añade 5 minutos extra automáticamente. También puedes generar uno nuevo en cualquier momento."
+        "a": "Por defecto cada buzón dura 10 minutos. Cada correo que recibes añade 5 minutos extra automáticamente, por lo que los buzones activos permanecen abiertos más tiempo. También puedes ampliar manualmente el buzón o generar uno nuevo en cualquier momento con un solo clic."
       },
       {
         "q": "¿Puedo recibir archivos adjuntos?",
-        "a": "Sí, puedes recibir archivos adjuntos de hasta 5 MB. Los archivos quedan disponibles mientras el buzón esté activo."
+        "a": "Sí, puedes recibir archivos adjuntos de hasta 5 MB por mensaje. Los archivos se almacenan en memoria Redis y quedan disponibles mientras el buzón esté activo. Se eliminan de forma permanente junto con el buzón cuando este expira."
       },
       {
         "q": "¿Para qué sirve un correo temporal?",
-        "a": "Es útil para registros en foros, descargas de software, trials de servicios, evitar listas de email marketing y proteger tu identidad online."
+        "a": "Es útil para registros en foros y comunidades, descargas de versiones de prueba de software, activaciones de servicios gratuitos, recepción de códigos de verificación de un solo uso, evitar listas de email marketing, probar aplicaciones web y proteger tu identidad online en sitios en los que no confías plenamente."
       },
       {
         "q": "¿Mis correos son privados?",
-        "a": "No almacenamos direcciones IP. Los correos se eliminan automáticamente al expirar el buzón. Sin embargo, no uses este servicio para información confidencial."
+        "a": "Sí. TmpMail no registra direcciones IP ni requiere ningún dato personal para usar el servicio. Los correos se almacenan exclusivamente en memoria Redis a través de la integración con la API de Mail.tm y se eliminan automáticamente cuando el buzón expira a los 10 minutos. No uses este servicio para comunicaciones confidenciales o con relevancia legal."
       }
     ]
   },
@@ -118,10 +118,402 @@
         "Evita el rastreo entre sitios que usan el email como identificador único.",
         "Cero configuración y cero datos guardados: no hay cuenta que hackear ni contraseña que recordar."
       ]
+    },
+    "whoUses": {
+      "title": "Quién usa TmpMail",
+      "items": [
+        {
+          "title": "Desarrolladores e ingenieros",
+          "body": "Los desarrolladores usan TmpMail para probar flujos de registro, pipelines de entrega de email y secuencias de onboarding sin llenar su bandeja real de mensajes de prueba. Al construir o auditar una aplicación web, necesitas disparar correos de verificación decenas de veces: TmpMail te permite hacerlo en segundos con una dirección nueva cada vez, sin ninguna limpieza posterior."
+        },
+        {
+          "title": "Freelancers y consultores",
+          "body": "Los freelancers se registran con frecuencia en herramientas de gestión de proyectos, portales de clientes y plataformas SaaS para compromisos a corto plazo. Usar un correo temporal para cuentas de prueba mantiene su bandeja profesional limpia y evita un aluvión interminable de newsletters de herramientas que usaron una sola vez."
+        },
+        {
+          "title": "Usuarios preocupados por su privacidad",
+          "body": "Quien toma en serio su privacidad digital sabe que compartir un email real es el primer paso para ser rastreado en toda la web. TmpMail proporciona una dirección que no puede cruzarse con otras cuentas, lo que significa que los data brokers, los anunciantes y las plataformas de analítica no obtienen ningún punto de apoyo sobre tu identidad."
+        },
+        {
+          "title": "Estudiantes e investigadores",
+          "body": "Los estudiantes necesitan acceder con frecuencia a recursos académicos, plataformas de cursos online o herramientas de investigación que requieren registro por email. TmpMail les permite acceder a contenido restringido, descargar documentos técnicos o activar licencias educativas gratuitas sin comprometer su correo universitario o personal en otra lista de correo más."
+        },
+        {
+          "title": "Periodistas y activistas",
+          "body": "Los periodistas que investigan temas sensibles y los activistas que operan en entornos de riesgo necesitan recopilar información de sitios web y foros sin dejar rastros digitales identificables. TmpMail genera direcciones que nunca se vinculan a ninguna identidad, ayudando a estos usuarios a investigar, registrarse y comunicarse con mayor seguridad."
+        }
+      ]
+    },
+    "comparison": {
+      "title": "TmpMail frente a otras soluciones de privacidad de email",
+      "body": "Las cuentas de email tradicionales de proveedores como Gmail u Outlook requieren un registro completo de identidad, almacenan tus datos indefinidamente y rastrean el uso en todo su ecosistema. Los servicios de alias de email como SimpleLogin o Hide My Email de Apple son potentes, pero requieren configurar una cuenta, pagar una suscripción y siguen enrutando el correo a través de tu bandeja real. Otros servicios de correo temporal como Guerrilla Mail, Temp-Mail.org y 10MinuteMail ofrecen direcciones desechables, pero muchos registran direcciones IP, muestran publicidad intrusiva o imponen límites de uso estrictos. TmpMail adopta un enfoque diferente: sin registro, sin publicidad, sin registro de IP y sin almacenamiento permanente de ningún tipo. Los correos se guardan en memoria Redis únicamente durante el tiempo de vida del buzón y se eliminan automáticamente al expirar. A diferencia de los servicios de alias, las direcciones de TmpMail no tienen ninguna conexión con ninguna cuenta existente: son completamente anónimas por diseño. Para registros puntuales, activaciones de prueba y códigos de verificación, TmpMail ofrece el flujo más rápido y respetuoso con la privacidad disponible."
+    }
+  },
+  "useCases": {
+    "correo-temporal-para-registros-web": {
+      "title": "Correo Temporal para Registros Web — Sin Spam",
+      "description": "Regístrate en cualquier sitio web con un correo temporal gratuito. Sin revelar tu email real. Protege tu bandeja de entrada del spam en segundos.",
+      "intro": "Cada vez que te registras en un nuevo sitio web, tu email real se añade a listas de marketing, se vende a data brokers y queda expuesto a posibles brechas de seguridad. TmpMail te da una dirección temporal completamente funcional que está lista en segundos: sin instalación, sin cuenta, sin contraseña. Abre TmpMail, copia tu dirección, pégala en el formulario de registro, recibe el email de verificación y completa el registro. La dirección temporal expira en 10 minutos y se lleva consigo todo rastro. Tu bandeja principal se mantiene limpia, privada y libre de spam. Ya sea que te estés registrando para un trial de streaming, un foro comunitario, una herramienta SaaS o una oferta puntual, TmpMail te ofrece la misma protección siempre. Funciona con cualquier formulario de registro que acepte direcciones de email estándar y admite la entrega en tiempo real de los códigos de verificación para que no tengas que esperar.",
+      "howTitle": "Cómo usar un correo temporal para registros",
+      "steps": [
+        "Abre TmpMail — tu dirección temporal se genera automáticamente en menos de un segundo, lista para usar sin ninguna configuración.",
+        "Copia la dirección con un clic y pégala en el formulario de registro del sitio web en el que quieras darte de alta.",
+        "Envía el formulario y vuelve a TmpMail. Tu email de verificación llega en segundos mediante entrega en tiempo real por WebSocket.",
+        "Abre el correo, haz clic en el enlace de confirmación o copia el código de verificación y completa tu registro en el sitio de destino.",
+        "Una vez que tengas lo que necesitas, simplemente cierra TmpMail. La dirección y todos los mensajes expiran automáticamente a los 10 minutos, sin dejar ningún rastro."
+      ],
+      "whyTitle": "Por qué usar un correo temporal para registrarte",
+      "whyItems": [
+        "Tu email real nunca queda expuesto al sitio web ni a sus socios externos.",
+        "Cero spam o correos de marketing llegan jamás a tu bandeja principal.",
+        "No se pueden construir cookies de rastreo ni perfiles de comportamiento a partir de una dirección temporal.",
+        "Funciona con cualquier formulario de registro en cualquier sitio web, sin excepción.",
+        "Los códigos de verificación llegan en tiempo real: sin esperas ni demoras.",
+        "Cada dirección es única y no reutilizable, por lo que es imposible correlacionar registros."
+      ],
+      "whySubsections": [
+        {
+          "title": "Detén el spam antes de que empiece",
+          "body": "Los filtros de spam son defensas reactivas: se ocupan del correo no deseado después de que llega. Usar un correo temporal para registros es preventivo: la dirección que recibió la newsletter ya no existe cuando se lanza la primera campaña de marketing. No hay nada que filtrar porque no hay ningún destino al que llegar. Las direcciones de TmpMail expiran en 10 minutos y se eliminan permanentemente de la memoria, lo que las hace inmunes a cualquier futura campaña de spam dirigida a esa dirección."
+        },
+        {
+          "title": "Protégete de las brechas de datos",
+          "body": "Cuando los sitios web sufren brechas de seguridad, tu dirección de email es una de las primeras informaciones expuestas. Si esa dirección es la tuya real, acaba en bases de datos de brechas y listas de spam que te persiguen durante años. Usar TmpMail para registros significa que el email almacenado por el sitio web ya ha expirado y sido eliminado antes de que cualquier brecha pudiera aprovecharlo. Aunque el sitio quede comprometido, la dirección no tiene ningún valor."
+        },
+        {
+          "title": "Una dirección por registro, cada vez",
+          "body": "Como TmpMail genera una dirección única cada vez, no hay riesgo de rastreo entre sitios a través de tu email. Los anunciantes y los data brokers usan las direcciones de correo como identificadores persistentes para vincular tu actividad en distintas plataformas. Con TmpMail, cada registro usa una dirección diferente que expira inmediatamente, haciendo técnicamente imposible la construcción de perfiles entre sitios."
+        }
+      ],
+      "scenarios": [
+        {
+          "title": "Registrarse para un trial gratuito de Netflix",
+          "body": "Netflix y servicios de streaming similares suelen pedir una dirección de email incluso para los trials gratuitos, y de inmediato comienzan a enviar correos promocionales y recordatorios de renovación. Con TmpMail puedes completar la verificación del registro en Netflix con una dirección temporal, disfrutar del trial y no recibir ni un solo correo de seguimiento en tu bandeja real. Cuando termina el trial, no llega ninguna campaña pidiendo que te vuelvas a suscribir."
+        },
+        {
+          "title": "Registrarse en Reddit o en un foro comunitario",
+          "body": "Foros como Reddit y plataformas comunitarias de nicho envían correos de bienvenida, resúmenes de notificaciones y campañas de reactivación periódicas. Registrarse con una dirección de TmpMail significa que recibes el email de activación al instante, confirmas tu cuenta y participas en la comunidad, todo sin que tu email real entre nunca en su base de datos. Si los datos del foro se filtran o se venden posteriormente, tu identidad permanece protegida."
+        },
+        {
+          "title": "Activar una cuenta de educación o prueba en GitHub",
+          "body": "Los desarrolladores crean con frecuencia cuentas secundarias en GitHub para probar pipelines de CI/CD, explorar nuevas configuraciones de organizaciones o evaluar flujos de trabajo de GitHub Actions en aislamiento. TmpMail proporciona el email de verificación necesario para activar esas cuentas al instante, manteniendo las cuentas de prueba completamente separadas de la identidad profesional e impidiendo que GitHub vincule las dos cuentas mediante una dirección de email compartida."
+        }
+      ],
+      "faq": [
+        {
+          "q": "¿Puedo usar un correo temporal para crear cualquier cuenta?",
+          "a": "Sí. Un correo temporal funciona en la mayoría de formularios de registro: foros, tiendas online, servicios de streaming, herramientas SaaS, apps y más. Algunos sitios intentan bloquear dominios de correo temporal conocidos, pero TmpMail ofrece varios dominios a elegir, lo que maximiza la compatibilidad incluso con las plataformas más exigentes."
+        },
+        {
+          "q": "¿Qué pasa si necesito acceder a la cuenta más tarde?",
+          "a": "Un correo temporal no es adecuado para cuentas que vayas a usar a largo plazo, ya que la dirección expira a los 10 minutos. Úsalo para registros puntuales, pruebas o verificaciones donde no necesites acceso futuro al email. Para cuentas a largo plazo, considera actualizar el email registrado a tu dirección real después de completar la verificación."
+        },
+        {
+          "q": "¿Con qué rapidez llegan los emails de verificación?",
+          "a": "Los emails de verificación suelen llegar entre 2 y 10 segundos después de ser enviados. TmpMail usa entrega en tiempo real por WebSocket a través de la API de Mail.tm, por lo que los mensajes aparecen en tu bandeja en el momento en que se reciben, sin necesidad de actualizar la página manualmente."
+        },
+        {
+          "q": "¿Puedo usar TmpMail en el móvil?",
+          "a": "Sí. TmpMail es una aplicación web completamente responsive que funciona en cualquier navegador móvil moderno. No se necesita instalar ninguna app. Abre el sitio en tu teléfono, copia la dirección y úsala en el formulario de registro de cualquier app o sitio web móvil."
+        },
+        {
+          "q": "¿Qué pasa si el correo llega después de los 10 minutos?",
+          "a": "Si tu buzón expira antes de que llegue el email de verificación, tendrás que generar una nueva dirección en TmpMail y reiniciar el proceso de registro. Para evitarlo, comienza el registro justo después de abrir TmpMail. Cada correo recibido también amplía automáticamente el buzón 5 minutos adicionales."
+        }
+      ]
+    },
+    "email-desechable-sin-registro": {
+      "title": "Email Desechable Sin Registro — Gratis y Anónimo",
+      "description": "Crea un email desechable anónimo en segundos, sin registro ni contraseña. Úsalo, recibe el código y olvídalo. Privacidad inmediata.",
+      "intro": "Un email desechable sin registro es la herramienta más eficaz para proteger tu identidad online sin añadir ninguna fricción a tu flujo de trabajo. La mayoría de las herramientas de privacidad te piden que crees otra cuenta más, verifiques otro email o instales una extensión del navegador. TmpMail no te pide nada: abre la página y tu dirección de correo única y completamente anónima está lista en menos de un segundo. Sin formularios, sin contraseñas, sin números de teléfono, sin ningún tipo de dato personal. Úsala para recibir un código de verificación, un enlace de activación, una confirmación de descarga o cualquier email puntual. Una vez que tengas lo que necesitas, simplemente cierra la pestaña. La dirección y todos los mensajes se almacenan únicamente en memoria Redis y se eliminan permanentemente cuando el buzón expira a los 10 minutos. Sin rastros, sin cuenta que gestionar, sin historial que borrar.",
+      "howTitle": "Cómo funciona el email desechable sin registro",
+      "steps": [
+        "Accede a TmpMail — en menos de un segundo tienes una dirección de correo temporal única y anónima lista para usar, sin ningún tipo de registro.",
+        "Copia la dirección y úsala donde la necesites. Ningún sitio te pedirá un número de teléfono, fecha de nacimiento ni contraseña para usar TmpMail.",
+        "Recibe el email en tiempo real. TmpMail usa entrega por WebSocket, por lo que los mensajes aparecen en tu bandeja en segundos desde que se envían.",
+        "Extrae lo que necesitas del email: un código de verificación, un enlace de descarga, un cupón o un mensaje de confirmación.",
+        "Cierra la pestaña. El buzón se destruye a los 10 minutos, llevándose consigo todos los mensajes y sin dejar ningún registro de que la dirección existió."
+      ],
+      "whyTitle": "Ventajas del email desechable sin registro",
+      "whyItems": [
+        "Cero datos personales recopilados: ni nombre, ni teléfono, ni dirección IP.",
+        "Disponible al instante sin formularios de activación, sin periodos de espera ni pasos de aprobación.",
+        "Cada dirección es única, generada aleatoriamente y no reutilizable.",
+        "Eliminación permanente automática garantizada cuando el buzón expira.",
+        "Sin cuenta a la que perder acceso, sin contraseña que restablecer, sin perfil que gestionar.",
+        "Funciona en cualquier dispositivo y navegador sin extensiones ni software adicional."
+      ],
+      "whySubsections": [
+        {
+          "title": "Por qué el anonimato del registro importa para la privacidad",
+          "body": "Registrarse siempre crea un registro. Incluso los servicios comercializados como centrados en la privacidad suelen requerir un email o número de teléfono para crear una cuenta, lo que inmediatamente vincula tu uso a una identidad. TmpMail elimina por completo esta paradoja: no hay capa de registro, no hay base de datos de usuarios y no hay sesión vinculada a ningún identificador. Cada buzón es efímero por arquitectura, no solo por política."
+        },
+        {
+          "title": "La garantía técnica de privacidad",
+          "body": "TmpMail almacena el contenido de los emails exclusivamente en memoria Redis a través de la integración con la API de Mail.tm. No hay escrituras permanentes en disco, no hay registros de base de datos de las direcciones emitidas y no hay registros del servidor de la actividad de los usuarios. Cuando un buzón expira —a los 10 minutos o cuando se elimina manualmente—, las claves de Redis se purgan y los datos desaparecen de forma permanente. Esto no es una política de retención; así es como está construido el sistema."
+        },
+        {
+          "title": "La disponibilidad instantánea como característica",
+          "body": "La velocidad importa. Cuando estás en medio de un proceso de registro, una descarga de software o un proceso de pago y de repente necesitas una dirección de email, una herramienta que requiere su propio registro es inútil. El diseño sin registro de TmpMail significa que una dirección de correo funcional está disponible en menos de un segundo, directamente desde la página de inicio. Sin interrupciones en tu flujo de trabajo, sin gestión de pestañas, sin credenciales de cuenta que recordar."
+        }
+      ],
+      "scenarios": [
+        {
+          "title": "Descargar software sin suscribirse a una lista de correo",
+          "body": "Muchos proveedores de software, incluidos desarrolladores independientes que distribuyen herramientas a través de plataformas como Gumroad o itch.io, piden una dirección de email antes de permitir una descarga. Con TmpMail puedes proporcionar una dirección para desbloquear el enlace de descarga, recibir el email de confirmación en segundos y descargar el archivo, todo sin suscribirte a la newsletter ni a las actualizaciones de producto del desarrollador."
+        },
+        {
+          "title": "Acceder a promociones de fin de semana gratuito en Steam",
+          "body": "Las ofertas promocionales en plataformas de juegos como Steam o Epic Games Store a veces requieren la creación de una cuenta o verificación de email para acceder a trials gratuitos o eventos de fin de semana. Una dirección de TmpMail te permite crear una cuenta secundaria para un trial sin conectarla a tu perfil de juego principal, protegiendo la seguridad de tu cuenta principal y manteniendo tu bandeja libre de seguimientos promocionales."
+        },
+        {
+          "title": "Probar el flujo de onboarding de un SaaS como desarrollador",
+          "body": "Al auditar o desarrollar el flujo de registro y verificación de email de una aplicación web, necesitas generar decenas de cuentas de prueba rápidamente. TmpMail proporciona una dirección de correo nueva y funcional bajo demanda sin limitación de tasa para uso normal, para que puedas probar la secuencia de onboarding completa —registro, email de verificación, activación de cuenta— tantas veces como necesites sin usar direcciones reales ni gestionar una lista de cuentas de prueba."
+        }
+      ],
+      "faq": [
+        {
+          "q": "¿Es verdad que no necesito ningún registro?",
+          "a": "Sí. TmpMail no te pide ningún dato en absoluto: ni nombre, ni email de respaldo, ni teléfono, ni información de pago. Solo abres el sitio y la dirección ya está generada. No existe ninguna cuenta que crear, ninguna sesión que gestionar ni ningún perfil asociado a tu uso."
+        },
+        {
+          "q": "¿Es legal usar un email desechable?",
+          "a": "Sí. Usar un email desechable para fines legítimos —evitar spam, probar servicios, proteger la privacidad, recibir códigos de verificación puntuales— es completamente legal en todas las jurisdicciones principales. No debes usarlo para actividades ilegales o fraudulentas, suplantación de identidad o para eludir la verificación de identidad legalmente obligatoria."
+        },
+        {
+          "q": "¿Pueden dos usuarios recibir la misma dirección temporal?",
+          "a": "No. Cada dirección de TmpMail se genera de forma única y aleatoria. La probabilidad de colisión es insignificante por diseño. Dos usuarios que abran TmpMail al mismo tiempo recibirán dos direcciones completamente diferentes sin ningún solapamiento."
+        },
+        {
+          "q": "¿Qué pasa con mis correos cuando la dirección expira?",
+          "a": "Cuando el buzón expira a los 10 minutos, todos los datos asociados se eliminan permanentemente de la memoria Redis. No hay copia de seguridad, no hay archivo y no hay opción de recuperación. Los datos desaparecen. Esto es intencional: la garantía de eliminación permanente es lo que hace que TmpMail sea de fiar."
+        },
+        {
+          "q": "¿Funciona TmpMail con códigos de autenticación de dos factores (2FA)?",
+          "a": "Sí. Si un servicio envía un código 2FA o de contraseña de un solo uso (OTP) a tu dirección temporal, lo recibirás en la bandeja de TmpMail en segundos. Sin embargo, ten en cuenta que una vez que el buzón expira ya no podrás recibir futuros códigos 2FA en esa dirección, por lo que no es adecuada para cuentas donde se requiere 2FA de forma continua."
+        }
+      ]
+    },
+    "proteger-privacidad-email": {
+      "title": "Protege Tu Privacidad de Email con TmpMail",
+      "description": "Mantén tu email personal privado y seguro. Usa TmpMail para proteger tu identidad en línea y evitar el rastreo por email sin registro.",
+      "intro": "Tu dirección de email es uno de los identificadores más poderosos en internet. Los anunciantes, los data brokers y las plataformas de analítica la usan para rastrearte en diferentes sitios web, construir perfiles de comportamiento detallados y conectar tu actividad online en decenas de servicios sin relación entre sí. Cada registro que haces con tu email real añade otro dato más a esos perfiles. TmpMail rompe esa cadena de forma permanente: genera una dirección temporal que no puede rastrearse hasta tu identidad real, no se almacena en ningún lugar de forma permanente y desaparece a los 10 minutos sin dejar constancia. Sin registro de direcciones IP, sin perfiles de usuario, sin cookies persistentes: solo una dirección de correo funcional que hace su trabajo y se evapora. Usa TmpMail cada vez que un sitio web te pida tu email pero no lo necesite realmente, y reserva tu dirección personal solo para los contactos y servicios que de verdad importan.",
+      "howTitle": "Cómo TmpMail protege tu privacidad de email",
+      "steps": [
+        "Usa TmpMail cada vez que un servicio online te pida tu email: en lugar de dar tu dirección real, das una que no existirá en 10 minutos.",
+        "Completa la verificación o el registro con normalidad. El sitio web almacena una dirección temporal que ya ha expirado antes de que se envíe su primer correo de marketing.",
+        "La dirección temporal expira y se elimina de la memoria. No existe ningún hilo que conecte ese registro con tu identidad real o con cualquier otra cuenta que poseas.",
+        "Dado que TmpMail no registra direcciones IP ni requiere cuenta, no hay metadatos que puedan vincular tu uso de TmpMail contigo.",
+        "Repite esto para cada registro de baja confianza. Con el tiempo, tu dirección de email real queda reservada para los contactos y servicios en los que genuinamente confías."
+      ],
+      "whyTitle": "Por qué TmpMail es la mejor solución para la privacidad",
+      "whyItems": [
+        "Sin registro de direcciones IP: tu ubicación de red nunca queda registrada.",
+        "Las empresas no pueden rastrearte entre sitios usando tu email como identificador.",
+        "Elimina el riesgo de que las brechas de datos expongan tu email real a los spammers.",
+        "Funciona en cualquier dispositivo y navegador sin extensiones, plugins ni apps.",
+        "Cada dirección es completamente independiente: sin conexión con ninguna cuenta existente.",
+        "Las direcciones se eliminan permanentemente al expirar, no simplemente se marcan como inactivas."
+      ],
+      "whySubsections": [
+        {
+          "title": "Cómo funciona el rastreo por email y por qué importa",
+          "body": "Las direcciones de email funcionan como identificadores universales en la web moderna. Cuando te registras en un sitio con tu email real, esa dirección se comparte habitualmente con socios publicitarios, se usa para construir audiencias de retargeting en plataformas como Facebook y Google, y se coteja con bases de datos de data brokers para enriquecer tu perfil con información demográfica. Aunque nunca abras un solo correo de marketing de ese servicio, el simple acto de registro basta para ampliar tu perfil publicitario. TmpMail evita esto desde el principio haciendo que la dirección registrada sea imposible de vincular con tu identidad real."
+        },
+        {
+          "title": "La diferencia entre privacidad y anonimato",
+          "body": "La privacidad significa controlar quién sabe qué sobre ti. El anonimato significa no ser identificable en absoluto. TmpMail proporciona ambos en el contexto del email: el propio servicio no sabe nada de ti (sin IP, sin cuenta), y el sitio web en el que te registras recibe una dirección que no puede rastrearse hasta ninguna persona real. Esta doble protección es lo que diferencia a TmpMail de los servicios de alias, que mejoran la privacidad pero preservan tu identidad subyacente en la base de datos del proveedor de alias."
+        },
+        {
+          "title": "Los beneficios a largo plazo de una identidad de email limpia",
+          "body": "Cuantos menos lugares exista tu dirección de email real, menor será tu superficie de ataque ante el phishing, el relleno de credenciales y los ataques de ingeniería social. Los hackers que obtienen direcciones de email de brechas de datos las usan para intentar iniciar sesión en otras plataformas, enviar correos de phishing dirigidos y construir pretextos de ingeniería social. Al usar TmpMail para cada registro de bajo riesgo, reduces sistemáticamente el número de lugares donde puede encontrarse tu dirección real, lo que directamente reduce tu exposición a estas amenazas a lo largo del tiempo."
+        }
+      ],
+      "scenarios": [
+        {
+          "title": "Registrarse en un evento de un servidor de Discord sin usar tu cuenta real",
+          "body": "Las comunidades de Discord y los servidores de juegos organizan con frecuencia eventos, sorteos y torneos que requieren registro de cuenta. Usar TmpMail para verificar una cuenta secundaria de Discord significa que tu cuenta principal y tu email real permanecen completamente separados de esa actividad. Si la comunidad queda comprometida posteriormente o su lista de miembros se filtra, tu identidad real no está en esos datos."
+        },
+        {
+          "title": "Investigar a la competencia sin dejar huella digital",
+          "body": "Los profesionales de negocios y los emprendedores a menudo necesitan registrarse en productos de la competencia para evaluar su experiencia de usuario, precios y flujos de onboarding. Usar tu email de empresa real para esta investigación crea una huella rastreable que puede detectarse a través de redes publicitarias y analíticas. TmpMail te permite realizar esta investigación con una dirección temporal que no revela nada sobre tu empresa, tu rol ni tus intenciones."
+        },
+        {
+          "title": "Acceder a recursos periodísticos y portales de prensa",
+          "body": "Los portales de prensa, las bases de datos académicas y los recursos de periodismo de investigación suelen restringir su contenido tras un registro por email. Un periodista que investiga un tema sensible puede usar TmpMail para acceder a estos recursos sin dejar un rastro de registros que podría revelar su foco de investigación. La dirección temporal proporciona la verificación necesaria mientras protege la seguridad operacional del periodista."
+        }
+      ],
+      "faq": [
+        {
+          "q": "¿Cómo protege TmpMail mi privacidad mejor que un alias de email?",
+          "a": "Los alias de email como los que proporcionan SimpleLogin o Hide My Email de Apple siguen vinculados a tu cuenta real: el proveedor del alias conoce tu identidad y la relación entre el alias y tu dirección real. TmpMail genera direcciones completamente independientes sin conexión con ninguna cuenta existente y las elimina permanentemente al expirar. No hay ninguna base de datos del proveedor que pueda ser requerida judicialmente o hackeada para revelar tu dirección real."
+        },
+        {
+          "q": "¿TmpMail guarda algún dato sobre mí?",
+          "a": "No. TmpMail no almacena direcciones IP, no requiere registro y no usa cookies de rastreo ni analítica. El contenido de los correos se guarda en memoria Redis únicamente durante el tiempo de vida del buzón —10 minutos por defecto— y se elimina automática y permanentemente al expirar. No hay almacenamiento de respaldo, no hay registros de acceso y no hay base de datos de usuarios."
+        },
+        {
+          "q": "¿Puede usarse TmpMail como prueba de que no recibí un correo?",
+          "a": "No. Dado que TmpMail no conserva ningún registro permanente y elimina todo el contenido a los 10 minutos, no puede usarse para demostrar ni refutar la entrega de ningún mensaje específico. No uses TmpMail para comunicaciones que puedan necesitar ser referenciadas, auditadas o presentadas en un contexto legal o profesional."
+        },
+        {
+          "q": "¿TmpMail cumple con el RGPD?",
+          "a": "Sí. TmpMail opera de conformidad con el RGPD (UE 2016/679) y la LOPDGDD española. Dado que el servicio no recopila datos personales ni almacena información identificable, los derechos de los interesados establecidos por estas normativas (acceso, rectificación, supresión, portabilidad y oposición) se satisfacen automáticamente: sencillamente no hay datos asociados a ninguna persona que acceder, corregir, eliminar o transferir."
+        },
+        {
+          "q": "¿Qué hago si accidentalmente usé mi email real en un sitio poco fiable?",
+          "a": "Si ya has compartido tu email real, considera usar un servicio como HaveIBeenPwned para comprobar si aparece en brechas de datos conocidas. Para futuros registros en sitios poco fiables, usa TmpMail para evitar que vuelva a ocurrir. También puede que quieras configurar una regla de filtro de spam para correos inesperados de ese dominio."
+        }
+      ]
+    },
+    "correo-temporal-redes-sociales": {
+      "title": "Correo Temporal para Redes Sociales — Sin Spam",
+      "description": "Crea cuentas en redes sociales con un correo desechable. Verifica sin exponer tu email real. Fácil, gratis y sin registro en segundos.",
+      "intro": "Las plataformas de redes sociales se encuentran entre los recolectores de datos personales más agresivos de internet. Cuando te registras con tu email real en plataformas como Instagram, Twitter/X, TikTok, Reddit, Pinterest o LinkedIn, esa dirección se usa para construir perfiles publicitarios, rastrearte en la web mediante pixel matching y enviarte un flujo constante de notificaciones y correos de reactivación. Con TmpMail puedes verificar y activar cuentas en redes sociales usando una dirección temporal que expira antes de que cualquier rastreo pueda arraigarse. Recibes el email de confirmación, activas la cuenta y la dirección desaparece, sin más. Tu email personal nunca entra en su base de datos. Ideal para cuentas secundarias, participación anónima en comunidades, pruebas de nuevas plataformas o cualquier situación en la que quieras interactuar en redes sociales sin comprometer tu privacidad ni llenar tu bandeja de notificaciones.",
+      "howTitle": "Cómo crear cuentas en redes sociales con correo temporal",
+      "steps": [
+        "Abre TmpMail y copia tu dirección temporal. Está lista en menos de un segundo sin necesidad de registro.",
+        "Ve a la página de registro de la red social y pega la dirección de TmpMail en el campo de email. Rellena los demás campos obligatorios.",
+        "Envía el formulario de registro y vuelve a TmpMail. Tu email de verificación llegará en segundos mediante entrega en tiempo real.",
+        "Haz clic en el enlace de verificación o introduce el código de confirmación en el flujo de registro de la plataforma social para activar tu cuenta.",
+        "Tu cuenta ya está activa. La dirección de TmpMail expirará en 10 minutos. La plataforma social no tiene ninguna dirección de email real tuya en su sistema."
+      ],
+      "whyTitle": "Ventajas de usar correo temporal en redes sociales",
+      "whyItems": [
+        "Tu email real nunca se almacena en la base de datos de la plataforma social.",
+        "Sin correos de notificación, resúmenes ni campañas de reactivación en tu bandeja personal.",
+        "Perfecto para cuentas de prueba, perfiles secundarios y participación anónima en comunidades.",
+        "Funciona con Instagram, Twitter/X, TikTok, Reddit, Pinterest, LinkedIn y muchas más.",
+        "Evita que las plataformas sociales asocien tu email con perfiles publicitarios en toda la web.",
+        "Si la base de datos de usuarios de la plataforma sufre una brecha, tu email real no está en ella."
+      ],
+      "whySubsections": [
+        {
+          "title": "Cómo las plataformas sociales usan tu email en tu contra",
+          "body": "Las redes sociales usan tu dirección de email para mucho más que la verificación de la cuenta. Tu dirección se hashea y se sube a redes publicitarias para que las plataformas puedan encontrarte en otros sitios y mostrarte anuncios. Se usa para importar listas de contactos: si un amigo sube sus contactos, la plataforma sabe que estáis conectados. También se vende o comparte con data brokers que la agregan con otros registros para construir perfiles exhaustivos. Usar TmpMail para el registro hace que nada de esto sea posible, porque la dirección archivada ya ha desaparecido."
+        },
+        {
+          "title": "Gestionar múltiples cuentas de forma segura",
+          "body": "Muchos usuarios mantienen legítimamente varias cuentas en redes sociales: perfiles profesionales y personales separados, cuentas para distintos proyectos creativos o cuentas seudónimas para comunidades donde la privacidad es sensible. Usar el mismo email real para varias cuentas las hace vinculables. TmpMail proporciona una dirección única e independiente para cada cuenta, haciéndolas operativamente independientes y protegiendo la identidad principal del usuario de ser asociada con ninguna de ellas."
+        },
+        {
+          "title": "Cuando la plataforma bloquea dominios de correo temporal",
+          "body": "Algunas plataformas sociales intentan bloquear registros desde dominios de correo temporal conocidos. TmpMail aborda esto ofreciendo varios dominios a elegir. Si un dominio es bloqueado, cambiar a otro en el selector de dominio de TmpMail lleva un solo clic, y puedes generar inmediatamente una nueva dirección en un dominio que la plataforma acepte. Esto garantiza una alta compatibilidad incluso con plataformas que filtran activamente las direcciones desechables."
+        }
+      ],
+      "scenarios": [
+        {
+          "title": "Crear una cuenta de Reddit para debates en comunidades sensibles",
+          "body": "Las comunidades de Reddit dedicadas al apoyo en salud mental, confesiones anónimas, consejos financieros o temas políticamente sensibles son valiosas precisamente porque permiten la participación seudónima. Registrar una cuenta de Reddit con TmpMail significa que la cuenta no puede rastrearse hasta tu email real, protegiendo tu identidad incluso si los datos de usuario de Reddit quedan expuestos en una brecha o son requeridos por un tercero."
+        },
+        {
+          "title": "Probar una nueva plataforma social antes de comprometerte",
+          "body": "Las nuevas plataformas sociales se lanzan con frecuencia y a menudo requieren registro por email para acceder incluso a las funciones básicas. Usar TmpMail para registrarse te permite evaluar la experiencia de usuario, la calidad del contenido y las prácticas de privacidad de la plataforma antes de decidir si crear una cuenta real. Si decides no continuar, la cuenta temporal simplemente expira sin ninguna conexión duradera con tu identidad."
+        },
+        {
+          "title": "Participar en un sorteo de Twitter/X o Instagram",
+          "body": "Los sorteos en redes sociales suelen requerir registro de cuenta y a menudo piden una dirección de email. Las marcas y los promotores usan estos registros para hacer crecer sus listas de marketing. Usar TmpMail para registrar una cuenta secundaria para un sorteo significa que puedes participar sin que tu email real entre en el CRM de la marca ni se comparta con sus socios promocionales."
+        }
+      ],
+      "faq": [
+        {
+          "q": "¿Funciona un correo temporal con todas las redes sociales?",
+          "a": "Funciona con la mayoría de plataformas. Algunas redes sociales intentan bloquear dominios de correo temporal conocidos. TmpMail ofrece varios dominios a elegir en el selector de dominios, lo que aumenta la compatibilidad. Si un dominio es rechazado, cambia a otro con un solo clic y genera una dirección nueva."
+        },
+        {
+          "q": "¿Puedo recuperar la contraseña de una red social si usé un correo temporal?",
+          "a": "No, no mediante recuperación por email, porque la dirección temporal expiró a los 10 minutos. Si pierdes el acceso a una cuenta de red social registrada con una dirección de TmpMail, no podrás restablecer la contraseña por email. Usa correos temporales solo para cuentas que no necesitas recuperar, o actualiza el email registrado a una dirección permanente después de activar la cuenta."
+        },
+        {
+          "q": "¿Sabrá la plataforma que usé un correo temporal?",
+          "a": "Algunas plataformas comprueban los dominios de email contra listas de proveedores de correo temporal conocidos y pueden marcar o rechazar el registro. TmpMail rota entre varios dominios para minimizar esto. Desde un punto de vista técnico, una dirección de TmpMail es una dirección de email completamente válida y funcional: recibe correos reales y es indistinguible de una dirección permanente durante la ventana de verificación."
+        },
+        {
+          "q": "¿Puedo usar la misma dirección de TmpMail para registrarme en varias plataformas?",
+          "a": "Técnicamente sí, si lo haces dentro de los 10 minutos antes de que la dirección expire. Sin embargo, usar la misma dirección en varias plataformas crea un vínculo entre esas cuentas. Para máxima privacidad y separación de cuentas, genera una dirección nueva de TmpMail para cada registro."
+        },
+        {
+          "q": "¿Hay límite en cuántos correos temporales puedo generar?",
+          "a": "No. TmpMail no tiene ningún límite por usuario en el número de direcciones temporales que puedes generar. Puedes crear una dirección nueva tantas veces como necesites, y cada una es completamente independiente de todas las anteriores."
+        }
+      ]
+    },
+    "evitar-spam-correo-personal": {
+      "title": "Evita el Spam en tu Correo con TmpMail",
+      "description": "Protege tu bandeja de entrada del spam usando un correo temporal. Sin newsletters no deseadas ni listas de marketing. Gratis y sin registro.",
+      "intro": "El spam no es un accidente: es el resultado predecible de darle tu email real a sitios web que no respetan tu bandeja de entrada. Newsletters que nunca pediste, promociones diarias de ofertas, campañas de reactivación, correos de socios afiliados: todos se remontan a un único momento en que introdujiste tu email real en un formulario de registro. TmpMail elimina el problema en el origen, en lugar de gestionarlo a posteriori. Usa una dirección temporal al registrarte en cualquier sitio en el que no confíes plenamente. Recibes el email de verificación, completas el registro y la dirección temporal expira. Cualquier email de marketing futuro enviado a esa dirección llega a un buzón que ya no existe. Sin filtros de spam, sin links de baja, sin listas negras que mantener. Prevención pura. TmpMail funciona para cualquier sitio web, formulario y servicio, completamente gratis, sin registro y sin límites de uso.",
+      "howTitle": "Cómo evitar el spam con un correo temporal",
+      "steps": [
+        "Antes de introducir tu email en cualquier sitio web nuevo, abre TmpMail en una pestaña nueva y copia tu dirección temporal.",
+        "Pega la dirección de TmpMail en el formulario de registro del sitio al que quieres acceder y envía el formulario.",
+        "Vuelve a TmpMail. Tu email de verificación llega en segundos mediante entrega en tiempo real por WebSocket. Sin esperas, sin actualizar manualmente.",
+        "Haz clic en el enlace de verificación o copia el código de confirmación y completa tu registro en el sitio de destino.",
+        "Cierra TmpMail. En 10 minutos la dirección expira y se elimina permanentemente. Cualquier correo de marketing enviado a ella posteriormente simplemente rebota en el vacío."
+      ],
+      "whyTitle": "Por qué TmpMail es la mejor defensa contra el spam",
+      "whyItems": [
+        "Previene el spam en el origen: los correos no deseados nunca llegan a tu bandeja real porque no tienen dirección a la que llegar.",
+        "Sin reglas de filtrado, listas negras ni gestión de bajas.",
+        "Funciona para cualquier sitio web, formulario, newsletter o servicio online.",
+        "Gratis, sin registro, sin límites de uso, sin tarjeta de crédito.",
+        "Cada dirección es única y expira automáticamente, sin ningún mantenimiento.",
+        "Detiene el intercambio entre listas: si el sitio vende tu email a socios, esos socios tienen una dirección muerta."
+      ],
+      "whySubsections": [
+        {
+          "title": "Por qué los filtros de spam no son suficientes",
+          "body": "Los filtros de spam son defensas reactivas. En el momento en que un filtro identifica y bloquea un correo de marketing, ese correo ya ha sido entregado a tu servidor, procesado y almacenado: simplemente no lo ves. Tu dirección de email sigue en la lista, sigue siendo utilizada y sigue generando actividad en el extremo del remitente. Los filtros también producen falsos positivos, bloqueando correos legítimos que sí quieres recibir. TmpMail evita que el spam llegue nunca a tu dirección real, lo que es fundamentalmente más eficaz que filtrarlo después de su llegada."
+        },
+        {
+          "title": "Cómo acaba tu email en listas de spam",
+          "body": "Tu dirección de email llega a las listas de spam a través de múltiples canales: sitios web que comparten datos de suscriptores con socios publicitarios, integraciones de analítica de terceros que cosechan envíos de formularios, brechas de datos que exponen bases de datos de usuarios, y empresas que venden listas de clientes cuando son adquiridas o quiebran. En todos los casos, el problema comienza con que tu email real está en la base de datos de esa empresa. TmpMail elimina tu dirección real de la ecuación por completo: la dirección en su base de datos ya ha expirado y sido eliminada."
+        },
+        {
+          "title": "El valor acumulado del orden en tu bandeja de entrada",
+          "body": "Cada correo de spam que recibes te cuesta tiempo, aunque sea solo la fracción de segundo que tarda en reconocerlo y eliminarlo. Más importante aún, el spam aumenta la relación ruido-señal en tu bandeja, haciendo más fácil perderse correos importantes. A lo largo de años de actividad online, el efecto acumulado de compartir tu email real con decenas o cientos de sitios es una bandeja que requiere una gestión constante. A partir de ahora, usar TmpMail para cada registro de baja confianza evita que se añadan nuevas fuentes de spam a esa lista."
+        }
+      ],
+      "scenarios": [
+        {
+          "title": "Acceder a un informe o documento descargable restringido",
+          "body": "Los equipos de marketing de empresas SaaS, consultoras y firmas de investigación restringen el contenido descargable —ebooks, informes del sector, documentos técnicos— tras formularios de registro por email. El contenido es valioso, pero el precio es que te añaden a una campaña de nutrición que enviará correos de seguimiento durante meses. Con TmpMail puedes descargar el recurso, recibir el email de confirmación con el enlace de descarga y no recibir jamás ningún correo de seguimiento del sistema de automatización de marketing de esa empresa."
+        },
+        {
+          "title": "Aprovechar un descuento promocional de un solo uso",
+          "body": "Los sitios de comercio electrónico a menudo ofrecen descuentos para nuevos visitantes a cambio de una suscripción por email. El descuento es real y útil; la suscripción no lo es. Con TmpMail puedes registrarte para el descuento, recibir el código promocional en tu bandeja temporal y aplicarlo en el proceso de compra, sin unirte a una lista de correo que enviará anuncios de ofertas y recordatorios de carrito abandonado a tu dirección real de forma indefinida."
+        },
+        {
+          "title": "Probar un trial gratuito de un SaaS B2B",
+          "body": "Los trials gratuitos de software empresarial —para herramientas como plataformas de gestión de proyectos, sistemas CRM o herramientas de automatización de marketing— suelen disparar extensas secuencias de onboarding por email: correos de bienvenida, destacados de funcionalidades, mensajes de seguimiento y avisos de expiración. Usar TmpMail para el registro del trial significa que puedes evaluar el producto durante el periodo de prueba sin recibir ninguno de esos correos de onboarding en tu bandeja de empresa, manteniendo tu comunicación profesional limpia y enfocada."
+        }
+      ],
+      "faq": [
+        {
+          "q": "¿Por qué recibo tanto spam en mi correo principal?",
+          "a": "Cada vez que te registras en un sitio web, tu email puede compartirse con socios publicitarios externos, venderse a brokers de listas de marketing o quedar expuesto en brechas de datos. Esas listas las usan durante años empresas con las que nunca has interactuado. Usar TmpMail para registros evita que tu email real entre en esas listas, cortando de raíz las nuevas fuentes de spam."
+        },
+        {
+          "q": "¿Es suficiente usar filtros de spam en lugar de un correo temporal?",
+          "a": "Los filtros de spam son reactivos: actúan sobre el spam que ya ha llegado a tu servidor. Un correo temporal es preventivo: el spam nunca llega a tu bandeja real porque la dirección que recibió la confirmación del registro original ya no existe. Los filtros también generan falsos positivos y requieren mantenimiento constante. TmpMail no requiere ningún mantenimiento."
+        },
+        {
+          "q": "¿Puedo usar TmpMail para darme de baja del spam existente?",
+          "a": "No. TmpMail genera nuevas direcciones temporales para usos futuros y no puede eliminar retroactivamente tu email existente de las listas de spam. Para el spam ya recibido, tendrías que usar el mecanismo de baja en cada correo o marcar los remitentes como spam en tu cliente de correo. TmpMail evita que se añadan nuevas fuentes de spam a partir de ahora."
+        },
+        {
+          "q": "¿Qué pasa si el sitio requiere confirmación por email antes de poder usarlo?",
+          "a": "TmpMail está diseñado específicamente para este caso de uso. Los correos de verificación y confirmación llegan a la bandeja de TmpMail en segundos mediante entrega en tiempo real por WebSocket. Abre TmpMail, pega tu dirección temporal, y la confirmación estará esperándote casi de inmediato. Tienes 10 minutos desde que se abre el buzón para completar la verificación: tiempo más que suficiente para la mayoría de los flujos de registro."
+        },
+        {
+          "q": "¿Sirve TmpMail para recibir newsletters que sí quiero?",
+          "a": "TmpMail está diseñado para uso temporal y desechable y no es adecuado para newsletters o comunicaciones continuas que quieras seguir recibiendo. Dado que la dirección expira a los 10 minutos, cualquier correo futuro de una newsletter a la que te suscribiste se entregaría a un buzón inexistente. Para las newsletters que genuinamente te interesan, usa tu email real o una cuenta secundaria dedicada."
+        }
+      ]
     }
   },
   "toast": {
-    "mailboxRenewed": "Buzón renovado automáticamente"
+    "mailboxRenewed": "Buzón renovado automáticamente",
+    "mailboxRenewFailed": "No se pudo renovar el buzón. Inténtalo manualmente."
   },
   "notifications": {
     "expiringSoon": "Tu buzón expira en 2 minutos",
@@ -136,14 +528,23 @@
     "label": "// sobre nosotros",
     "title": "Sobre TmpMail",
     "who": "¿Quiénes somos?",
-    "whoBody": "TmpMail es un servicio de correo electrónico temporal gratuito, creado para proteger la privacidad de las personas en línea. Somos un equipo independiente enfocado en herramientas de privacidad digital accesibles para todos.",
+    "whoBody": "TmpMail es un servicio de correo electrónico temporal gratuito operado por TmpMailio, disponible desde 2024 y creado para hacer que la privacidad digital sea accesible para todos sin fricción ni coste. TmpMailio fue fundado por un equipo independiente de desarrolladores que se encontraron repetidamente con el mismo problema: los servicios online requieren una dirección de correo para el registro, pero proporcionar tu dirección real significa aceptar spam, rastreo y exposición a brechas de datos. Construimos TmpMail para resolver ese problema de la forma más sencilla posible: una dirección que funciona al instante y desaparece automáticamente. Sin registro, sin pago, sin concesiones.",
+    "mission": "¿Por qué creamos TmpMail?",
+    "missionBody": "Cada vez que te registras en un sitio web con tu correo real, te expones a spam, rastreo entre plataformas y potenciales brechas de datos. Creamos TmpMail para eliminar esa fricción: una dirección temporal que funciona al instante, sin burocracia y sin dejar rastro. Nuestro objetivo es que la privacidad digital sea el camino de menor resistencia, no un privilegio técnico.",
+    "how": "¿Cómo funciona?",
+    "howBody": "Cuando abres TmpMail, nuestro sistema genera automáticamente una dirección de correo única en dominios que gestionamos directamente, impulsado por la API de Mail.tm para una recepción de correo fiable. Los mensajes entrantes se reciben en tiempo real mediante conexiones WebSocket y se almacenan en memoria Redis: no hay escrituras permanentes en disco, no hay entradas en bases de datos relacionales y no hay registros del servidor de la actividad de los usuarios. Cloudflare se encuentra delante de nuestra infraestructura para proporcionar protección DDoS y entrega global de baja latencia sin almacenar en caché ningún contenido de correo. Cuando un buzón expira a los 10 minutos, las claves de Redis se purgan y los datos desaparecen permanentemente. No hay base de datos de usuarios, no hay sesiones autenticadas y no hay registro de direcciones IP en ninguna capa del sistema.",
+    "commitment": "Nuestro compromiso",
+    "commitmentBody": "Nos comprometemos a mantener TmpMail gratuito, sin publicidad y sin rastreo. Si alguna vez cambiamos el modelo de servicio, lo comunicaremos con antelación en esta página. La privacidad de nuestros usuarios no es negociable.",
     "contact": "Contacto",
     "contactBody": "Para cualquier consulta, sugerencia o reporte de abuso, escríbenos a",
     "privacy": "Privacidad",
     "privacyBody": "No almacenamos datos personales. Las direcciones de correo y los mensajes recibidos se eliminan automáticamente al expirar el buzón (10 minutos por defecto). Sin cookies de rastreo, sin publicidad, sin perfiles de usuario.",
     "privacyLink": "Política de privacidad completa",
     "terms": "Términos de uso",
-    "termsLink": "Leer términos de uso"
+    "termsLink": "Leer términos de uso",
+    "techStack": "TmpMail está construido sobre una arquitectura tecnológica moderna y diseñada desde el principio para la privacidad. El frontend es una aplicación Next.js desplegada en el edge para tiempos de carga rápidos a nivel global. La recepción de correos se gestiona a través de la API de Mail.tm, que proporciona ingestión SMTP fiable sin necesidad de operar nuestra propia infraestructura de servidor de correo. Los mensajes recibidos se almacenan exclusivamente en memoria Redis, garantizando cero persistencia en disco y eliminación instantánea al expirar. Las actualizaciones de la bandeja de entrada en tiempo real se entregan mediante conexiones WebSocket, por lo que los correos aparecen en el navegador en segundos desde su recepción, sin polling ni recargas de página. Cloudflare proporciona protección de infraestructura y entrega CDN global. Esta combinación de tecnologías se eligió específicamente para minimizar la superficie de retención de datos: nada de lo que toca los correos de un usuario se escribe nunca en almacenamiento permanente.",
+    "gdprBody": "TmpMail opera en cumplimiento del Reglamento General de Protección de Datos (RGPD, UE 2016/679) y la Ley Orgánica de Protección de Datos Personales y garantía de los derechos digitales (LOPDGDD) española. Dado que el servicio no recopila ningún dato personal —ni nombres, ni direcciones IP, ni registros de cuentas de correo—, los derechos de los interesados establecidos por estas normativas (acceso, rectificación, supresión, portabilidad y oposición) se satisfacen automáticamente: no existe ningún dato asociado a ninguna persona que acceder, corregir, eliminar o transferir. El contenido de los correos se procesa exclusivamente de forma temporal en memoria, tal como se describe en nuestra política de privacidad. TmpMailio actúa como responsable del tratamiento a los efectos de esta declaración. Para cualquier consulta relacionada con el RGPD, contáctenos en contacto@tmpmailio.com.",
+    "competitorComparison": "Varios servicios de correo temporal conocidos son anteriores a TmpMail, y conocer las diferencias ayuda a los usuarios a elegir la herramienta adecuada. Guerrilla Mail, uno de los servicios de correo desechable más antiguos, ofrece retención prolongada de direcciones e incluso permite enviar correos, pero muestra publicidad, registra algunos metadatos de uso y su interfaz está desactualizada. Temp-Mail.org ofrece una experiencia cuidada y una app móvil, pero su nivel gratuito está financiado por publicidad y el servicio ha recibido críticas por retener el contenido de los correos más tiempo del declarado. 10MinuteMail es sencillo y ampliamente reconocido, pero solo ofrece un único dominio, lo que significa que está bloqueado en muchos sitios web que filtran dominios temporales conocidos, y no admite actualizaciones de bandeja en tiempo real. TmpMail se diferencia en tres dimensiones: sin publicidad (ningún modelo de ingresos que incentive la retención de datos), múltiples dominios (reduciendo la probabilidad de ser bloqueado por los filtros de registro) y entrega por WebSocket en tiempo real (los correos aparecen en la bandeja en segundos, no en minutos). TmpMail también hace compromisos técnicos explícitos sobre el almacenamiento exclusivamente en memoria Redis y la ausencia de registro de IP que muchos competidores no pueden igualar."
   },
   "legal": {
     "updated": "Última actualización: marzo 2026",
@@ -172,12 +573,20 @@
     },
     "terms": {
       "title": "Términos",
+      "s0Title": "Aceptación de los términos",
+      "s0Body": "Al acceder y usar TmpMail, aceptas los presentes términos de uso. Si no estás de acuerdo con alguna de las condiciones, te pedimos que no uses el servicio. TmpMail se reserva el derecho de modificar estos términos en cualquier momento, publicando la versión actualizada en esta página.",
       "s1Title": "Uso aceptable",
       "s1Body": "TmpMail es un servicio de correo temporal para uso personal y legítimo: pruebas de software, registros en sitios web, evitar spam. Está estrictamente prohibido usar este servicio para enviar o recibir contenido ilegal, realizar spam masivo o suplantar identidades.",
       "s2Title": "Sin garantías",
       "s2Body": "El servicio se ofrece \"tal cual\" sin garantías de disponibilidad, velocidad de entrega ni conservación de mensajes. No uses TmpMail para comunicaciones críticas, confidenciales o legalmente relevantes.",
       "s3Title": "Limitación de responsabilidad",
-      "s3Body": "TmpMail no es responsable de pérdida de datos, correos no entregados, interrupciones del servicio ni daños de ningún tipo derivados del uso del servicio."
+      "s3Body": "TmpMail no es responsable de pérdida de datos, correos no entregados, interrupciones del servicio ni daños de ningún tipo derivados del uso del servicio.",
+      "s4Title": "Propiedad intelectual",
+      "s4Body": "El nombre TmpMail, el diseño visual y el código fuente del servicio son propiedad de TmpMailio. No está permitido reproducir, distribuir ni crear obras derivadas sin autorización expresa. Las direcciones de correo generadas y los mensajes recibidos no son propiedad de TmpMailio y se eliminan permanentemente al expirar.",
+      "s5Title": "Modificaciones del servicio",
+      "s5Body": "TmpMail puede modificar, suspender o discontinuar cualquier parte del servicio en cualquier momento y sin previo aviso. No seremos responsables ante el usuario ni ante terceros por ninguna modificación, suspensión o interrupción del servicio.",
+      "s6Title": "Ley aplicable",
+      "s6Body": "Estos términos se rigen por la legislación española y de la Unión Europea. Cualquier controversia derivada del uso del servicio se someterá a la jurisdicción de los tribunales competentes de España, salvo que la legislación aplicable en el país del usuario establezca otra jurisdicción de forma imperativa."
     },
     "contact": {
       "title": "Contacto",

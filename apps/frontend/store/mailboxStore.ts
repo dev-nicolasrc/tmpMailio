@@ -42,7 +42,7 @@ export const useMailboxStore = create<MailboxStore>((set, get) => ({
         body: JSON.stringify({ domain }),
       })
       const data = await res.json()
-      if (!res.ok) throw new Error(data.error)
+      if (!res.ok) throw new Error(data.error ?? `HTTP ${res.status}`)
       set({ mailbox: data.mailbox, emails: [], selectedEmail: null })
     } finally {
       set({ isLoading: false })
@@ -52,16 +52,22 @@ export const useMailboxStore = create<MailboxStore>((set, get) => ({
   deleteMailbox: async () => {
     const { mailbox } = get()
     if (!mailbox) return
-    await fetch(`${API}/api/mailbox/${mailbox.id}`, { method: "DELETE" })
+    const res = await fetch(`${API}/api/mailbox/${mailbox.id}`, { method: "DELETE" })
+    if (!res.ok && res.status !== 404) throw new Error(`Failed to delete: HTTP ${res.status}`)
     set({ mailbox: null, emails: [], selectedEmail: null })
   },
 
   selectEmail: async (emailId: string) => {
     const { mailbox } = get()
     if (!mailbox) return
-    const res = await fetch(`${API}/api/email/${mailbox.id}/${emailId}`)
-    const data = await res.json()
-    if (res.ok) set({ selectedEmail: { ...data.email, receivedAt: new Date(data.email.receivedAt) } })
+    try {
+      const res = await fetch(`${API}/api/email/${mailbox.id}/${emailId}`)
+      if (!res.ok) return
+      const data = await res.json()
+      set({ selectedEmail: { ...data.email, receivedAt: new Date(data.email.receivedAt) } })
+    } catch (err) {
+      console.error("[Store] selectEmail error:", err)
+    }
   },
 
   clearSelectedEmail: () => set({ selectedEmail: null }),
@@ -91,8 +97,13 @@ export const useMailboxStore = create<MailboxStore>((set, get) => ({
   loadEmails: async () => {
     const { mailbox } = get()
     if (!mailbox) return
-    const res = await fetch(`${API}/api/mailbox/${mailbox.id}/emails`)
-    const data = await res.json()
-    if (res.ok) set({ emails: data.emails.map((e: EmailHeader) => ({ ...e, receivedAt: new Date(e.receivedAt) })) })
+    try {
+      const res = await fetch(`${API}/api/mailbox/${mailbox.id}/emails`)
+      if (!res.ok) return
+      const data = await res.json()
+      set({ emails: data.emails.map((e: EmailHeader) => ({ ...e, receivedAt: new Date(e.receivedAt) })) })
+    } catch (err) {
+      console.error("[Store] loadEmails error:", err)
+    }
   },
 }))

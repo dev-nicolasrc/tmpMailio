@@ -41,13 +41,13 @@ export function useSocket() {
 
     socket.on("mailbox_expired", ({ mailboxId }) => {
       if (mailboxId !== mailbox.id) return
-      createMailbox()
-      showToast(tToast("mailboxRenewed"))
+      //createMailbox()
+      //showToast(tToast("mailboxRenewed"))
       sendNotification("TmpMail", tNotif("renewed"))
     })
 
     socket.on("mailbox_deleted", ({ mailboxId }) => {
-      if (mailboxId === mailbox.id) createMailbox()
+      if (mailboxId === mailbox.id) createMailbox().catch(() => {})
     })
 
     return () => {

@@ -8,24 +8,37 @@ const BASE = "https://api.mail.tm"
 
 async function request<T>(
   path: string,
-  options: RequestInit = {}
+  options: RequestInit = {},
+  retries = 2
 ): Promise<T> {
-  const res = await fetch(`${BASE}${path}`, {
-    ...options,
-    headers: {
-      "Content-Type": "application/json",
-      ...(options.headers ?? {}),
-    },
-  })
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    const res = await fetch(`${BASE}${path}`, {
+      ...options,
+      headers: {
+        "Content-Type": "application/json",
+        ...(options.headers ?? {}),
+      },
+    })
 
-  if (!res.ok) {
-    const body = await res.text()
-    throw new Error(`Mail.tm ${options.method ?? "GET"} ${path} → ${res.status}: ${body}`)
+    if (res.status === 429 && attempt < retries) {
+      const retryAfter = parseInt(res.headers.get("Retry-After") ?? "3", 10)
+      const waitMs = Math.min(retryAfter * 1000, 10000)
+      console.warn(`[Mail.tm] 429 on ${path}, retrying in ${waitMs}ms (attempt ${attempt + 1}/${retries})`)
+      await new Promise((r) => setTimeout(r, waitMs))
+      continue
+    }
+
+    if (!res.ok) {
+      const body = await res.text()
+      throw new Error(`Mail.tm ${options.method ?? "GET"} ${path} → ${res.status}: ${body}`)
+    }
+
+    // 204 No Content
+    if (res.status === 204) return {} as T
+    return res.json() as Promise<T>
   }
 
-  // 204 No Content
-  if (res.status === 204) return {} as T
-  return res.json() as Promise<T>
+  throw new Error(`Mail.tm ${options.method ?? "GET"} ${path} → exhausted retries`)
 }
 
 // ─── Types ────────────────────────────────────────────────────────────────────

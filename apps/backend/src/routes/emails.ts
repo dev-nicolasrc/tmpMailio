@@ -7,18 +7,23 @@ const router = Router()
 // GET /api/email/:mailboxId/:emailId
 // The frontend needs both IDs: mailboxId to get the token, emailId to fetch from Mail.tm
 router.get("/:mailboxId/:emailId", async (req: Request, res: Response) => {
-  const { mailboxId, emailId } = req.params
-  const creds = await getMailboxToken(mailboxId)
-  if (!creds) {
-    res.status(404).json({ error: "Mailbox not found" })
-    return
+  try {
+    const { mailboxId, emailId } = req.params
+    const creds = await getMailboxToken(mailboxId)
+    if (!creds) {
+      res.status(404).json({ error: "Mailbox not found" })
+      return
+    }
+    const email = await getEmailById(emailId, creds.token)
+    if (!email) {
+      res.status(404).json({ error: "Email not found" })
+      return
+    }
+    res.json({ email })
+  } catch (err) {
+    console.error("[Email] GET error:", err)
+    res.status(500).json({ error: "Failed to fetch email" })
   }
-  const email = await getEmailById(emailId, creds.token)
-  if (!email) {
-    res.status(404).json({ error: "Email not found" })
-    return
-  }
-  res.json({ email })
 })
 
 export default router

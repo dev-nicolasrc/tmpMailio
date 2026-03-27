@@ -5,32 +5,46 @@ import { useTranslations } from "next-intl"
 import { sendNotification } from "@/lib/notifications"
 
 interface ExpirationTimerProps {
-  expiresAt: Date
+  expiresAt: string | Date
   onExpired?: () => void
 }
 
 export function ExpirationTimer({ expiresAt, onExpired }: ExpirationTimerProps) {
+  // Convert to stable string to avoid re-renders from new Date objects
+  const expiresAtStr = typeof expiresAt === "string" ? expiresAt : expiresAt.toISOString()
   const t = useTranslations("timer")
   const tNotif = useTranslations("notifications")
   const totalMs = 10 * 60 * 1000
   const [remaining, setRemaining] = useState(0)
   const warnedRef = useRef(false)
   const expiredRef = useRef(false)
+  const onExpiredRef = useRef(onExpired)
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
-  // Reset flags when a new mailbox is set
+  // Keep callback ref up to date without triggering effect re-runs
+  useEffect(() => {
+    onExpiredRef.current = onExpired
+  }, [onExpired])
+
+  // Reset flags when a new mailbox is set (expiresAt changes)
   useEffect(() => {
     warnedRef.current = false
     expiredRef.current = false
-  }, [expiresAt])
+  }, [expiresAtStr])
 
   useEffect(() => {
     const tick = () => {
-      const ms = new Date(expiresAt).getTime() - Date.now()
+      const ms = new Date(expiresAtStr).getTime() - Date.now()
       if (ms <= 0) {
         setRemaining(0)
         if (!expiredRef.current) {
           expiredRef.current = true
-          onExpired?.()
+          // Stop ticking — no need to keep running after expiration
+          if (intervalRef.current) {
+            clearInterval(intervalRef.current)
+            intervalRef.current = null
+          }
+          onExpiredRef.current?.()
         }
         return
       }
@@ -41,9 +55,14 @@ export function ExpirationTimer({ expiresAt, onExpired }: ExpirationTimerProps) 
       }
     }
     tick()
-    const id = setInterval(tick, 1000)
-    return () => clearInterval(id)
-  }, [expiresAt, onExpired, tNotif])
+    intervalRef.current = setInterval(tick, 1000)
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current)
+        intervalRef.current = null
+      }
+    }
+  }, [expiresAtStr, tNotif]) // removed onExpired from deps — using ref instead
 
   const minutes = Math.floor(remaining / 60000)
   const seconds = Math.floor((remaining % 60000) / 1000)
