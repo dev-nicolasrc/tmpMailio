@@ -29,7 +29,7 @@ export function Footer() {
             — {t("tagline")}
           </span>
           <span className="font-mono text-xs hidden md:block" style={{ color: "var(--text-secondary)" }}>
-            © {new Date().getFullYear()} TmpMailio
+            © <time dateTime={String(new Date().getFullYear())}>{new Date().getFullYear()}</time> TmpMailio
           </span>
         </div>
 
@@ -43,7 +43,7 @@ export function Footer() {
             <Link
               key={link.href}
               href={link.href}
-              className="font-mono text-sm px-3 py-1.5 transition-colors"
+              className="font-mono text-sm px-3 py-3 transition-colors"
               style={{ color: "var(--text-secondary)" }}
               onMouseEnter={e => ((e.target as HTMLElement).style.color = "var(--text-primary)")}
               onMouseLeave={e => ((e.target as HTMLElement).style.color = "var(--text-secondary)")}
@@ -54,7 +54,7 @@ export function Footer() {
 
           <Link
             href={`/${otherLocale}`}
-            className="font-mono text-sm px-3 py-1.5 transition-all"
+            className="font-mono text-sm px-3 py-3 transition-all"
             style={{
               border: "1px solid var(--border-mid)",
               color: "var(--text-secondary)",

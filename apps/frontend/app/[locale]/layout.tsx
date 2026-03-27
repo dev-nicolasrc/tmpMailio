@@ -5,6 +5,8 @@ import { NextIntlClientProvider } from "next-intl"
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server"
 import { notFound } from "next/navigation"
 import { locales } from "@/i18n"
+import { buildOrganizationSchema } from "@/lib/schema/organization"
+import { AdSense } from "@/components/AdSense"
 import "../globals.css"
 
 const syne = Syne({
@@ -25,17 +27,18 @@ type Props = { children: React.ReactNode; params: { locale: string } }
 
 export async function generateMetadata({ params: { locale } }: Props): Promise<Metadata> {
   const t = await getTranslations({ locale, namespace: "meta" })
-  const canonical = process.env.NEXT_PUBLIC_SITE_URL ?? "https://example.com"
+  const canonical = process.env.NEXT_PUBLIC_SITE_URL ?? "https://tmpmailio.com"
+  const desc = t("description")
 
   return {
     title: {
       default: t("title"),
       template: `%s | TmpMail`,
     },
-    description: t("description"),
+    description: desc.length > 150 ? desc.slice(0, 147) + "..." : desc,
     keywords: locale === "es"
-      ? ["correo temporal", "email desechable", "correo desechable", "email temporal gratis", "inbox temporal", "correo fake"]
-      : ["temporary email", "disposable email", "throwaway email", "fake email", "temp mail", "free temporary inbox"],
+      ? ["correo temporal", "email desechable", "correo desechable", "email temporal gratis", "inbox temporal", "correo anónimo"]
+      : ["temporary email", "disposable email", "throwaway email", "anonymous email", "temp mail", "free temporary inbox"],
     metadataBase: new URL(canonical),
     alternates: {
       canonical: `/${locale}`,
@@ -43,7 +46,7 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
     },
     openGraph: {
       title: t("title"),
-      description: t("description"),
+      description: desc.length > 150 ? desc.slice(0, 147) + "..." : desc,
       url: `${canonical}/${locale}`,
       siteName: "TmpMail",
       images: [{ url: `${canonical}/${locale}/opengraph-image`, width: 1200, height: 630, alt: t("title") }],
@@ -54,13 +57,17 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
     twitter: {
       card: "summary_large_image",
       title: t("title"),
-      description: t("description"),
+      description: desc.length > 150 ? desc.slice(0, 147) + "..." : desc,
       images: [`${canonical}/${locale}/opengraph-image`],
     },
-    manifest: "/manifest.json",
+    manifest: `/manifest.${locale}.json`,
     icons: {
-      icon: [{ url: "/favicon.ico", sizes: "32x32", type: "image/x-icon" }],
-      apple: "/apple-touch-icon.png",
+      icon: [
+        { url: "/icon.png", sizes: "512x512", type: "image/png" },
+        { url: "/favicon.ico", sizes: "48x48", type: "image/x-icon" },
+      ],
+      apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+      shortcut: "/icon.png",
     },
     other: {
       "theme-color": "#0a0a0a",
@@ -82,6 +89,7 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
 
   setRequestLocale(locale)
   const messages = await getMessages()
+  const typedLocale = locale as "es" | "en"
 
   return (
     <html
@@ -90,37 +98,24 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
       className={`${syne.variable} ${firaCode.variable}`}
     >
       <head>
+        <link rel="icon" href="/icon.png" type="image/png" sizes="512x512" />
+        <link rel="shortcut icon" href="/icon.png" type="image/png" />
         <link rel="preconnect" href={process.env.NEXT_PUBLIC_SOCKET_URL ?? "https://api.tmpmailio.com"} />
         <link rel="dns-prefetch" href={process.env.NEXT_PUBLIC_SOCKET_URL ?? "https://api.tmpmailio.com"} />
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
       </head>
       <body suppressHydrationWarning>
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 font-mono text-xs"
+          style={{ background: "var(--accent-primary)", color: "#080808" }}
+        >
+          {locale === "es" ? "Saltar al contenido" : "Skip to content"}
+        </a>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              "@id": "https://tmpmailio.com/#organization",
-              name: "TmpMail",
-              alternateName: "TmpMailio",
-              url: "https://tmpmailio.com",
-              logo: {
-                "@type": "ImageObject",
-                url: "https://tmpmailio.com/icon-512.png",
-                width: 512,
-                height: 512,
-              },
-              contactPoint: {
-                "@type": "ContactPoint",
-                url: `https://tmpmailio.com/${locale}/contact`,
-                email: "contacto@tmpmailio.com",
-                contactType: "customer support",
-                availableLanguage: ["Spanish", "English"],
-              },
-              privacyPolicy: `https://tmpmailio.com/${locale}/privacy`,
-              termsOfService: `https://tmpmailio.com/${locale}/terms`,
-            }),
-          }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildOrganizationSchema(typedLocale)) }}
         />
         <script
           type="application/ld+json"
@@ -129,7 +124,8 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
               "@context": "https://schema.org",
               "@type": "WebSite",
               "@id": "https://tmpmailio.com/#website",
-              name: "TmpMail",
+              name: "Tmp Mail",
+              alternateName: "TmpMail",
               url: "https://tmpmailio.com",
               inLanguage: ["es", "en"],
               publisher: {
@@ -143,6 +139,7 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
             {children}
           </NextIntlClientProvider>
         </ThemeProvider>
+        <AdSense />
       </body>
     </html>
   )

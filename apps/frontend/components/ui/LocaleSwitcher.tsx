@@ -15,7 +15,7 @@ export function LocaleSwitcher() {
   return (
     <Link
       href={otherPath}
-      className="font-mono text-xs px-2 py-1"
+      className="font-mono text-xs px-2 py-1 min-h-[48px] min-w-[48px] flex items-center justify-center"
       style={{
         border: "1px solid var(--border-mid)",
         color: "var(--text-secondary)",

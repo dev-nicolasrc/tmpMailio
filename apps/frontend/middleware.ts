@@ -24,7 +24,7 @@ export default function middleware(request: NextRequest) {
   // Using 302 (temporary) so browsers re-detect on every fresh visit.
   if (pathname === "/" || BARE_PATHS.includes(pathname)) {
     const locale = detectLocale(request)
-    return NextResponse.redirect(new URL(`/${locale}${pathname === "/" ? "" : pathname}`, request.url), 302)
+    return NextResponse.redirect(new URL(`/${locale}${pathname === "/" ? "" : pathname}`, request.url), 301)
   }
 
   return intlMiddleware(request)

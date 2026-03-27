@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server"
+import { buildBreadcrumbSchema } from "@/lib/schema/breadcrumb"
 import type { Metadata } from "next"
 
 type Props = { params: { locale: string } }
@@ -6,7 +7,12 @@ type Props = { params: { locale: string } }
 export async function generateMetadata({ params: { locale } }: Props): Promise<Metadata> {
   const t = await getTranslations({ locale, namespace: "legal.terms" })
   return {
-    title: t("title"),
+    title: locale === "es"
+      ? "Términos de Servicio — TmpMail Correo Desechable"
+      : "Terms of Service — TmpMail Disposable Email",
+    description: locale === "es"
+      ? "Términos de uso de TmpMail: uso aceptable, limitaciones de responsabilidad y legislación aplicable para el servicio de correo temporal."
+      : "TmpMail terms of service: acceptable use, liability limitations, and applicable law for the disposable email service.",
     alternates: {
       canonical: `https://tmpmailio.com/${locale}/terms`,
       languages: {
@@ -15,6 +21,9 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
         "x-default": "https://tmpmailio.com/en/terms",
       },
     },
+    openGraph: {
+      url: `https://tmpmailio.com/${locale}/terms`,
+    },
   }
 }
 
@@ -22,25 +31,20 @@ export default async function TermsPage({ params: { locale } }: Props) {
   const t = await getTranslations({ locale, namespace: "legal" })
 
   const sections = [
+    { title: t("terms.s0Title"), body: t("terms.s0Body") },
     { title: t("terms.s1Title"), body: t("terms.s1Body") },
     { title: t("terms.s2Title"), body: t("terms.s2Body") },
     { title: t("terms.s3Title"), body: t("terms.s3Body") },
+    { title: t("terms.s4Title"), body: t("terms.s4Body") },
+    { title: t("terms.s5Title"), body: t("terms.s5Body") },
+    { title: t("terms.s6Title"), body: t("terms.s6Body") },
   ]
 
   return (
     <div className="min-h-screen flex flex-col" style={{ background: "var(--bg-primary)" }}>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              { "@type": "ListItem", position: 1, name: "TmpMail", item: `https://tmpmailio.com/${locale}` },
-              { "@type": "ListItem", position: 2, name: t("terms.title"), item: `https://tmpmailio.com/${locale}/terms` },
-            ],
-          }),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbSchema(locale, t("terms.title"), "terms")) }}
       />
       <main className="flex-1">
         <article className="max-w-2xl mx-auto py-14 px-5 md:px-10">

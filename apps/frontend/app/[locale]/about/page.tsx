@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server"
+import { buildBreadcrumbSchema } from "@/lib/schema/breadcrumb"
 import type { Metadata } from "next"
 import Link from "next/link"
 
@@ -6,10 +7,12 @@ type Props = { params: { locale: string } }
 
 export async function generateMetadata({ params: { locale } }: Props): Promise<Metadata> {
   return {
-    title: locale === "es" ? "Sobre TmpMail" : "About TmpMail",
+    title: locale === "es"
+      ? "Sobre TmpMail — Servicio de Correo Temporal Privado"
+      : "About TmpMail — Privacy-First Disposable Email Service",
     description: locale === "es"
-      ? "Conoce TmpMail: quiénes somos, cómo protegemos tu privacidad y cómo contactarnos."
-      : "Learn about TmpMail: who we are, how we protect your privacy, and how to contact us.",
+      ? "Conoce TmpMail: equipo independiente desde 2024, Redis en memoria, sin base de datos de usuarios. Privacidad real, no promesas."
+      : "Meet TmpMail: independent team since 2024, in-memory Redis, no user database. Real privacy, not just promises.",
     alternates: {
       canonical: `https://tmpmailio.com/${locale}/about`,
       languages: {
@@ -17,6 +20,9 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
         en: "https://tmpmailio.com/en/about",
         "x-default": "https://tmpmailio.com/en/about",
       },
+    },
+    openGraph: {
+      url: `https://tmpmailio.com/${locale}/about`,
     },
   }
 }
@@ -29,16 +35,7 @@ export default async function AboutPage({ params: { locale } }: Props) {
     <div className="min-h-screen flex flex-col" style={{ background: "var(--bg-primary)" }}>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              { "@type": "ListItem", position: 1, name: "TmpMail", item: `https://tmpmailio.com/${locale}` },
-              { "@type": "ListItem", position: 2, name: t("title"), item: `https://tmpmailio.com/${locale}/about` },
-            ],
-          }),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbSchema(locale, t("title"), "about")) }}
       />
       <main className="flex-1">
         <article className="max-w-2xl mx-auto py-14 px-5 md:px-10">
@@ -78,6 +75,57 @@ export default async function AboutPage({ params: { locale } }: Props) {
                 style={{ color: "var(--text-secondary)" }}
               >
                 {t("whoBody")}
+              </p>
+            </section>
+
+            {/* Mission */}
+            <section>
+              <h2
+                className="font-mono text-xs tracking-widest uppercase mb-3 flex items-center gap-2"
+                style={{ color: "var(--accent-primary)" }}
+              >
+                <span style={{ color: "var(--border-mid)" }}>//</span>
+                {t("mission")}
+              </h2>
+              <p
+                className="font-mono text-sm leading-relaxed"
+                style={{ color: "var(--text-secondary)" }}
+              >
+                {t("missionBody")}
+              </p>
+            </section>
+
+            {/* How it works */}
+            <section>
+              <h2
+                className="font-mono text-xs tracking-widest uppercase mb-3 flex items-center gap-2"
+                style={{ color: "var(--accent-primary)" }}
+              >
+                <span style={{ color: "var(--border-mid)" }}>//</span>
+                {t("how")}
+              </h2>
+              <p
+                className="font-mono text-sm leading-relaxed"
+                style={{ color: "var(--text-secondary)" }}
+              >
+                {t("howBody")}
+              </p>
+            </section>
+
+            {/* Commitment */}
+            <section>
+              <h2
+                className="font-mono text-xs tracking-widest uppercase mb-3 flex items-center gap-2"
+                style={{ color: "var(--accent-primary)" }}
+              >
+                <span style={{ color: "var(--border-mid)" }}>//</span>
+                {t("commitment")}
+              </h2>
+              <p
+                className="font-mono text-sm leading-relaxed"
+                style={{ color: "var(--text-secondary)" }}
+              >
+                {t("commitmentBody")}
               </p>
             </section>
 

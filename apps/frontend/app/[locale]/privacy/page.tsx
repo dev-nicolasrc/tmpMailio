@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server"
+import { buildBreadcrumbSchema } from "@/lib/schema/breadcrumb"
 import type { Metadata } from "next"
 
 type Props = { params: { locale: string } }
@@ -6,7 +7,12 @@ type Props = { params: { locale: string } }
 export async function generateMetadata({ params: { locale } }: Props): Promise<Metadata> {
   const t = await getTranslations({ locale, namespace: "legal.privacy" })
   return {
-    title: t("title"),
+    title: locale === "es"
+      ? "Política de Privacidad — TmpMail | Sin Datos, RGPD"
+      : "Privacy Policy — TmpMail | No Data Stored, GDPR Compliant",
+    description: locale === "es"
+      ? "TmpMail no almacena IP, no usa cookies de rastreo y cumple con RGPD. Todos los datos se eliminan automáticamente en 10 minutos."
+      : "TmpMail stores no IP addresses, uses no tracking cookies, and is fully GDPR compliant. All data is automatically deleted within 10 minutes.",
     alternates: {
       canonical: `https://tmpmailio.com/${locale}/privacy`,
       languages: {
@@ -14,6 +20,9 @@ export async function generateMetadata({ params: { locale } }: Props): Promise<M
         en: "https://tmpmailio.com/en/privacy",
         "x-default": "https://tmpmailio.com/en/privacy",
       },
+    },
+    openGraph: {
+      url: `https://tmpmailio.com/${locale}/privacy`,
     },
   }
 }
@@ -38,16 +47,7 @@ export default async function PrivacyPage({ params: { locale } }: Props) {
     <div className="min-h-screen flex flex-col" style={{ background: "var(--bg-primary)" }}>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              { "@type": "ListItem", position: 1, name: "TmpMail", item: `https://tmpmailio.com/${locale}` },
-              { "@type": "ListItem", position: 2, name: t("privacy.title"), item: `https://tmpmailio.com/${locale}/privacy` },
-            ],
-          }),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(buildBreadcrumbSchema(locale, t("privacy.title"), "privacy")) }}
       />
       <main className="flex-1">
         <article className="max-w-2xl mx-auto py-14 px-5 md:px-10">

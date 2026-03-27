@@ -36,6 +36,7 @@ export function FAQAccordion() {
           return (
             <details
               key={i}
+              open={i === 0}
               className="group"
               style={{ borderBottom: "1px solid var(--border)" }}
             >
@@ -64,7 +65,7 @@ export function FAQAccordion() {
               </summary>
 
               <p
-                className="pl-9 pr-4 pb-4 font-mono text-xs leading-relaxed"
+                className="pl-9 pr-4 pb-4 font-mono text-sm leading-relaxed"
                 style={{ color: "var(--text-secondary)" }}
               >
                 {item.a}

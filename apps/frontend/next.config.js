@@ -18,14 +18,32 @@ const nextConfig = {
   async headers() {
     return [
       {
-        // Prevent browsers and CDNs from caching HTML pages.
-        // _next/static/ assets use content-based hashes so they can stay immutable.
-        source: "/((?!_next/static|_next/image|favicon.ico|icons|sounds|manifest.json).*)",
+        // Static assets: immutable cache (content-hashed filenames)
+        source: "/_next/static/:path*",
         headers: [
-          {
-            key: "Cache-Control",
-            value: "no-store, no-cache, must-revalidate",
-          },
+          { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
+        ],
+      },
+      {
+        // Static pages (about, privacy, terms, contact, use-case slugs)
+        // SSG — safe to cache 1h, revalidate in background
+        source: "/:locale(es|en)/:path+",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=3600, stale-while-revalidate=86400" },
+        ],
+      },
+      {
+        // Main mailbox pages — SSR but cacheable at edge
+        source: "/:locale(es|en)",
+        headers: [
+          { key: "Cache-Control", value: "public, s-maxage=3600, stale-while-revalidate=86400" },
+        ],
+      },
+      {
+        // Public assets (icons, manifest, favicon)
+        source: "/:file(favicon.ico|icon.png|apple-touch-icon.png|manifest.json|manifest.en.json|manifest.es.json)",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=86400" },
         ],
       },
     ]
